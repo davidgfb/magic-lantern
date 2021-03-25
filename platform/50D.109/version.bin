@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar25.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-25 20:13:43 by david@david-VirtualBox
+Built on : 2021-03-25 20:29:38 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Thu Mar 25 21:13:44 2021 +0100
++++ b/src/module.h	Thu Mar 25 21:29:38 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -23,23 +23,160 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Thu Mar 25 21:13:44 2021 +0100
-@@ -4318,159 +4318,152 @@
-     else toggle_disp_mode();
++++ b/src/zebra.c	Thu Mar 25 21:29:38 2021 +0100
+@@ -4248,229 +4248,227 @@
+ TASK_CREATE( "livev_loprio_task", livev_lopriority_task, 0, 0x1f, 0x8000 );
+ 
+ // these may be out of order for config compatibility
+-void update_disp_mode_bits_from_params()
+-{
+-//~ BMP_LOCK(
+-    uint32_t bits =
+-        (global_draw & 1      ? 1<<0 : 0) |
+-        (zebra_draw           ? 1<<1 : 0) |
+-#ifdef FEATURE_HISTOGRAM
+-        (hist_draw            ? 1<<2 : 0) |
+-#endif
+-        (crop_enabled         ? 1<<3 : 0) |
+-        (waveform_draw        ? 1<<4 : 0) |
+-        (falsecolor_draw      ? 1<<5 : 0) |
+-        (spotmeter_draw       ? 1<<6 : 0) |
+-        (global_draw & 2      ? 1<<7 : 0) |
+-        (focus_peaking        ? 1<<8 : 0) |
+-        (zoom_overlay_enabled ? 1<<9 : 0) |
+-        (transparent_overlay  ? 1<<10: 0) |
+-        (electronic_level     ? 1<<11: 0) |
+-        //~ (defish_preview       ? 1<<12: 0) |
+-#ifdef FEATURE_VECTORSCOPE
+-        (vectorscope_should_draw() ? 1<<13: 0) |
+-#else
+-        0 |
+-#endif
+-        0;
+-        
+-    if (disp_mode == 1) disp_mode_a = bits;
+-    else if (disp_mode == 2) disp_mode_b = bits;
+-    else if (disp_mode == 3) disp_mode_c = bits;
+-    else disp_mode_x = bits;
+-//~ )
++void update_disp_mode_bits_from_params() {
++	//~ BMP_LOCK(
++		uint32_t bits = (global_draw & 1      ? 1<<0 : 0) |
++		    			(zebra_draw           ? 1<<1 : 0) |
++						#ifdef FEATURE_HISTOGRAM
++		    				(hist_draw            ? 1<<2 : 0) |
++						#endif
++						(crop_enabled         ? 1<<3 : 0) |
++						(waveform_draw        ? 1<<4 : 0) |
++						(falsecolor_draw      ? 1<<5 : 0) |
++						(spotmeter_draw       ? 1<<6 : 0) |
++						(global_draw & 2      ? 1<<7 : 0) |
++						(focus_peaking        ? 1<<8 : 0) |
++						(zoom_overlay_enabled ? 1<<9 : 0) |
++						(transparent_overlay  ? 1<<10: 0) |
++						(electronic_level     ? 1<<11: 0) |
++						//~ (defish_preview       ? 1<<12: 0) |
++							#ifdef FEATURE_VECTORSCOPE
++		    					(vectorscope_should_draw() ? 1<<13: 0) |
++							#else
++		    					0 |
++							#endif
++		    				0;
++		    
++		if (disp_mode == 1) { //a switch
++			disp_mode_a = bits;
++		} else if (disp_mode == 2) {
++			disp_mode_b = bits;
++		} else if (disp_mode == 3) {
++			disp_mode_c = bits;
++		} else {
++			disp_mode_x = bits;
++		}
++	//~ )
+ }
+ 
+-void update_disp_mode_params_from_bits()
+-{
+-//~ BMP_LOCK(
+-    uint32_t bits = disp_mode == 1 ? disp_mode_a : 
+-                    disp_mode == 2 ? disp_mode_b :
+-                    disp_mode == 3 ? disp_mode_c : disp_mode_x;
+-
+-    int global_draw_0    = bits & (1<<0) ? 1 : 0;
+-    zebra_draw           = bits & (1<<1) ? 1 : 0;
+-#ifdef FEATURE_HISTOGRAM
+-    hist_draw            = bits & (1<<2) ? 1 : 0;
+-#endif
+-    crop_enabled         = bits & (1<<3) ? 1 : 0;
+-    waveform_draw        = bits & (1<<4) ? 1 : 0;
+-    falsecolor_draw      = bits & (1<<5) ? 1 : 0;
+-    spotmeter_draw       = bits & (1<<6) ? 1 : 0;
+-    int global_draw_1    = bits & (1<<7) ? 1 : 0;
+-    focus_peaking        = bits & (1<<8) ? 1 : 0;
+-    zoom_overlay_enabled = bits & (1<<9) ? 1 : 0;
+-    transparent_overlay  = bits & (1<<10)? 1 : 0;
+-    electronic_level     = bits & (1<<11)? 1 : 0;
+-    //~ defish_preview       = bits & (1<<12)? 1 : 0;
+-#ifdef FEATURE_VECTORSCOPE
+-    vectorscope_request_draw(bits & (1<<13)? 1 : 0);
+-#endif
+-    global_draw = global_draw_0 + global_draw_1 * 2;
+-//~ end:
+-//~ )
++void update_disp_mode_params_from_bits() {
++	//~ BMP_LOCK(
++		uint32_t bits = disp_mode == 1 ? disp_mode_a : 
++		                disp_mode == 2 ? disp_mode_b :
++		                disp_mode == 3 ? disp_mode_c : disp_mode_x;
++
++		int global_draw_0    = bits & (1<<0) ? 1 : 0;
++		zebra_draw           = bits & (1<<1) ? 1 : 0;
++		#ifdef FEATURE_HISTOGRAM
++			hist_draw            = bits & (1<<2) ? 1 : 0;
++		#endif
++		crop_enabled         = bits & (1<<3) ? 1 : 0;
++		waveform_draw        = bits & (1<<4) ? 1 : 0;
++		falsecolor_draw      = bits & (1<<5) ? 1 : 0;
++		spotmeter_draw       = bits & (1<<6) ? 1 : 0;
++		int global_draw_1    = bits & (1<<7) ? 1 : 0;
++		focus_peaking        = bits & (1<<8) ? 1 : 0;
++		zoom_overlay_enabled = bits & (1<<9) ? 1 : 0;
++		transparent_overlay  = bits & (1<<10)? 1 : 0;
++		electronic_level     = bits & (1<<11)? 1 : 0;
++		//~ defish_preview       = bits & (1<<12)? 1 : 0;
++		#ifdef FEATURE_VECTORSCOPE
++			vectorscope_request_draw(bits & (1<<13)? 1 : 0);
++		#endif
++		global_draw = global_draw_0 + global_draw_1 * 2;
++	//~ end:
++	//~ )
+ }
+ 
+-int get_disp_mode() { return disp_mode; }
++int get_disp_mode() { 
++	return disp_mode; 
++}
+ 
+ static void toggle_disp_mode_menu(void *priv, int delta) {
+-    if (!disp_profiles_0) menu_toggle_submenu();
+-    else toggle_disp_mode();
++    if (!disp_profiles_0) {
++    	menu_toggle_submenu();
++    } else {
++    	toggle_disp_mode();
++    }
  }
  
 -int toggle_disp_mode()
 -{
 +int toggle_disp_mode() {
-+	int value = 0;
      update_disp_mode_bits_from_params();
      idle_wakeup_reset_counters(-3);
      disp_mode = MOD(disp_mode + 1, disp_profiles_0 + 1);
      BMP_LOCK( do_disp_mode_change(); )
      //~ menu_set_dirty();
 -    return disp_mode == 0;
-+    value = (disp_mode == 0);
-+    return value;
++    return (disp_mode == 0);
 +}
 +
 +static void do_disp_mode_change() {
@@ -306,7 +443,7 @@ diff -r 352a05ff20db src/zebra.c
      //~ draw_cropmark_area();
      msleep(1000);
      //~ bvram_mirror_init();
-@@ -4480,99 +4473,91 @@
+@@ -4480,99 +4478,91 @@
  
      struct vram_info * vram = get_yuv422_vram();
      uint8_t * const lvram = vram->vram;
@@ -481,7 +618,7 @@ diff -r 352a05ff20db src/zebra.c
      /* go to play mode if not already there */
      enter_play_mode();
      
-@@ -4585,12 +4570,13 @@
+@@ -4585,12 +4575,13 @@
      /* the overlay will now be displayed from cropmarks.c */
  }
  
@@ -498,7 +635,7 @@ diff -r 352a05ff20db src/zebra.c
      
      #ifdef FEATURE_EXPO_OVERRIDE
      bv_auto_update();
-@@ -4601,8 +4587,7 @@
+@@ -4601,8 +4592,7 @@
      #endif
  }
  
@@ -508,7 +645,7 @@ diff -r 352a05ff20db src/zebra.c
      int old_lv = lv;
      int old_peaking = focus_peaking;
      focus_peaking = 1;
-@@ -4611,8 +4596,7 @@
+@@ -4611,8 +4601,7 @@
      msleep(2000);
      int a = get_seconds_clock();
      lv = 1; // lie, to force using the liveview algorithm which is relevant for benchmarking
