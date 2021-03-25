@@ -4318,15 +4318,17 @@ static void toggle_disp_mode_menu(void *priv, int delta) {
     else toggle_disp_mode();
 }
 
-int toggle_disp_mode()
-{
+int toggle_disp_mode() {
+	int value = 0;
     update_disp_mode_bits_from_params();
     idle_wakeup_reset_counters(-3);
     disp_mode = MOD(disp_mode + 1, disp_profiles_0 + 1);
     BMP_LOCK( do_disp_mode_change(); )
     //~ menu_set_dirty();
-    return disp_mode == 0;
+    value = (disp_mode == 0);
+    return value;
 }
+
 static void do_disp_mode_change() {
     if (gui_menu_shown()) { 
         update_disp_mode_params_from_bits();         

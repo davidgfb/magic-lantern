@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar25.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-25 20:07:46 by david@david-VirtualBox
+Built on : 2021-03-25 20:13:43 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Thu Mar 25 21:07:46 2021 +0100
++++ b/src/module.h	Thu Mar 25 21:13:44 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -23,17 +23,25 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Thu Mar 25 21:07:46 2021 +0100
-@@ -4327,150 +4327,141 @@
-     //~ menu_set_dirty();
-     return disp_mode == 0;
++++ b/src/zebra.c	Thu Mar 25 21:13:44 2021 +0100
+@@ -4318,159 +4318,152 @@
+     else toggle_disp_mode();
  }
--static void do_disp_mode_change()
+ 
+-int toggle_disp_mode()
 -{
--    if (gui_menu_shown()) 
--    { 
--        update_disp_mode_params_from_bits(); 
--        return; 
++int toggle_disp_mode() {
++	int value = 0;
+     update_disp_mode_bits_from_params();
+     idle_wakeup_reset_counters(-3);
+     disp_mode = MOD(disp_mode + 1, disp_profiles_0 + 1);
+     BMP_LOCK( do_disp_mode_change(); )
+     //~ menu_set_dirty();
+-    return disp_mode == 0;
++    value = (disp_mode == 0);
++    return value;
++}
++
 +static void do_disp_mode_change() {
 +    if (gui_menu_shown()) { 
 +        update_disp_mode_params_from_bits();         
@@ -49,7 +57,13 @@ diff -r 352a05ff20db src/zebra.c
 +		update_disp_mode_params_from_bits();
 +		redraw();
 +    }
-+}
+ }
+-static void do_disp_mode_change()
+-{
+-    if (gui_menu_shown()) 
+-    { 
+-        update_disp_mode_params_from_bits(); 
+-        return; 
 +
 +int handle_disp_preset_key(struct event * event) {
 +    /*the INFO key may be also used for enabling powersaving right away
@@ -292,7 +306,7 @@ diff -r 352a05ff20db src/zebra.c
      //~ draw_cropmark_area();
      msleep(1000);
      //~ bvram_mirror_init();
-@@ -4480,99 +4471,91 @@
+@@ -4480,99 +4473,91 @@
  
      struct vram_info * vram = get_yuv422_vram();
      uint8_t * const lvram = vram->vram;
@@ -467,7 +481,7 @@ diff -r 352a05ff20db src/zebra.c
      /* go to play mode if not already there */
      enter_play_mode();
      
-@@ -4585,12 +4568,13 @@
+@@ -4585,12 +4570,13 @@
      /* the overlay will now be displayed from cropmarks.c */
  }
  
@@ -484,7 +498,7 @@ diff -r 352a05ff20db src/zebra.c
      
      #ifdef FEATURE_EXPO_OVERRIDE
      bv_auto_update();
-@@ -4601,8 +4585,7 @@
+@@ -4601,8 +4587,7 @@
      #endif
  }
  
@@ -494,7 +508,7 @@ diff -r 352a05ff20db src/zebra.c
      int old_lv = lv;
      int old_peaking = focus_peaking;
      focus_peaking = 1;
-@@ -4611,8 +4594,7 @@
+@@ -4611,8 +4596,7 @@
      msleep(2000);
      int a = get_seconds_clock();
      lv = 1; // lie, to force using the liveview algorithm which is relevant for benchmarking
