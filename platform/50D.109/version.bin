@@ -1,0 +1,27 @@
+
+
+Magic Lantern Nightly.2021Mar25.50D109
+Camera   : 50D
+Firmware : 109
+Changeset: 352a05ff20db+ (qemu)
+Built on : 2021-03-25 14:50:20 by david@david-VirtualBox
+
+diff -r 352a05ff20db src/module.h
+--- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
++++ b/src/module.h	Thu Mar 25 15:50:20 2021 +0100
+@@ -340,8 +340,10 @@
+ /* see propvalues.c */
+ extern int is_camera(const char * model, const char * firmware);
+ 
++/* esto fue comentado
+ #ifdef MODULE
+-#include "module_strings.h"
++	#include "module_strings.h" 
+ #endif
++*/
+ 
+ #endif
+
+
+
+

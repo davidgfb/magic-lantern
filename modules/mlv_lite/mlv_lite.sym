@@ -1,0 +1,16 @@
+00000570 raw_rec_trace_ctx
+000021ec raw_movie_filename
+000021f0 raw_video_enabled
+00004788 mlv_prng_lfsr
+000047c0 mlv_generate_guid
+00004838 mlv_set_type
+00004840 mlv_init_fileheader
+00004884 mlv_set_timestamp
+000048e4 mlv_fill_lens
+000049d4 mlv_fill_wbal
+00004af4 mlv_fill_styl
+00004bf8 mlv_fill_expo
+00004d24 mlv_fill_rtci
+00004e58 mlv_fill_idnt
+00004f24 mlv_build_vers
+00004fd4 mlv_write_vers_blocks
