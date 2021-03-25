@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar25.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-25 19:28:53 by david@david-VirtualBox
+Built on : 2021-03-25 19:43:24 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Thu Mar 25 20:28:53 2021 +0100
++++ b/src/module.h	Thu Mar 25 20:43:24 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -23,9 +23,38 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Thu Mar 25 20:28:53 2021 +0100
-@@ -4411,66 +4411,65 @@
-     }
++++ b/src/zebra.c	Thu Mar 25 20:43:24 2021 +0100
+@@ -4393,84 +4393,78 @@
+ }
+ 
+ /* called from GUI handler */
+-static void overlays_playback_toggle()
+-{
+-    if (overlays_playback_running)
+-        return;
+-    
+-    if (!overlays_playback_displayed)
+-    {
+-        /* this may take about 1 second, so let's run it outside GuiMainTask */
+-        overlays_playback_running = 1;
+-        task_create("lv_playback", 0x1a, 0x8000, draw_overlays_playback, 0);
+-        overlays_playback_displayed = 1;
+-    }
+-    else
+-    {
+-        overlays_playback_clear();
+-    }
++static void overlays_playback_toggle() {
++    if (!overlays_playback_running) {                
++		if (!overlays_playback_displayed) {
++		    /* this may take about 1 second, so let's run it outside GuiMainTask */
++		    overlays_playback_running = 1;
++		    task_create("lv_playback", 0x1a, 0x8000, draw_overlays_playback, 0);
++		    overlays_playback_displayed = 1;
++		} else {
++		    overlays_playback_clear();
++		}
++	}
  }
  
 -int handle_overlays_playback(struct event * event)
@@ -123,7 +152,7 @@ diff -r 352a05ff20db src/zebra.c
      //~ draw_cropmark_area();
      msleep(1000);
      //~ bvram_mirror_init();
-@@ -4480,99 +4479,91 @@
+@@ -4480,99 +4474,91 @@
  
      struct vram_info * vram = get_yuv422_vram();
      uint8_t * const lvram = vram->vram;
@@ -298,7 +327,7 @@ diff -r 352a05ff20db src/zebra.c
      /* go to play mode if not already there */
      enter_play_mode();
      
-@@ -4585,12 +4576,13 @@
+@@ -4585,12 +4571,13 @@
      /* the overlay will now be displayed from cropmarks.c */
  }
  
@@ -315,7 +344,7 @@ diff -r 352a05ff20db src/zebra.c
      
      #ifdef FEATURE_EXPO_OVERRIDE
      bv_auto_update();
-@@ -4601,8 +4593,7 @@
+@@ -4601,8 +4588,7 @@
      #endif
  }
  
@@ -325,7 +354,7 @@ diff -r 352a05ff20db src/zebra.c
      int old_lv = lv;
      int old_peaking = focus_peaking;
      focus_peaking = 1;
-@@ -4611,8 +4602,7 @@
+@@ -4611,8 +4597,7 @@
      msleep(2000);
      int a = get_seconds_clock();
      lv = 1; // lie, to force using the liveview algorithm which is relevant for benchmarking

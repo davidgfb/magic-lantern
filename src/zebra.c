@@ -4393,22 +4393,17 @@ static void overlays_playback_clear()
 }
 
 /* called from GUI handler */
-static void overlays_playback_toggle()
-{
-    if (overlays_playback_running)
-        return;
-    
-    if (!overlays_playback_displayed)
-    {
-        /* this may take about 1 second, so let's run it outside GuiMainTask */
-        overlays_playback_running = 1;
-        task_create("lv_playback", 0x1a, 0x8000, draw_overlays_playback, 0);
-        overlays_playback_displayed = 1;
-    }
-    else
-    {
-        overlays_playback_clear();
-    }
+static void overlays_playback_toggle() {
+    if (!overlays_playback_running) {                
+		if (!overlays_playback_displayed) {
+		    /* this may take about 1 second, so let's run it outside GuiMainTask */
+		    overlays_playback_running = 1;
+		    task_create("lv_playback", 0x1a, 0x8000, draw_overlays_playback, 0);
+		    overlays_playback_displayed = 1;
+		} else {
+		    overlays_playback_clear();
+		}
+	}
 }
 
 int handle_overlays_playback(struct event * event) {
