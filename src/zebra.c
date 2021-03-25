@@ -4187,39 +4187,36 @@ livev_hipriority_task( void* unused )
     }
 }
 
-static void loprio_sleep()
-{
+static void loprio_sleep() {
     msleep(200);
-    while (is_mvr_buffer_almost_full()) msleep(100);
+    while (is_mvr_buffer_almost_full()) {
+    	msleep(100);
+    }
 }
 
 // Items which do not need a high FPS, but are CPU intensive
 // histogram, waveform...
-static void
-livev_lopriority_task( void* unused )
-{
+static void livev_lopriority_task( void* unused ) {
     msleep(500);
-    TASK_LOOP
-    {
+    TASK_LOOP {
         #ifdef FEATURE_CROPMARKS
-        #ifdef FEATURE_GHOST_IMAGE
-        if (transparent_overlay_flag)
-        {
-            transparent_overlay_from_play();
-            transparent_overlay_flag = 0;
-        }
-        #endif
+        	#ifdef FEATURE_GHOST_IMAGE
+				if (transparent_overlay_flag) {
+				    transparent_overlay_from_play();
+				    transparent_overlay_flag = 0;
+				}
+        	#endif
 
-        // here, redrawing cropmarks does not block fast zoom
-        if (crop_enabled && cropmarks_play && PLAY_MODE && DISPLAY_IS_ON && (int32_t)MEM(IMGPLAY_ZOOM_LEVEL_ADDR) <= 0)
-        {
-            msleep(500);
-            if (PLAY_MODE && DISPLAY_IS_ON && ((int32_t)(int32_t)MEM(IMGPLAY_ZOOM_LEVEL_ADDR) <= 0)) // double-check
-            {
-                cropmark_redraw();
-                if ((int32_t)(int32_t)MEM(IMGPLAY_ZOOM_LEVEL_ADDR) >= 0) redraw(); // whoops, CTRL-Z, CTRL-Z :)
-            }
-        }
+		    // here, redrawing cropmarks does not block fast zoom
+		    if (crop_enabled && cropmarks_play && PLAY_MODE && DISPLAY_IS_ON && (int32_t)MEM(IMGPLAY_ZOOM_LEVEL_ADDR) <= 0) {
+		        msleep(500);
+		        if (PLAY_MODE && DISPLAY_IS_ON && ((int32_t)(int32_t)MEM(IMGPLAY_ZOOM_LEVEL_ADDR) <= 0)) { // double-check		        
+		            cropmark_redraw();
+		            if ((int32_t)(int32_t)MEM(IMGPLAY_ZOOM_LEVEL_ADDR) >= 0) {
+		            	redraw(); // whoops, CTRL-Z, CTRL-Z :)
+		            }
+		        }
+		    }
         #endif
 
         loprio_sleep();
@@ -4235,8 +4232,7 @@ livev_lopriority_task( void* unused )
 
         loprio_sleep();
 
-        if (!gui_menu_shown())
-        {
+        if (!gui_menu_shown()) {
             draw_histogram_and_waveform(0);
         }
     }
@@ -4265,12 +4261,12 @@ void update_disp_mode_bits_from_params() {
 						(transparent_overlay  ? 1<<10: 0) |
 						(electronic_level     ? 1<<11: 0) |
 						//~ (defish_preview       ? 1<<12: 0) |
-							#ifdef FEATURE_VECTORSCOPE
-		    					(vectorscope_should_draw() ? 1<<13: 0) |
-							#else
-		    					0 |
-							#endif
-		    				0;
+						#ifdef FEATURE_VECTORSCOPE
+		    				(vectorscope_should_draw() ? 1<<13: 0) |
+						#else
+		    				0 |
+						#endif
+		    			0;
 		
 		switch (disp_mode) {
 			case 1:
