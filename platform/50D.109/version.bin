@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar25.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-25 15:00:43 by david@david-VirtualBox
+Built on : 2021-03-25 19:28:53 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Thu Mar 25 16:00:43 2021 +0100
++++ b/src/module.h	Thu Mar 25 20:28:53 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -23,8 +23,80 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Thu Mar 25 16:00:43 2021 +0100
-@@ -4454,23 +4454,21 @@
++++ b/src/zebra.c	Thu Mar 25 20:28:53 2021 +0100
+@@ -4411,66 +4411,65 @@
+     }
+ }
+ 
+-int handle_overlays_playback(struct event * event)
+-{
++int handle_overlays_playback(struct event * event) {
++	int value=0; 
+     // enable LiveV stuff in Play mode
+-    if (PLAY_OR_QR_MODE)
+-    {
+-        switch(event->param)
+-        {
+-#if defined(BTN_ZEBRAS_FOR_PLAYBACK) && defined(BTN_ZEBRAS_FOR_PLAYBACK_NAME)
++    if (PLAY_OR_QR_MODE) {
++        switch(event->param) {
++			#if defined(BTN_ZEBRAS_FOR_PLAYBACK) && defined(BTN_ZEBRAS_FOR_PLAYBACK_NAME)
+             case BTN_ZEBRAS_FOR_PLAYBACK:
+                 /* used in PLAY mode (user pressed button to toggle overlays) */
+-                overlays_playback_toggle();
+-                return 0;
++                overlays_playback_toggle();                
++                break;
+ #endif
+             case MLEV_TRIGGER_ZEBRAS_FOR_PLAYBACK:
+                 /* used in QuickReview mode - always show the overlays, no toggle */
+                 overlays_playback_displayed = 0;
+-                overlays_playback_toggle();
+-                return 0;
++                overlays_playback_toggle();                
++                break;
+         }
+         
+-        if (event->param == GMT_OLC_INFO_CHANGED)
+-            return 1;
+-
+-        #ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
+-        else if (event->param == GMT_GUICMD_PRESS_BUTTON_SOMETHING)
+-            return 1;
+-        #endif
+-
+-        else
+-        {
+-            /* some button pressed in play mode, while ML overlays are active? clear them */
+-            overlays_playback_clear();
+-        }
+-    }
+-    else
+-    {
++        if (event->param == GMT_OLC_INFO_CHANGED) {
++        	value=1;
++		} else {
++		
++			#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
++				if (event->param == GMT_GUICMD_PRESS_BUTTON_SOMETHING) {
++					value=1;
++				} else {
++			#endif
++			
++					/* some button pressed in play mode, while ML overlays are active? clear them */
++					overlays_playback_clear();
++			#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
++				}
++			#endif
++		
++		}		
++    } else {
+         /* got out of play mode? ML overlays are for sure no longer active */
+         overlays_playback_displayed = 0;
+     }
+-    return 1;
++    value=1;
++    return value; 
  }
  #endif
  
@@ -51,7 +123,7 @@ diff -r 352a05ff20db src/zebra.c
      //~ draw_cropmark_area();
      msleep(1000);
      //~ bvram_mirror_init();
-@@ -4480,99 +4478,91 @@
+@@ -4480,99 +4479,91 @@
  
      struct vram_info * vram = get_yuv422_vram();
      uint8_t * const lvram = vram->vram;
@@ -226,7 +298,7 @@ diff -r 352a05ff20db src/zebra.c
      /* go to play mode if not already there */
      enter_play_mode();
      
-@@ -4585,12 +4575,13 @@
+@@ -4585,12 +4576,13 @@
      /* the overlay will now be displayed from cropmarks.c */
  }
  
@@ -243,7 +315,7 @@ diff -r 352a05ff20db src/zebra.c
      
      #ifdef FEATURE_EXPO_OVERRIDE
      bv_auto_update();
-@@ -4601,8 +4592,7 @@
+@@ -4601,8 +4593,7 @@
      #endif
  }
  
@@ -253,7 +325,7 @@ diff -r 352a05ff20db src/zebra.c
      int old_lv = lv;
      int old_peaking = focus_peaking;
      focus_peaking = 1;
-@@ -4611,8 +4601,7 @@
+@@ -4611,8 +4602,7 @@
      msleep(2000);
      int a = get_seconds_clock();
      lv = 1; // lie, to force using the liveview algorithm which is relevant for benchmarking

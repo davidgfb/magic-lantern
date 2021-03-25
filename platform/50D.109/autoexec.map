@@ -328,47 +328,46 @@ LOAD footer.o
  *(.iplt)
  .iplt          0x00008000        0x0 reboot.o
 
-.text           0x00800000    0x6bf20
+.text           0x00800000    0x6c760
  *(.text.unlikely .text.*_unlikely .text.unlikely.*)
  *(.text.exit .text.exit.*)
  *(.text.startup .text.startup.*)
  *(.text.hot .text.hot.*)
  *(.text .stub .text.* .gnu.linkonce.t.*)
- .text          0x00800000    0x6ba6c reboot.o
+ .text          0x00800000    0x6c2b0 reboot.o
                 0x00800000                _start
-                0x008020b0                blob_start
-                0x0086b7f4                blob_end
-                0x0086b7f4                cstart
- *fill*         0x0086ba6c        0x4 
- .text          0x0086ba70      0x264 disp_direct.o
-                0x0086bb5c                disp_set_pixel
-                0x0086bb94                disp_init
-                0x0086bc90                print_line
- *fill*         0x0086bcd4        0xc 
- .text          0x0086bce0       0xdc font_direct.o
-                0x0086bce0                font_draw
- .text          0x0086bdbc       0x1c strlen.o
-                0x0086bdbc                strlen
- .text          0x0086bdd8       0x30 strcmp.o
-                0x0086bdd8                strcoll
-                0x0086bdd8                strcmp
- .text          0x0086be08      0x114 gcc-libgcc.a(_udivsi3.o)
-                0x0086be08                __udivsi3
-                0x0086be08                __aeabi_uidiv
-                0x0086befc                __aeabi_uidivmod
- .text          0x0086bf1c        0x4 gcc-libgcc.a(_dvmd_tls.o)
-                0x0086bf1c                __aeabi_ldiv0
-                0x0086bf1c                __aeabi_idiv0
- .text          0x0086bf20        0x0 footer.o
+                0x00802934                blob_start
+                0x0086c038                blob_end
+                0x0086c038                cstart
+ .text          0x0086c2b0      0x264 disp_direct.o
+                0x0086c39c                disp_set_pixel
+                0x0086c3d4                disp_init
+                0x0086c4d0                print_line
+ *fill*         0x0086c514        0xc 
+ .text          0x0086c520       0xdc font_direct.o
+                0x0086c520                font_draw
+ .text          0x0086c5fc       0x1c strlen.o
+                0x0086c5fc                strlen
+ .text          0x0086c618       0x30 strcmp.o
+                0x0086c618                strcoll
+                0x0086c618                strcmp
+ .text          0x0086c648      0x114 gcc-libgcc.a(_udivsi3.o)
+                0x0086c648                __udivsi3
+                0x0086c648                __aeabi_uidiv
+                0x0086c73c                __aeabi_uidivmod
+ .text          0x0086c75c        0x4 gcc-libgcc.a(_dvmd_tls.o)
+                0x0086c75c                __aeabi_ldiv0
+                0x0086c75c                __aeabi_idiv0
+ .text          0x0086c760        0x0 footer.o
  *(.gnu.warning)
  *(.glue_7t)
- .glue_7t       0x0086bf20        0x0 linker stubs
+ .glue_7t       0x0086c760        0x0 linker stubs
  *(.glue_7)
- .glue_7        0x0086bf20        0x0 linker stubs
+ .glue_7        0x0086c760        0x0 linker stubs
  *(.vfp11_veneer)
- .vfp11_veneer  0x0086bf20        0x0 linker stubs
+ .vfp11_veneer  0x0086c760        0x0 linker stubs
  *(.v4_bx)
- .v4_bx         0x0086bf20        0x0 linker stubs
+ .v4_bx         0x0086c760        0x0 linker stubs
 
 .fini
  *(SORT(.fini))
@@ -376,16 +375,16 @@ LOAD footer.o
                 [!provide]                PROVIDE (_etext, .)
                 [!provide]                PROVIDE (etext, .)
 
-.rodata         0x0086bf20      0x565
+.rodata         0x0086c760      0x565
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata.str1.1
-                0x0086bf20      0x17d reboot.o
+                0x0086c760      0x17d reboot.o
                                 0x17e (size before relaxing)
- *fill*         0x0086c09d        0x3 
- .rodata        0x0086c0a0       0x40 disp_direct.o
+ *fill*         0x0086c8dd        0x3 
+ .rodata        0x0086c8e0       0x40 disp_direct.o
  .rodata.str1.1
-                0x0086c0e0       0x45 disp_direct.o
- .rodata        0x0086c125      0x360 font_direct.o
+                0x0086c920       0x45 disp_direct.o
+ .rodata        0x0086c965      0x360 font_direct.o
 
 .rodata1
  *(.rodata1)
@@ -414,7 +413,7 @@ LOAD footer.o
 
 .exception_ranges
  *(.exception_ranges .exception_ranges*)
-                0x0086c485                . = .
+                0x0086ccc5                . = .
 
 .eh_frame
  *(.eh_frame)
@@ -436,18 +435,18 @@ LOAD footer.o
  *(.tbss .tbss.* .gnu.linkonce.tb.*)
  *(.tcommon)
 
-.preinit_array  0x0086c485        0x0
+.preinit_array  0x0086ccc5        0x0
                 [!provide]                PROVIDE (__preinit_array_start, .)
  *(.preinit_array)
                 [!provide]                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x0086c485        0x0
+.init_array     0x0086ccc5        0x0
                 [!provide]                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array)
                 [!provide]                PROVIDE (__init_array_end, .)
 
-.fini_array     0x0086c485        0x0
+.fini_array     0x0086ccc5        0x0
                 [!provide]                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array)
@@ -477,56 +476,56 @@ LOAD footer.o
 .dynamic
  *(.dynamic)
 
-.got            0x0086c488        0x0
+.got            0x0086ccc8        0x0
  *(.got.plt)
  *(.igot.plt)
- .igot.plt      0x0086c488        0x0 reboot.o
+ .igot.plt      0x0086ccc8        0x0 reboot.o
  *(.got)
  *(.igot)
 
-.data           0x0086c4a0       0x40
-                0x0086c4a0                __data_start = .
+.data           0x0086cce0       0x40
+                0x0086cce0                __data_start = .
  *(.data .data.* .gnu.linkonce.d.*)
- .data          0x0086c4a0        0x0 reboot.o
- .data          0x0086c4a0        0x8 disp_direct.o
- .data          0x0086c4a8        0x0 font_direct.o
- .data          0x0086c4a8        0x0 strlen.o
- .data          0x0086c4a8        0x0 strcmp.o
- .data          0x0086c4a8        0x0 gcc-libgcc.a(_udivsi3.o)
- .data          0x0086c4a8        0x0 gcc-libgcc.a(_dvmd_tls.o)
- *fill*         0x0086c4a8       0x18 
- .data          0x0086c4c0       0x20 footer.o
-                0x0086c4d8                autoexec_bin_footer
-                0x0086c4e0                autoexec_bin_checksum_end
+ .data          0x0086cce0        0x0 reboot.o
+ .data          0x0086cce0        0x8 disp_direct.o
+ .data          0x0086cce8        0x0 font_direct.o
+ .data          0x0086cce8        0x0 strlen.o
+ .data          0x0086cce8        0x0 strcmp.o
+ .data          0x0086cce8        0x0 gcc-libgcc.a(_udivsi3.o)
+ .data          0x0086cce8        0x0 gcc-libgcc.a(_dvmd_tls.o)
+ *fill*         0x0086cce8       0x18 
+ .data          0x0086cd00       0x20 footer.o
+                0x0086cd18                autoexec_bin_footer
+                0x0086cd20                autoexec_bin_checksum_end
 
 .data1
  *(.data1)
-                0x0086c4e0                _edata = .
+                0x0086cd20                _edata = .
                 [!provide]                PROVIDE (edata, .)
-                0x0086c4e0                . = .
-                0x0086c4e0                __bss_start = .
-                0x0086c4e0                __bss_start__ = .
+                0x0086cd20                . = .
+                0x0086cd20                __bss_start = .
+                0x0086cd20                __bss_start__ = .
 
-.bss            0x0086c4e0        0x0
+.bss            0x0086cd20        0x0
  *(.dynbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
- .bss           0x0086c4e0        0x0 reboot.o
- .bss           0x0086c4e0        0x0 disp_direct.o
- .bss           0x0086c4e0        0x0 font_direct.o
- .bss           0x0086c4e0        0x0 strlen.o
- .bss           0x0086c4e0        0x0 strcmp.o
- .bss           0x0086c4e0        0x0 gcc-libgcc.a(_udivsi3.o)
- .bss           0x0086c4e0        0x0 gcc-libgcc.a(_dvmd_tls.o)
- .bss           0x0086c4e0        0x0 footer.o
+ .bss           0x0086cd20        0x0 reboot.o
+ .bss           0x0086cd20        0x0 disp_direct.o
+ .bss           0x0086cd20        0x0 font_direct.o
+ .bss           0x0086cd20        0x0 strlen.o
+ .bss           0x0086cd20        0x0 strcmp.o
+ .bss           0x0086cd20        0x0 gcc-libgcc.a(_udivsi3.o)
+ .bss           0x0086cd20        0x0 gcc-libgcc.a(_dvmd_tls.o)
+ .bss           0x0086cd20        0x0 footer.o
  *(COMMON)
-                0x0086c4e0                . = ALIGN ((. != 0x0)?0x4:0x1)
-                0x0086c4e0                _bss_end__ = .
-                0x0086c4e0                __bss_end__ = .
-                0x0086c4e0                . = ALIGN (0x4)
-                0x0086c4e0                . = SEGMENT_START ("ldata-segment", .)
-                0x0086c4e0                . = ALIGN (0x4)
-                0x0086c4e0                __end__ = .
-                0x0086c4e0                _end = .
+                0x0086cd20                . = ALIGN ((. != 0x0)?0x4:0x1)
+                0x0086cd20                _bss_end__ = .
+                0x0086cd20                __bss_end__ = .
+                0x0086cd20                . = ALIGN (0x4)
+                0x0086cd20                . = SEGMENT_START ("ldata-segment", .)
+                0x0086cd20                . = ALIGN (0x4)
+                0x0086cd20                __end__ = .
+                0x0086cd20                _end = .
                 [!provide]                PROVIDE (end, .)
 
 .stab

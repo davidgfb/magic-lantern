@@ -4411,46 +4411,47 @@ static void overlays_playback_toggle()
     }
 }
 
-int handle_overlays_playback(struct event * event)
-{
+int handle_overlays_playback(struct event * event) {
+	int value=0; 
     // enable LiveV stuff in Play mode
-    if (PLAY_OR_QR_MODE)
-    {
-        switch(event->param)
-        {
-#if defined(BTN_ZEBRAS_FOR_PLAYBACK) && defined(BTN_ZEBRAS_FOR_PLAYBACK_NAME)
+    if (PLAY_OR_QR_MODE) {
+        switch(event->param) {
+			#if defined(BTN_ZEBRAS_FOR_PLAYBACK) && defined(BTN_ZEBRAS_FOR_PLAYBACK_NAME)
             case BTN_ZEBRAS_FOR_PLAYBACK:
                 /* used in PLAY mode (user pressed button to toggle overlays) */
-                overlays_playback_toggle();
-                return 0;
+                overlays_playback_toggle();                
+                break;
 #endif
             case MLEV_TRIGGER_ZEBRAS_FOR_PLAYBACK:
                 /* used in QuickReview mode - always show the overlays, no toggle */
                 overlays_playback_displayed = 0;
-                overlays_playback_toggle();
-                return 0;
+                overlays_playback_toggle();                
+                break;
         }
         
-        if (event->param == GMT_OLC_INFO_CHANGED)
-            return 1;
-
-        #ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
-        else if (event->param == GMT_GUICMD_PRESS_BUTTON_SOMETHING)
-            return 1;
-        #endif
-
-        else
-        {
-            /* some button pressed in play mode, while ML overlays are active? clear them */
-            overlays_playback_clear();
-        }
-    }
-    else
-    {
+        if (event->param == GMT_OLC_INFO_CHANGED) {
+        	value=1;
+		} else {
+		
+			#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
+				if (event->param == GMT_GUICMD_PRESS_BUTTON_SOMETHING) {
+					value=1;
+				} else {
+			#endif
+			
+					/* some button pressed in play mode, while ML overlays are active? clear them */
+					overlays_playback_clear();
+			#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
+				}
+			#endif
+		
+		}		
+    } else {
         /* got out of play mode? ML overlays are for sure no longer active */
         overlays_playback_displayed = 0;
     }
-    return 1;
+    value=1;
+    return value; 
 }
 #endif
 
