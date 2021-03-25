@@ -4454,23 +4454,21 @@ int handle_overlays_playback(struct event * event)
 }
 #endif
 
-static void zebra_init()
-{
+static void zebra_init() {
     precompute_yuv2rgb();
     menu_add( "Overlay", zebra_menus, COUNT(zebra_menus) );
     menu_add( "Debug", livev_dbg_menus, COUNT(livev_dbg_menus) );
     //~ menu_add( "Movie", movie_menus, COUNT(movie_menus) );
     //~ menu_add( "Config", cfg_menus, COUNT(cfg_menus) );
     #ifdef FEATURE_CROPMARKS
-    menu_add( "Overlay", cropmarks_menu, COUNT(cropmarks_menu) );
+    	menu_add( "Overlay", cropmarks_menu, COUNT(cropmarks_menu) );
     #endif
 }
 
 INIT_FUNC(__FILE__, zebra_init);
 
 
-static void make_overlay()
-{
+static void make_overlay() {
     //~ draw_cropmark_area();
     msleep(1000);
     //~ bvram_mirror_init();
@@ -4480,99 +4478,91 @@ static void make_overlay()
 
     struct vram_info * vram = get_yuv422_vram();
     uint8_t * const lvram = vram->vram;
-    if (!lvram) return;
-
-    uint8_t * const bvram = bmp_vram();
-    if (!bvram) return;
-
-    // difficulty: in play mode, image buffer may have different size/position than in LiveView
-    // => normalized xn and yn will fix this
-    for (int yn = 0; yn < 480; yn++)
-    {
-        int y = N2BM_Y(yn);
-        //~ int k;
-        uint16_t * const v_row = (uint16_t*)( lvram        + BM2LV_R(y)); // 1 pixel
-        uint8_t  * const b_row = (uint8_t*) ( bvram        + BM_R(y));    // 1 pixel
-        uint8_t  * const m_row = (uint8_t*) ( bvram_mirror + BM_R(yn));    // 1 pixel
-        uint16_t* lvp; // that's a moving pointer through lv vram
-        uint8_t* bp;   // through bmp vram
-        uint8_t* mp;   // through bmp vram mirror
-        for (int xn = 0; xn < 720; xn++)
-        {
-            int x = N2BM_X(xn);
-            lvp = v_row + BM2LV_X(x);
-            bp = b_row + x;
-            mp = m_row + xn;
-            *bp = *mp = ((*lvp) * 41 >> 16) + 38;
-        }
-    }
-    FILE* f = FIO_CreateFile("ML/DATA/overlay.dat");
-    if (f)
-    {
-        FIO_WriteFile( f, (const void *) bvram_mirror, BVRAM_MIRROR_SIZE);
-        FIO_CloseFile(f);
-        bmp_printf(FONT_MED, 0, 0, "Overlay saved.  ");
-    }
-    else
-    {
-        bmp_printf(FONT_MED, 0, 0, "Overlay error.  ");
-    }
-    msleep(1000);
+    if (lvram) {			
+		uint8_t * const bvram = bmp_vram();
+		if (bvram) {			
+			// difficulty: in play mode, image buffer may have different size/position than in LiveView
+			// => normalized xn and yn will fix this
+			for (int yn = 0; yn < 480; yn++) {
+				int y = N2BM_Y(yn);
+				//~ int k;
+				uint16_t * const v_row = (uint16_t*)( lvram        + BM2LV_R(y)); // 1 pixel
+				uint8_t  * const b_row = (uint8_t*) ( bvram        + BM_R(y));    // 1 pixel
+				uint8_t  * const m_row = (uint8_t*) ( bvram_mirror + BM_R(yn));    // 1 pixel
+				uint16_t* lvp; // that's a moving pointer through lv vram
+				uint8_t* bp;   // through bmp vram
+				uint8_t* mp;   // through bmp vram mirror
+				for (int xn = 0; xn < 720; xn++) {
+				    int x = N2BM_X(xn);
+				    lvp = v_row + BM2LV_X(x);
+				    bp = b_row + x;
+				    mp = m_row + xn;
+				    *bp = *mp = ((*lvp) * 41 >> 16) + 38;
+				}
+			}
+			FILE* f = FIO_CreateFile("ML/DATA/overlay.dat");
+			if (f) {
+				FIO_WriteFile( f, (const void *) bvram_mirror, BVRAM_MIRROR_SIZE);
+				FIO_CloseFile(f);
+				bmp_printf(FONT_MED, 0, 0, "Overlay saved.  ");
+			} else {
+				bmp_printf(FONT_MED, 0, 0, "Overlay error.  ");
+			}
+			msleep(1000);
+		}
+	}
 }
 
-static void show_overlay()
-{
+static void show_overlay() {
     //~ bvram_mirror_init();
     //~ struct vram_info * vram = get_yuv422_vram();
     //~ uint8_t * const lvram = vram->vram;
     //~ int lvpitch = YUV422_LV_PITCH;
     get_yuv422_vram();
     uint8_t * const bvram = bmp_vram_real();
-    if (!bvram) return;
-    
-    clrscr();
+    if (bvram) {					
+		clrscr();
 
-    int size = 0;
-    void * tmp = read_entire_file("ML/DATA/overlay.dat", &size);
-    if (tmp)
-    {
-        ASSERT(size == BVRAM_MIRROR_SIZE);
-        memcpy(bvram_mirror, tmp, BVRAM_MIRROR_SIZE);
-        free(tmp); tmp = NULL;
-    }
+		int size = 0;
+		void * tmp = read_entire_file("ML/DATA/overlay.dat", &size);
+		if (tmp) {
+		    ASSERT(size == BVRAM_MIRROR_SIZE);
+		    memcpy(bvram_mirror, tmp, BVRAM_MIRROR_SIZE);
+		    free(tmp); tmp = NULL;
+		}
 
-    for (int y = os.y0; y < os.y_max; y++)
-    {
-        int yn = BM2N_Y(y);
-        int ym = yn - (int)transparent_overlay_offy; // normalized with offset applied
-        //~ int k;
-        //~ uint16_t * const v_row = (uint16_t*)( lvram + y * lvpitch );        // 1 pixel
-        uint8_t * const b_row = (uint8_t*)( bvram + y * BMPPITCH);          // 1 pixel
-        uint8_t * const m_row = (uint8_t*)( bvram_mirror + ym * BMPPITCH);   // 1 pixel
-        uint8_t* bp;  // through bmp vram
-        uint8_t* mp;  //through bmp vram mirror
-        if (ym < 0 || ym > 480) continue;
-        //~ int offm = 0;
-        //~ int offb = 0;
-        //~ if (transparent_overlay == 2) offm = 720/2;
-        //~ if (transparent_overlay == 3) offb = 720/2;
-        for (int x = os.x0; x < os.x_max; x++)
-        {
-            int xn = BM2N_X(x);
-            int xm = xn - (int)transparent_overlay_offx;
-            bp = b_row + x;
-            mp = m_row + xm;
-            if (((x+y) % 2) && xm >= 0 && xm <= 720)
-                *bp = *mp;
-        }
-    }
-    
-    bvram_mirror_clear();
-    afframe_clr_dirty();
+		for (int y = os.y0; y < os.y_max; y++) {
+		    int yn = BM2N_Y(y);
+		    int ym = yn - (int)transparent_overlay_offy; // normalized with offset applied
+		    //~ int k;
+		    //~ uint16_t * const v_row = (uint16_t*)( lvram + y * lvpitch );        // 1 pixel
+		    uint8_t * const b_row = (uint8_t*)( bvram + y * BMPPITCH);          // 1 pixel
+		    uint8_t * const m_row = (uint8_t*)( bvram_mirror + ym * BMPPITCH);   // 1 pixel
+		    uint8_t* bp;  // through bmp vram
+		    uint8_t* mp;  //through bmp vram mirror
+		    if (ym < 0 || ym > 480) {		    	
+				//~ int offm = 0;
+				//~ int offb = 0;
+				//~ if (transparent_overlay == 2) offm = 720/2;
+				//~ if (transparent_overlay == 3) offb = 720/2;
+				for (int x = os.x0; x < os.x_max; x++) {
+				    int xn = BM2N_X(x);
+				    int xm = xn - (int)transparent_overlay_offx;
+				    bp = b_row + x;
+				    mp = m_row + xm;
+				    if (((x+y) % 2) && xm >= 0 && xm <= 720) {
+				        *bp = *mp;
+				    }
+				}
+			}
+		}
+		
+		bvram_mirror_clear();
+		afframe_clr_dirty();
+	}
 }
 
-static void transparent_overlay_from_play()
-{
+static void transparent_overlay_from_play() {
     /* go to play mode if not already there */
     enter_play_mode();
     
@@ -4585,12 +4575,13 @@ static void transparent_overlay_from_play()
     /* the overlay will now be displayed from cropmarks.c */
 }
 
-PROP_HANDLER(PROP_LV_ACTION)
-{
+PROP_HANDLER(PROP_LV_ACTION) {
     zoom_overlay_triggered_by_focus_ring_countdown = 0;
     
     idle_globaldraw_disable = 0;
-    if (buf[0] == 0) lv_paused = 0;
+    if (buf[0] == 0) {
+    	lv_paused = 0;
+    }
     
     #ifdef FEATURE_EXPO_OVERRIDE
     bv_auto_update();
@@ -4601,8 +4592,7 @@ PROP_HANDLER(PROP_LV_ACTION)
     #endif
 }
 
-void peaking_benchmark()
-{
+void peaking_benchmark() {
     int old_lv = lv;
     int old_peaking = focus_peaking;
     focus_peaking = 1;
@@ -4611,8 +4601,7 @@ void peaking_benchmark()
     msleep(2000);
     int a = get_seconds_clock();
     lv = 1; // lie, to force using the liveview algorithm which is relevant for benchmarking
-    for (int i = 0; i < 1000; i++)
-    {
+    for (int i = 0; i < 1000; i++) {
         draw_zebra_and_focus(0,1);
     }
     int b = get_seconds_clock();
