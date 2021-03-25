@@ -4327,24 +4327,21 @@ int toggle_disp_mode()
     //~ menu_set_dirty();
     return disp_mode == 0;
 }
-static void do_disp_mode_change()
-{
-    if (gui_menu_shown()) 
-    { 
-        update_disp_mode_params_from_bits(); 
-        return; 
+static void do_disp_mode_change() {
+    if (gui_menu_shown()) { 
+        update_disp_mode_params_from_bits();         
+    } else {    
+		display_on();
+		bmp_on();
+		clrscr();
+		idle_globaldraw_dis();
+		//~ redraw();
+		bmp_printf(SHADOW_FONT(FONT_LARGE), 50, 50, "Display preset: %d", disp_mode);
+		msleep(250);
+		idle_globaldraw_en();
+		update_disp_mode_params_from_bits();
+		redraw();
     }
-    
-    display_on();
-    bmp_on();
-    clrscr();
-    idle_globaldraw_dis();
-    //~ redraw();
-    bmp_printf(SHADOW_FONT(FONT_LARGE), 50, 50, "Display preset: %d", disp_mode);
-    msleep(250);
-    idle_globaldraw_en();
-    update_disp_mode_params_from_bits();
-    redraw();
 }
 
 int handle_disp_preset_key(struct event * event) {
