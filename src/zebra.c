@@ -4271,16 +4271,22 @@ void update_disp_mode_bits_from_params() {
 		    					0 |
 							#endif
 		    				0;
-		    
-		if (disp_mode == 1) { //a switch
-			disp_mode_a = bits;
-		} else if (disp_mode == 2) {
-			disp_mode_b = bits;
-		} else if (disp_mode == 3) {
-			disp_mode_c = bits;
-		} else {
-			disp_mode_x = bits;
-		}
+		
+		switch (disp_mode) {
+			case 1:
+				disp_mode_a = bits;
+				break;
+			case 2:
+				disp_mode_b = bits;
+				break;
+			case 3:
+				disp_mode_c = bits;
+				break;
+				
+			default:
+				disp_mode_x = bits;
+				break;				
+		}  		
 	//~ )
 }
 
