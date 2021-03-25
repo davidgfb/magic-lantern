@@ -4347,107 +4347,107 @@ static void do_disp_mode_change()
     redraw();
 }
 
-int handle_disp_preset_key(struct event * event)
-{
-    // the INFO key may be also used for enabling powersaving right away
-    // if display presets are off: pressing INFO will go to powersave (if any of those modes are enabled)
-    // if display presets are on: powersave will act somewhat like an extra display preset
-    
-    if (event->param == BGMT_INFO)
-    {
-        if (!disp_profiles_0)
-            return handle_powersave_key(event);
+int handle_disp_preset_key(struct event * event) {
+    /*the INFO key may be also used for enabling powersaving right away
+      if display presets are off: pressing INFO will go to powersave (if any of those modes are enabled)
+      if display presets are on: powersave will act somewhat like an extra display preset
+    */
+    int value = 0;
+     
+    if (event->param == BGMT_INFO) {
+        if (!disp_profiles_0) {
+        	value = handle_powersave_key(event);
+		} else {
 
-        if (!lv && !LV_PAUSED) return 1;
-        if (IS_FAKE(event)) return 1;
-        if (gui_menu_shown()) return 1;
-        
-        if (idle_is_powersave_enabled_on_info_disp_key())
-        {
-            if (disp_mode == disp_profiles_0 && !idle_is_powersave_active())
-                return handle_powersave_key(event);
-            else
-                toggle_disp_mode(); // and wake up from powersave
-        }
-        else
-        {
-            toggle_disp_mode();
-        }
-        return 0;
+		    if ((!lv && !LV_PAUSED) || IS_FAKE(event) || gui_menu_shown()) {        	
+		    	value = 1;
+			} else {
+				
+				if (idle_is_powersave_enabled_on_info_disp_key()) {
+				    if (disp_mode == disp_profiles_0 && !idle_is_powersave_active()) {
+				    	value = handle_powersave_key(event);				       
+				    } else {
+				        toggle_disp_mode(); // and wake up from powersave
+				    }
+				} else {
+				    toggle_disp_mode();
+				}								
+			}
+		}
     }
-    return 1;
+    
+    value = 1;
+    return value;
 }
 
 #ifdef FEATURE_OVERLAYS_IN_PLAYBACK_MODE
-static int overlays_playback_displayed = 0;
+	static int overlays_playback_displayed = 0;
 
-static void overlays_playback_clear()
-{
-    if (overlays_playback_displayed)
-    {
-        clrscr();
-        digic_zebra_cleanup();
-        redraw();
-        overlays_playback_displayed = 0;
-    }
-}
-
-/* called from GUI handler */
-static void overlays_playback_toggle() {
-    if (!overlays_playback_running) {                
-		if (!overlays_playback_displayed) {
-		    /* this may take about 1 second, so let's run it outside GuiMainTask */
-		    overlays_playback_running = 1;
-		    task_create("lv_playback", 0x1a, 0x8000, draw_overlays_playback, 0);
-		    overlays_playback_displayed = 1;
-		} else {
-		    overlays_playback_clear();
+	static void overlays_playback_clear() {
+		if (overlays_playback_displayed) {
+		    clrscr();
+		    digic_zebra_cleanup();
+		    redraw();
+		    overlays_playback_displayed = 0;
 		}
 	}
-}
 
-int handle_overlays_playback(struct event * event) {
-	int value=0; 
-    // enable LiveV stuff in Play mode
-    if (PLAY_OR_QR_MODE) {
-        switch(event->param) {
-			#if defined(BTN_ZEBRAS_FOR_PLAYBACK) && defined(BTN_ZEBRAS_FOR_PLAYBACK_NAME)
-            case BTN_ZEBRAS_FOR_PLAYBACK:
-                /* used in PLAY mode (user pressed button to toggle overlays) */
-                overlays_playback_toggle();                
-                break;
-#endif
-            case MLEV_TRIGGER_ZEBRAS_FOR_PLAYBACK:
-                /* used in QuickReview mode - always show the overlays, no toggle */
-                overlays_playback_displayed = 0;
-                overlays_playback_toggle();                
-                break;
-        }
-        
-        if (event->param == GMT_OLC_INFO_CHANGED) {
-        	value=1;
-		} else {
-		
-			#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
-				if (event->param == GMT_GUICMD_PRESS_BUTTON_SOMETHING) {
-					value=1;
-				} else {
-			#endif
+	/* called from GUI handler */
+	static void overlays_playback_toggle() {
+		if (!overlays_playback_running) {                
+			if (!overlays_playback_displayed) {
+				/* this may take about 1 second, so let's run it outside GuiMainTask */
+				overlays_playback_running = 1;
+				task_create("lv_playback", 0x1a, 0x8000, draw_overlays_playback, 0);
+				overlays_playback_displayed = 1;
+			} else {
+				overlays_playback_clear();
+			}
+		}
+	}
+
+	int handle_overlays_playback(struct event * event) {
+		int value=0; 
+		// enable LiveV stuff in Play mode
+		if (PLAY_OR_QR_MODE) {
+		    switch(event->param) {
+				#if defined(BTN_ZEBRAS_FOR_PLAYBACK) && defined(BTN_ZEBRAS_FOR_PLAYBACK_NAME)
+				    case BTN_ZEBRAS_FOR_PLAYBACK:
+				        /* used in PLAY mode (user pressed button to toggle overlays) */
+				        overlays_playback_toggle();                
+				        break;
+				#endif
+		        case MLEV_TRIGGER_ZEBRAS_FOR_PLAYBACK:
+		            /* used in QuickReview mode - always show the overlays, no toggle */
+		            overlays_playback_displayed = 0;
+		            overlays_playback_toggle();                
+		            break;
+		    }
+		    
+		    if (event->param == GMT_OLC_INFO_CHANGED) {
+		    	value=1;
+			} else {
 			
-					/* some button pressed in play mode, while ML overlays are active? clear them */
-					overlays_playback_clear();
-			#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
-				}
-			#endif
-		
-		}		
-    } else {
-        /* got out of play mode? ML overlays are for sure no longer active */
-        overlays_playback_displayed = 0;
-    }
-    value=1;
-    return value; 
-}
+				#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
+					if (event->param == GMT_GUICMD_PRESS_BUTTON_SOMETHING) {
+						value=1;
+					} else {
+				#endif
+				
+						/* some button pressed in play mode, while ML overlays are active? clear them */
+						overlays_playback_clear();
+				#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
+					}
+				#endif
+			
+			}		
+		} else {
+		    /* got out of play mode? ML overlays are for sure no longer active */
+		    overlays_playback_displayed = 0;
+		}
+		value=1;
+		return value; 
+	}
 #endif
 
 static void zebra_init() {

@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar25.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-25 19:43:24 by david@david-VirtualBox
+Built on : 2021-03-25 20:00:58 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Thu Mar 25 20:43:24 2021 +0100
++++ b/src/module.h	Thu Mar 25 21:00:58 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -23,11 +23,87 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Thu Mar 25 20:43:24 2021 +0100
-@@ -4393,84 +4393,78 @@
++++ b/src/zebra.c	Thu Mar 25 21:00:58 2021 +0100
+@@ -4347,130 +4347,124 @@
+     redraw();
  }
  
- /* called from GUI handler */
+-int handle_disp_preset_key(struct event * event)
+-{
+-    // the INFO key may be also used for enabling powersaving right away
+-    // if display presets are off: pressing INFO will go to powersave (if any of those modes are enabled)
+-    // if display presets are on: powersave will act somewhat like an extra display preset
++int handle_disp_preset_key(struct event * event) {
++    /*the INFO key may be also used for enabling powersaving right away
++      if display presets are off: pressing INFO will go to powersave (if any of those modes are enabled)
++      if display presets are on: powersave will act somewhat like an extra display preset
++    */
++    int value = 0;
++     
++    if (event->param == BGMT_INFO) {
++        if (!disp_profiles_0) {
++        	value = handle_powersave_key(event);
++		} else {
++
++		    if ((!lv && !LV_PAUSED) || IS_FAKE(event) || gui_menu_shown()) {        	
++		    	value = 1;
++			} else {
++				
++				if (idle_is_powersave_enabled_on_info_disp_key()) {
++				    if (disp_mode == disp_profiles_0 && !idle_is_powersave_active()) {
++				    	value = handle_powersave_key(event);				       
++				    } else {
++				        toggle_disp_mode(); // and wake up from powersave
++				    }
++				} else {
++				    toggle_disp_mode();
++				}								
++			}
++		}
++    }
+     
+-    if (event->param == BGMT_INFO)
+-    {
+-        if (!disp_profiles_0)
+-            return handle_powersave_key(event);
+-
+-        if (!lv && !LV_PAUSED) return 1;
+-        if (IS_FAKE(event)) return 1;
+-        if (gui_menu_shown()) return 1;
+-        
+-        if (idle_is_powersave_enabled_on_info_disp_key())
+-        {
+-            if (disp_mode == disp_profiles_0 && !idle_is_powersave_active())
+-                return handle_powersave_key(event);
+-            else
+-                toggle_disp_mode(); // and wake up from powersave
+-        }
+-        else
+-        {
+-            toggle_disp_mode();
+-        }
+-        return 0;
+-    }
+-    return 1;
++    value = 1;
++    return value;
+ }
+ 
+ #ifdef FEATURE_OVERLAYS_IN_PLAYBACK_MODE
+-static int overlays_playback_displayed = 0;
+-
+-static void overlays_playback_clear()
+-{
+-    if (overlays_playback_displayed)
+-    {
+-        clrscr();
+-        digic_zebra_cleanup();
+-        redraw();
+-        overlays_playback_displayed = 0;
+-    }
+-}
+-
+-/* called from GUI handler */
 -static void overlays_playback_toggle()
 -{
 -    if (overlays_playback_running)
@@ -44,48 +120,95 @@ diff -r 352a05ff20db src/zebra.c
 -    {
 -        overlays_playback_clear();
 -    }
-+static void overlays_playback_toggle() {
-+    if (!overlays_playback_running) {                
-+		if (!overlays_playback_displayed) {
-+		    /* this may take about 1 second, so let's run it outside GuiMainTask */
-+		    overlays_playback_running = 1;
-+		    task_create("lv_playback", 0x1a, 0x8000, draw_overlays_playback, 0);
-+		    overlays_playback_displayed = 1;
-+		} else {
-+		    overlays_playback_clear();
-+		}
-+	}
- }
- 
+-}
+-
 -int handle_overlays_playback(struct event * event)
 -{
-+int handle_overlays_playback(struct event * event) {
-+	int value=0; 
-     // enable LiveV stuff in Play mode
+-    // enable LiveV stuff in Play mode
 -    if (PLAY_OR_QR_MODE)
 -    {
 -        switch(event->param)
 -        {
 -#if defined(BTN_ZEBRAS_FOR_PLAYBACK) && defined(BTN_ZEBRAS_FOR_PLAYBACK_NAME)
-+    if (PLAY_OR_QR_MODE) {
-+        switch(event->param) {
-+			#if defined(BTN_ZEBRAS_FOR_PLAYBACK) && defined(BTN_ZEBRAS_FOR_PLAYBACK_NAME)
-             case BTN_ZEBRAS_FOR_PLAYBACK:
-                 /* used in PLAY mode (user pressed button to toggle overlays) */
+-            case BTN_ZEBRAS_FOR_PLAYBACK:
+-                /* used in PLAY mode (user pressed button to toggle overlays) */
 -                overlays_playback_toggle();
 -                return 0;
-+                overlays_playback_toggle();                
-+                break;
++	static int overlays_playback_displayed = 0;
++
++	static void overlays_playback_clear() {
++		if (overlays_playback_displayed) {
++		    clrscr();
++		    digic_zebra_cleanup();
++		    redraw();
++		    overlays_playback_displayed = 0;
++		}
++	}
++
++	/* called from GUI handler */
++	static void overlays_playback_toggle() {
++		if (!overlays_playback_running) {                
++			if (!overlays_playback_displayed) {
++				/* this may take about 1 second, so let's run it outside GuiMainTask */
++				overlays_playback_running = 1;
++				task_create("lv_playback", 0x1a, 0x8000, draw_overlays_playback, 0);
++				overlays_playback_displayed = 1;
++			} else {
++				overlays_playback_clear();
++			}
++		}
++	}
++
++	int handle_overlays_playback(struct event * event) {
++		int value=0; 
++		// enable LiveV stuff in Play mode
++		if (PLAY_OR_QR_MODE) {
++		    switch(event->param) {
++				#if defined(BTN_ZEBRAS_FOR_PLAYBACK) && defined(BTN_ZEBRAS_FOR_PLAYBACK_NAME)
++				    case BTN_ZEBRAS_FOR_PLAYBACK:
++				        /* used in PLAY mode (user pressed button to toggle overlays) */
++				        overlays_playback_toggle();                
++				        break;
++				#endif
++		        case MLEV_TRIGGER_ZEBRAS_FOR_PLAYBACK:
++		            /* used in QuickReview mode - always show the overlays, no toggle */
++		            overlays_playback_displayed = 0;
++		            overlays_playback_toggle();                
++		            break;
++		    }
++		    
++		    if (event->param == GMT_OLC_INFO_CHANGED) {
++		    	value=1;
++			} else {
++			
++				#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
++					if (event->param == GMT_GUICMD_PRESS_BUTTON_SOMETHING) {
++						value=1;
++					} else {
++				#endif
++				
++						/* some button pressed in play mode, while ML overlays are active? clear them */
++						overlays_playback_clear();
++				#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
++					}
++				#endif
++			
++			}		
++		} else {
++		    /* got out of play mode? ML overlays are for sure no longer active */
++		    overlays_playback_displayed = 0;
++		}
++		value=1;
++		return value; 
++	}
  #endif
-             case MLEV_TRIGGER_ZEBRAS_FOR_PLAYBACK:
-                 /* used in QuickReview mode - always show the overlays, no toggle */
-                 overlays_playback_displayed = 0;
+-            case MLEV_TRIGGER_ZEBRAS_FOR_PLAYBACK:
+-                /* used in QuickReview mode - always show the overlays, no toggle */
+-                overlays_playback_displayed = 0;
 -                overlays_playback_toggle();
 -                return 0;
-+                overlays_playback_toggle();                
-+                break;
-         }
-         
+-        }
+-        
 -        if (event->param == GMT_OLC_INFO_CHANGED)
 -            return 1;
 -
@@ -102,35 +225,16 @@ diff -r 352a05ff20db src/zebra.c
 -    }
 -    else
 -    {
-+        if (event->param == GMT_OLC_INFO_CHANGED) {
-+        	value=1;
-+		} else {
-+		
-+			#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
-+				if (event->param == GMT_GUICMD_PRESS_BUTTON_SOMETHING) {
-+					value=1;
-+				} else {
-+			#endif
-+			
-+					/* some button pressed in play mode, while ML overlays are active? clear them */
-+					overlays_playback_clear();
-+			#ifdef GMT_GUICMD_PRESS_BUTTON_SOMETHING
-+				}
-+			#endif
-+		
-+		}		
-+    } else {
-         /* got out of play mode? ML overlays are for sure no longer active */
-         overlays_playback_displayed = 0;
-     }
+-        /* got out of play mode? ML overlays are for sure no longer active */
+-        overlays_playback_displayed = 0;
+-    }
 -    return 1;
-+    value=1;
-+    return value; 
- }
- #endif
- 
+-}
+-#endif
+-
 -static void zebra_init()
 -{
++
 +static void zebra_init() {
      precompute_yuv2rgb();
      menu_add( "Overlay", zebra_menus, COUNT(zebra_menus) );

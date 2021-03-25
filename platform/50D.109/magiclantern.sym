@@ -687,8 +687,8 @@
 00084a5c get_disp_mode
 00084a6c toggle_disp_mode
 00084b50 handle_disp_preset_key
-00084c0c handle_overlays_playback
-00084c98 peaking_benchmark
+00084c08 handle_overlays_playback
+00084c94 peaking_benchmark
 00084ee0 vectorscope_addpixel
 0008500c vectorscope_should_draw
 0008501c vectorscope_request_draw
