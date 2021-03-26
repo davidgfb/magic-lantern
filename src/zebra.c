@@ -3698,75 +3698,90 @@ int should_draw_bottom_graphs()
     return 0;
 }
 
-void draw_histogram_and_waveform(int allow_play)
-{
+void draw_histogram_and_waveform(int allow_play) {
 
-    if (menu_active_and_not_hidden()) return;
-    if (!get_global_draw()) return;
+    if (menu_active_and_not_hidden()) {
+    	return;
+    }
+    if (!get_global_draw()) {
+    	return;
+    }
 
     get_yuv422_vram();
 
 #if defined(FEATURE_HISTOGRAM) || defined(FEATURE_WAVEFORM) || defined(FEATURE_VECTORSCOPE)
-    if (0
-        || hist_draw
-        || waveform_draw
-#if defined(FEATURE_VECTORSCOPE)
-        || vectorscope_should_draw()
-#endif
-        )
-    {
+    if (0 || hist_draw || waveform_draw 
+	#if defined(FEATURE_VECTORSCOPE)
+		|| vectorscope_should_draw()
+	#endif
+    ) {
         hist_build(); /* also updates waveform and vectorscope */
     }
 #endif
     
-    if (menu_active_and_not_hidden()) return; // hack: not to draw histo over menu
-    if (!get_global_draw()) return;
-    if (!liveview_display_idle() && !(PLAY_OR_QR_MODE && allow_play) && !gui_menu_shown()) return;
-    if (is_zoom_mode_so_no_zebras()) return;
+    if (menu_active_and_not_hidden()) {
+    	return; // hack: not to draw histo over menu
+    }
+    if (!get_global_draw()) {
+    	return;
+    }
+    if (!liveview_display_idle() && !(PLAY_OR_QR_MODE && allow_play) && !gui_menu_shown()) {
+    	return;
+    }
+    if (is_zoom_mode_so_no_zebras()) {
+    	return;
+    }
 
     int screen_layout = get_screen_layout();
 
 #ifdef FEATURE_HISTOGRAM
-    if( hist_draw && !WAVEFORM_FULLSCREEN)
-    {
+    if( hist_draw && !WAVEFORM_FULLSCREEN) {
         #ifdef CONFIG_4_3_SCREEN
-        if (PLAY_OR_QR_MODE)
-            BMP_LOCK( hist_draw_image( os.x0 + 500,  1); )
-        else
+		    if (PLAY_OR_QR_MODE) {
+		        BMP_LOCK( hist_draw_image( os.x0 + 500,  1); )
+		    } else
         #endif
-        if (should_draw_bottom_graphs())
+        if (should_draw_bottom_graphs()) {
             BMP_LOCK( hist_draw_image( os.x0 + 50,  480 - hist_height - 1); )
-        else if (screen_layout == SCREENLAYOUT_3_2)
+        } else if (screen_layout == SCREENLAYOUT_3_2) {
             BMP_LOCK( hist_draw_image( os.x_max - HIST_WIDTH - 2,  os.y_max - (lv ? os.off_169 + 10 : 0) - hist_height - 1); )
-        else
+        } else {
             BMP_LOCK( hist_draw_image( os.x_max - HIST_WIDTH - 5, os.y0 + 100); )
+        }
     }
 #endif
 
-    if (menu_active_and_not_hidden()) return;
-    if (!get_global_draw()) return;
-    if (!liveview_display_idle() && !(PLAY_OR_QR_MODE && allow_play) && !gui_menu_shown()) return;
-    if (is_zoom_mode_so_no_zebras()) return;
+    if (menu_active_and_not_hidden()) {
+    	return;
+    }
+    if (!get_global_draw()) {
+    	return;
+    }
+    if (!liveview_display_idle() && !(PLAY_OR_QR_MODE && allow_play) && !gui_menu_shown()) {
+    	return;
+    }
+    if (is_zoom_mode_so_no_zebras()) {
+    	return;
+    }
         
 #ifdef FEATURE_WAVEFORM
-    if( waveform_draw)
-    {
+    if( waveform_draw) {
         #ifdef CONFIG_4_3_SCREEN
-        if (PLAY_OR_QR_MODE && WAVEFORM_FACTOR == 1)
-            BMP_LOCK( waveform_draw_image( os.x0 + 100,  1, 54); )
-        else
+		    if (PLAY_OR_QR_MODE && WAVEFORM_FACTOR == 1) {
+		        BMP_LOCK( waveform_draw_image( os.x0 + 100,  1, 54); )
+		    } else
         #endif
-        if (should_draw_bottom_graphs() && WAVEFORM_FACTOR == 1)
+        if (should_draw_bottom_graphs() && WAVEFORM_FACTOR == 1) {
             BMP_LOCK( waveform_draw_image( os.x0 + 250,  480 - 54, 54); )
-        else if (screen_layout == SCREENLAYOUT_3_2 && !WAVEFORM_FULLSCREEN)
-        {
-            if (WAVEFORM_FACTOR == 1)
+        } else if (screen_layout == SCREENLAYOUT_3_2 && !WAVEFORM_FULLSCREEN) {
+            if (WAVEFORM_FACTOR == 1) {
                 BMP_LOCK( waveform_draw_image( os.x0 + 4, os.y_max - (lv ? os.off_169 : 0) - (gui_menu_shown() ? 25 : 0) - 54, 54); )
-            else
+            } else {
                 BMP_LOCK( waveform_draw_image( os.x_max - WAVEFORM_WIDTH*WAVEFORM_FACTOR - 4, os.y0 + 100, WAVEFORM_HEIGHT*WAVEFORM_FACTOR ); );
-        }
-        else
+            }
+        } else {
             BMP_LOCK( waveform_draw_image( os.x_max - WAVEFORM_WIDTH*WAVEFORM_FACTOR - (WAVEFORM_FULLSCREEN ? 0 : 4), os.y_max - WAVEFORM_HEIGHT*WAVEFORM_FACTOR - WAVEFORM_OFFSET, WAVEFORM_HEIGHT*WAVEFORM_FACTOR ); )
+        }
     }
 #endif
 

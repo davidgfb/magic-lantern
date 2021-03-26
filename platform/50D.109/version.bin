@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar26.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-26 11:10:27 by david@david-VirtualBox
+Built on : 2021-03-26 11:23:06 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Fri Mar 26 12:10:27 2021 +0100
++++ b/src/module.h	Fri Mar 26 12:23:06 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -23,8 +23,140 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Fri Mar 26 12:10:27 2021 +0100
-@@ -3776,79 +3776,78 @@
++++ b/src/zebra.c	Fri Mar 26 12:23:06 2021 +0100
+@@ -3698,75 +3698,90 @@
+     return 0;
+ }
+ 
+-void draw_histogram_and_waveform(int allow_play)
+-{
+-
+-    if (menu_active_and_not_hidden()) return;
+-    if (!get_global_draw()) return;
++void draw_histogram_and_waveform(int allow_play) {
++
++    if (menu_active_and_not_hidden()) {
++    	return;
++    }
++    if (!get_global_draw()) {
++    	return;
++    }
+ 
+     get_yuv422_vram();
+ 
+ #if defined(FEATURE_HISTOGRAM) || defined(FEATURE_WAVEFORM) || defined(FEATURE_VECTORSCOPE)
+-    if (0
+-        || hist_draw
+-        || waveform_draw
+-#if defined(FEATURE_VECTORSCOPE)
+-        || vectorscope_should_draw()
+-#endif
+-        )
+-    {
++    if (0 || hist_draw || waveform_draw 
++	#if defined(FEATURE_VECTORSCOPE)
++		|| vectorscope_should_draw()
++	#endif
++    ) {
+         hist_build(); /* also updates waveform and vectorscope */
+     }
+ #endif
+     
+-    if (menu_active_and_not_hidden()) return; // hack: not to draw histo over menu
+-    if (!get_global_draw()) return;
+-    if (!liveview_display_idle() && !(PLAY_OR_QR_MODE && allow_play) && !gui_menu_shown()) return;
+-    if (is_zoom_mode_so_no_zebras()) return;
++    if (menu_active_and_not_hidden()) {
++    	return; // hack: not to draw histo over menu
++    }
++    if (!get_global_draw()) {
++    	return;
++    }
++    if (!liveview_display_idle() && !(PLAY_OR_QR_MODE && allow_play) && !gui_menu_shown()) {
++    	return;
++    }
++    if (is_zoom_mode_so_no_zebras()) {
++    	return;
++    }
+ 
+     int screen_layout = get_screen_layout();
+ 
+ #ifdef FEATURE_HISTOGRAM
+-    if( hist_draw && !WAVEFORM_FULLSCREEN)
+-    {
++    if( hist_draw && !WAVEFORM_FULLSCREEN) {
+         #ifdef CONFIG_4_3_SCREEN
+-        if (PLAY_OR_QR_MODE)
+-            BMP_LOCK( hist_draw_image( os.x0 + 500,  1); )
+-        else
++		    if (PLAY_OR_QR_MODE) {
++		        BMP_LOCK( hist_draw_image( os.x0 + 500,  1); )
++		    } else
+         #endif
+-        if (should_draw_bottom_graphs())
++        if (should_draw_bottom_graphs()) {
+             BMP_LOCK( hist_draw_image( os.x0 + 50,  480 - hist_height - 1); )
+-        else if (screen_layout == SCREENLAYOUT_3_2)
++        } else if (screen_layout == SCREENLAYOUT_3_2) {
+             BMP_LOCK( hist_draw_image( os.x_max - HIST_WIDTH - 2,  os.y_max - (lv ? os.off_169 + 10 : 0) - hist_height - 1); )
+-        else
++        } else {
+             BMP_LOCK( hist_draw_image( os.x_max - HIST_WIDTH - 5, os.y0 + 100); )
++        }
+     }
+ #endif
+ 
+-    if (menu_active_and_not_hidden()) return;
+-    if (!get_global_draw()) return;
+-    if (!liveview_display_idle() && !(PLAY_OR_QR_MODE && allow_play) && !gui_menu_shown()) return;
+-    if (is_zoom_mode_so_no_zebras()) return;
++    if (menu_active_and_not_hidden()) {
++    	return;
++    }
++    if (!get_global_draw()) {
++    	return;
++    }
++    if (!liveview_display_idle() && !(PLAY_OR_QR_MODE && allow_play) && !gui_menu_shown()) {
++    	return;
++    }
++    if (is_zoom_mode_so_no_zebras()) {
++    	return;
++    }
+         
+ #ifdef FEATURE_WAVEFORM
+-    if( waveform_draw)
+-    {
++    if( waveform_draw) {
+         #ifdef CONFIG_4_3_SCREEN
+-        if (PLAY_OR_QR_MODE && WAVEFORM_FACTOR == 1)
+-            BMP_LOCK( waveform_draw_image( os.x0 + 100,  1, 54); )
+-        else
++		    if (PLAY_OR_QR_MODE && WAVEFORM_FACTOR == 1) {
++		        BMP_LOCK( waveform_draw_image( os.x0 + 100,  1, 54); )
++		    } else
+         #endif
+-        if (should_draw_bottom_graphs() && WAVEFORM_FACTOR == 1)
++        if (should_draw_bottom_graphs() && WAVEFORM_FACTOR == 1) {
+             BMP_LOCK( waveform_draw_image( os.x0 + 250,  480 - 54, 54); )
+-        else if (screen_layout == SCREENLAYOUT_3_2 && !WAVEFORM_FULLSCREEN)
+-        {
+-            if (WAVEFORM_FACTOR == 1)
++        } else if (screen_layout == SCREENLAYOUT_3_2 && !WAVEFORM_FULLSCREEN) {
++            if (WAVEFORM_FACTOR == 1) {
+                 BMP_LOCK( waveform_draw_image( os.x0 + 4, os.y_max - (lv ? os.off_169 : 0) - (gui_menu_shown() ? 25 : 0) - 54, 54); )
+-            else
++            } else {
+                 BMP_LOCK( waveform_draw_image( os.x_max - WAVEFORM_WIDTH*WAVEFORM_FACTOR - 4, os.y0 + 100, WAVEFORM_HEIGHT*WAVEFORM_FACTOR ); );
++            }
++        } else {
++            BMP_LOCK( waveform_draw_image( os.x_max - WAVEFORM_WIDTH*WAVEFORM_FACTOR - (WAVEFORM_FULLSCREEN ? 0 : 4), os.y_max - WAVEFORM_HEIGHT*WAVEFORM_FACTOR - WAVEFORM_OFFSET, WAVEFORM_HEIGHT*WAVEFORM_FACTOR ); )
+         }
+-        else
+-            BMP_LOCK( waveform_draw_image( os.x_max - WAVEFORM_WIDTH*WAVEFORM_FACTOR - (WAVEFORM_FULLSCREEN ? 0 : 4), os.y_max - WAVEFORM_HEIGHT*WAVEFORM_FACTOR - WAVEFORM_OFFSET, WAVEFORM_HEIGHT*WAVEFORM_FACTOR ); )
+     }
+ #endif
+ 
+@@ -3776,79 +3791,78 @@
  }
  
  
@@ -174,7 +306,7 @@ diff -r 352a05ff20db src/zebra.c
      }
  }
  
-@@ -3860,26 +3859,29 @@
+@@ -3860,26 +3874,29 @@
  // this should be synchronized with
  // * graphics code (like zebra); otherwise zebras will remain frozen on screen
  // * gui_main_task (to make sure Canon won't call redraw in parallel => crash)
@@ -220,7 +352,7 @@ diff -r 352a05ff20db src/zebra.c
  
      //~ if (disable_redraw) 
      //~ {
-@@ -3890,41 +3892,37 @@
+@@ -3890,41 +3907,37 @@
          struct gui_task * current = gui_task_list.current;
          struct dialog * dialog = current->priv;
  
@@ -271,7 +403,7 @@ diff -r 352a05ff20db src/zebra.c
      #endif
      
      menu_set_dirty();
-@@ -3932,112 +3930,105 @@
+@@ -3932,112 +3945,105 @@
      zoom_overlay_dirty = 1;
  }
  
@@ -440,7 +572,7 @@ diff -r 352a05ff20db src/zebra.c
                      msleep(100);
                  }
                  vram_params_set_dirty();
-@@ -4045,11 +4036,12 @@
+@@ -4045,11 +4051,12 @@
                  crop_set_dirty(10);
                  msleep(500);
              }
@@ -456,7 +588,7 @@ diff -r 352a05ff20db src/zebra.c
          }
          #if 0
          draw_cropmark_area(); // just for debugging
-@@ -4059,30 +4051,28 @@
+@@ -4059,30 +4066,28 @@
          #endif
  
          #ifdef CONFIG_RAW_LIVEVIEW
@@ -509,7 +641,7 @@ diff -r 352a05ff20db src/zebra.c
          #endif
  
          int mz = should_draw_zoom_overlay();
-@@ -4091,60 +4081,67 @@
+@@ -4091,60 +4096,67 @@
          guess_fastrefresh_direction();
  
          #ifdef FEATURE_MAGIC_ZOOM
@@ -612,7 +744,7 @@ diff -r 352a05ff20db src/zebra.c
          #endif
  
          #ifdef FEATURE_REC_NOTIFY
-@@ -4154,89 +4151,101 @@
+@@ -4154,89 +4166,101 @@
          #endif
          
          #ifdef FEATURE_MAGIC_ZOOM
@@ -773,7 +905,7 @@ diff -r 352a05ff20db src/zebra.c
              draw_histogram_and_waveform(0);
          }
      }
-@@ -4248,229 +4257,233 @@
+@@ -4248,229 +4272,233 @@
  TASK_CREATE( "livev_loprio_task", livev_lopriority_task, 0, 0x1f, 0x8000 );
  
  // these may be out of order for config compatibility
@@ -1198,7 +1330,7 @@ diff -r 352a05ff20db src/zebra.c
      //~ draw_cropmark_area();
      msleep(1000);
      //~ bvram_mirror_init();
-@@ -4480,99 +4493,91 @@
+@@ -4480,99 +4508,91 @@
  
      struct vram_info * vram = get_yuv422_vram();
      uint8_t * const lvram = vram->vram;
@@ -1373,7 +1505,7 @@ diff -r 352a05ff20db src/zebra.c
      /* go to play mode if not already there */
      enter_play_mode();
      
-@@ -4585,12 +4590,13 @@
+@@ -4585,12 +4605,13 @@
      /* the overlay will now be displayed from cropmarks.c */
  }
  
@@ -1390,7 +1522,7 @@ diff -r 352a05ff20db src/zebra.c
      
      #ifdef FEATURE_EXPO_OVERRIDE
      bv_auto_update();
-@@ -4601,8 +4607,7 @@
+@@ -4601,8 +4622,7 @@
      #endif
  }
  
@@ -1400,7 +1532,7 @@ diff -r 352a05ff20db src/zebra.c
      int old_lv = lv;
      int old_peaking = focus_peaking;
      focus_peaking = 1;
-@@ -4611,8 +4616,7 @@
+@@ -4611,8 +4631,7 @@
      msleep(2000);
      int a = get_seconds_clock();
      lv = 1; // lie, to force using the liveview algorithm which is relevant for benchmarking
