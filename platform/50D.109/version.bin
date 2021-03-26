@@ -1,14 +1,14 @@
 
 
-Magic Lantern Nightly.2021Mar25.50D109
+Magic Lantern Nightly.2021Mar26.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-25 20:48:13 by david@david-VirtualBox
+Built on : 2021-03-26 10:12:57 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Thu Mar 25 21:48:13 2021 +0100
++++ b/src/module.h	Fri Mar 26 11:12:57 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -23,8 +23,70 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Thu Mar 25 21:48:13 2021 +0100
-@@ -4187,39 +4187,36 @@
++++ b/src/zebra.c	Fri Mar 26 11:12:57 2021 +0100
+@@ -3992,9 +3992,7 @@
+ // Items which need a high FPS
+ // Magic Zoom, Focus Peaking, zebra*, spotmeter*, false color*
+ // * = not really high FPS, but still fluent
+- static void
+-livev_hipriority_task( void* unused )
+-{
++static void livev_hipriority_task( void* unused ) {
+     msleep(1000);
+     
+     #ifdef FEATURE_CROPMARKS
+@@ -4165,78 +4163,85 @@
+         if (should_draw_zoom_overlay()) m = 100;
+         
+         int kmm = k % m;
+-        if (!gui_menu_shown()) // don't update everything in one step, to reduce magic zoom flicker
+-        {
+-            #if defined(CONFIG_550D) || defined(CONFIG_5D2) || defined(CONFIG_50D) || defined(CONFIG_7D)
+-            if (kmm == 0)
+-                BMP_LOCK( if (lv) black_bars(); )
+-            #endif
+-
+-            if (kmm == 2)
+-            {
+-                BMP_LOCK( if (lv) update_lens_display(1,0); );
+-                if (lens_display_dirty) lens_display_dirty--;
+-            }
+-
+-            if (kmm == 8)
+-            {
+-                BMP_LOCK( if (lv) update_lens_display(0,1); );
+-                if (lens_display_dirty) lens_display_dirty--;
+-            }
++        if (!gui_menu_shown()) { // don't update everything in one step, to reduce magic zoom flicker
++        	
++        	switch (kmm) {
++        		#if defined(CONFIG_550D) || defined(CONFIG_5D2) || defined(CONFIG_50D) || defined(CONFIG_7D)
++		    		case 0:
++		    			BMP_LOCK( if (lv) {
++		            		black_bars(); 
++		            	} );
++		    			break;
++        		#endif
++        		
++        		case 2:
++        			BMP_LOCK( if (lv) {
++                		update_lens_display(1,0); 
++                	} );
++		            if (lens_display_dirty) {
++		            	lens_display_dirty--;
++		            }
++        			break;
++        		
++        		case 8:
++        			BMP_LOCK( if (lv) {
++                		update_lens_display(0,1);
++                	} );
++		            if (lens_display_dirty) {
++		            	lens_display_dirty--;
++		            }
++        			break;
++        	}
+         }
      }
  }
  
@@ -87,7 +149,22 @@ diff -r 352a05ff20db src/zebra.c
          #endif
  
          loprio_sleep();
-@@ -4235,8 +4232,7 @@
+-        if (!zebra_should_run())
+-        {
+-            if (WAVEFORM_FULLSCREEN && liveview_display_idle() && get_global_draw() && !is_zoom_mode_so_no_zebras() && !gui_menu_shown())
+-            {
+-                if (get_halfshutter_pressed()) clrscr();
+-                else draw_histogram_and_waveform(0);
++        if (!zebra_should_run()) {
++            if (WAVEFORM_FULLSCREEN && liveview_display_idle() && get_global_draw() && !is_zoom_mode_so_no_zebras() && !gui_menu_shown()) {
++                if (get_halfshutter_pressed()) {
++                	clrscr();
++                } else {
++                	draw_histogram_and_waveform(0);
++                }
+             }
+-            continue;
+         }
  
          loprio_sleep();
  
@@ -97,7 +174,7 @@ diff -r 352a05ff20db src/zebra.c
              draw_histogram_and_waveform(0);
          }
      }
-@@ -4248,229 +4244,233 @@
+@@ -4248,229 +4253,233 @@
  TASK_CREATE( "livev_loprio_task", livev_lopriority_task, 0, 0x1f, 0x8000 );
  
  // these may be out of order for config compatibility
@@ -522,7 +599,7 @@ diff -r 352a05ff20db src/zebra.c
      //~ draw_cropmark_area();
      msleep(1000);
      //~ bvram_mirror_init();
-@@ -4480,99 +4480,91 @@
+@@ -4480,99 +4489,91 @@
  
      struct vram_info * vram = get_yuv422_vram();
      uint8_t * const lvram = vram->vram;
@@ -697,7 +774,7 @@ diff -r 352a05ff20db src/zebra.c
      /* go to play mode if not already there */
      enter_play_mode();
      
-@@ -4585,12 +4577,13 @@
+@@ -4585,12 +4586,13 @@
      /* the overlay will now be displayed from cropmarks.c */
  }
  
@@ -714,7 +791,7 @@ diff -r 352a05ff20db src/zebra.c
      
      #ifdef FEATURE_EXPO_OVERRIDE
      bv_auto_update();
-@@ -4601,8 +4594,7 @@
+@@ -4601,8 +4603,7 @@
      #endif
  }
  
@@ -724,7 +801,7 @@ diff -r 352a05ff20db src/zebra.c
      int old_lv = lv;
      int old_peaking = focus_peaking;
      focus_peaking = 1;
-@@ -4611,8 +4603,7 @@
+@@ -4611,8 +4612,7 @@
      msleep(2000);
      int a = get_seconds_clock();
      lv = 1; // lie, to force using the liveview algorithm which is relevant for benchmarking

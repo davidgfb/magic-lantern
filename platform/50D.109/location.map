@@ -11753,7 +11753,7 @@ Linker script and memory map
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x86fcb
+.debug_info     0x00000000    0x86fce
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000       0xcd version.o
  .debug_info    0x000000cd      0xcc8 backtrace.o
@@ -11808,72 +11808,72 @@ Linker script and memory map
  .debug_info    0x0005d05c      0xc4f imgconv.o
  .debug_info    0x0005dcab     0x2bcd histogram.o
  .debug_info    0x00060878      0xb8f falsecolor.o
- .debug_info    0x00061407     0xaa8d zebra.o
- .debug_info    0x0006be94     0x120c vectorscope.o
- .debug_info    0x0006d0a0      0x349 beep.o
- .debug_info    0x0006d3e9      0x190 crop-mode-hack.o
- .debug_info    0x0006d579      0x745 ph_info_disp.o
- .debug_info    0x0006dcbe      0x6f5 flexinfo.o
- .debug_info    0x0006e3b3     0x103a screenshot.o
- .debug_info    0x0006f3ed      0xaac fileprefix.o
- .debug_info    0x0006fe99     0x194c lvinfo.o
- .debug_info    0x000717e5      0x389 builtin-enforcing.o
- .debug_info    0x00071b6e     0x2291 powersave.o
- .debug_info    0x00073dff      0xe67 ml-cbr.o
- .debug_info    0x00074c66     0x3b3e raw.o
- .debug_info    0x000787a4     0x20a4 chdk-dng.o
- .debug_info    0x0007a848     0x13dc edmac-memcpy.o
- .debug_info    0x0007bc24      0xa96 console.o
- .debug_info    0x0007c6ba      0xcf7 tcc-glue.o
- .debug_info    0x0007d3b1     0x41bf module.o
- .debug_info    0x00081570      0x72f misc.o
- .debug_info    0x00081c9f      0xa5c afma.o
- .debug_info    0x000826fb       0x9c newlib-libc.a(lib_a-setjmp.o)
- .debug_info    0x00082797      0x130 newlib-libc.a(lib_a-memcpy-stub.o)
- .debug_info    0x000828c7      0x192 newlib-libc.a(lib_a-memccpy.o)
- .debug_info    0x00082a59      0x116 newlib-libc.a(lib_a-memset.o)
- .debug_info    0x00082b6f      0x155 newlib-libm.a(lib_a-sf_ceil.o)
- .debug_info    0x00082cc4      0x119 newlib-libm.a(lib_a-sf_cos.o)
- .debug_info    0x00082ddd      0x170 newlib-libm.a(lib_a-sf_frexp.o)
- .debug_info    0x00082f4d       0xbb newlib-libm.a(lib_a-sf_log2.o)
- .debug_info    0x00083008      0x14a newlib-libm.a(lib_a-sf_round.o)
- .debug_info    0x00083152      0x100 newlib-libm.a(lib_a-sf_sin.o)
- .debug_info    0x00083252      0x100 newlib-libm.a(lib_a-sf_tan.o)
- .debug_info    0x00083352      0x17f newlib-libm.a(lib_a-wf_acos.o)
- .debug_info    0x000834d1      0x17f newlib-libm.a(lib_a-wf_asin.o)
- .debug_info    0x00083650       0xbd newlib-libm.a(lib_a-wf_atan2.o)
- .debug_info    0x0008370d      0x1a4 newlib-libm.a(lib_a-wf_exp.o)
- .debug_info    0x000838b1      0x18d newlib-libm.a(lib_a-wf_fmod.o)
- .debug_info    0x00083a3e      0x17f newlib-libm.a(lib_a-wf_log10.o)
- .debug_info    0x00083bbd      0x17f newlib-libm.a(lib_a-wf_log.o)
- .debug_info    0x00083d3c      0x18c newlib-libm.a(lib_a-wf_pow.o)
- .debug_info    0x00083ec8      0x17f newlib-libm.a(lib_a-wf_sqrt.o)
- .debug_info    0x00084047      0x282 newlib-libm.a(lib_a-ef_acos.o)
- .debug_info    0x000842c9      0x28c newlib-libm.a(lib_a-ef_asin.o)
- .debug_info    0x00084555      0x1de newlib-libm.a(lib_a-ef_atan2.o)
- .debug_info    0x00084733      0x281 newlib-libm.a(lib_a-ef_exp.o)
- .debug_info    0x000849b4      0x17f newlib-libm.a(lib_a-ef_fmod.o)
- .debug_info    0x00084b33      0x1bc newlib-libm.a(lib_a-ef_log10.o)
- .debug_info    0x00084cef      0x29a newlib-libm.a(lib_a-ef_log.o)
- .debug_info    0x00084f89      0x57e newlib-libm.a(lib_a-ef_pow.o)
- .debug_info    0x00085507      0x2eb newlib-libm.a(lib_a-ef_rem_pio2.o)
- .debug_info    0x000857f2      0x1aa newlib-libm.a(lib_a-ef_sqrt.o)
- .debug_info    0x0008599c      0x187 newlib-libm.a(lib_a-kf_cos.o)
- .debug_info    0x00085b23      0x2e3 newlib-libm.a(lib_a-kf_rem_pio2.o)
- .debug_info    0x00085e06      0x17d newlib-libm.a(lib_a-kf_sin.o)
- .debug_info    0x00085f83      0x225 newlib-libm.a(lib_a-kf_tan.o)
- .debug_info    0x000861a8      0x1f1 newlib-libm.a(lib_a-sf_atan.o)
- .debug_info    0x00086399       0xc4 newlib-libm.a(lib_a-sf_fabs.o)
- .debug_info    0x0008645d       0xc8 newlib-libm.a(lib_a-sf_finite.o)
- .debug_info    0x00086525      0x155 newlib-libm.a(lib_a-sf_floor.o)
- .debug_info    0x0008667a       0xc6 newlib-libm.a(lib_a-sf_fpclassify.o)
- .debug_info    0x00086740       0xca newlib-libm.a(lib_a-sf_nan.o)
- .debug_info    0x0008680a      0x1d7 newlib-libm.a(lib_a-sf_scalbn.o)
- .debug_info    0x000869e1       0xc1 newlib-libm.a(lib_a-s_lib_ver.o)
- .debug_info    0x00086aa2      0x131 newlib-libm.a(lib_a-s_matherr.o)
- .debug_info    0x00086bd3       0xcd newlib-libm.a(lib_a-s_nan.o)
- .debug_info    0x00086ca0      0x209 newlib-libm.a(lib_a-s_rint.o)
- .debug_info    0x00086ea9      0x122 newlib-libm.a(lib_a-sf_copysign.o)
+ .debug_info    0x00061407     0xaa90 zebra.o
+ .debug_info    0x0006be97     0x120c vectorscope.o
+ .debug_info    0x0006d0a3      0x349 beep.o
+ .debug_info    0x0006d3ec      0x190 crop-mode-hack.o
+ .debug_info    0x0006d57c      0x745 ph_info_disp.o
+ .debug_info    0x0006dcc1      0x6f5 flexinfo.o
+ .debug_info    0x0006e3b6     0x103a screenshot.o
+ .debug_info    0x0006f3f0      0xaac fileprefix.o
+ .debug_info    0x0006fe9c     0x194c lvinfo.o
+ .debug_info    0x000717e8      0x389 builtin-enforcing.o
+ .debug_info    0x00071b71     0x2291 powersave.o
+ .debug_info    0x00073e02      0xe67 ml-cbr.o
+ .debug_info    0x00074c69     0x3b3e raw.o
+ .debug_info    0x000787a7     0x20a4 chdk-dng.o
+ .debug_info    0x0007a84b     0x13dc edmac-memcpy.o
+ .debug_info    0x0007bc27      0xa96 console.o
+ .debug_info    0x0007c6bd      0xcf7 tcc-glue.o
+ .debug_info    0x0007d3b4     0x41bf module.o
+ .debug_info    0x00081573      0x72f misc.o
+ .debug_info    0x00081ca2      0xa5c afma.o
+ .debug_info    0x000826fe       0x9c newlib-libc.a(lib_a-setjmp.o)
+ .debug_info    0x0008279a      0x130 newlib-libc.a(lib_a-memcpy-stub.o)
+ .debug_info    0x000828ca      0x192 newlib-libc.a(lib_a-memccpy.o)
+ .debug_info    0x00082a5c      0x116 newlib-libc.a(lib_a-memset.o)
+ .debug_info    0x00082b72      0x155 newlib-libm.a(lib_a-sf_ceil.o)
+ .debug_info    0x00082cc7      0x119 newlib-libm.a(lib_a-sf_cos.o)
+ .debug_info    0x00082de0      0x170 newlib-libm.a(lib_a-sf_frexp.o)
+ .debug_info    0x00082f50       0xbb newlib-libm.a(lib_a-sf_log2.o)
+ .debug_info    0x0008300b      0x14a newlib-libm.a(lib_a-sf_round.o)
+ .debug_info    0x00083155      0x100 newlib-libm.a(lib_a-sf_sin.o)
+ .debug_info    0x00083255      0x100 newlib-libm.a(lib_a-sf_tan.o)
+ .debug_info    0x00083355      0x17f newlib-libm.a(lib_a-wf_acos.o)
+ .debug_info    0x000834d4      0x17f newlib-libm.a(lib_a-wf_asin.o)
+ .debug_info    0x00083653       0xbd newlib-libm.a(lib_a-wf_atan2.o)
+ .debug_info    0x00083710      0x1a4 newlib-libm.a(lib_a-wf_exp.o)
+ .debug_info    0x000838b4      0x18d newlib-libm.a(lib_a-wf_fmod.o)
+ .debug_info    0x00083a41      0x17f newlib-libm.a(lib_a-wf_log10.o)
+ .debug_info    0x00083bc0      0x17f newlib-libm.a(lib_a-wf_log.o)
+ .debug_info    0x00083d3f      0x18c newlib-libm.a(lib_a-wf_pow.o)
+ .debug_info    0x00083ecb      0x17f newlib-libm.a(lib_a-wf_sqrt.o)
+ .debug_info    0x0008404a      0x282 newlib-libm.a(lib_a-ef_acos.o)
+ .debug_info    0x000842cc      0x28c newlib-libm.a(lib_a-ef_asin.o)
+ .debug_info    0x00084558      0x1de newlib-libm.a(lib_a-ef_atan2.o)
+ .debug_info    0x00084736      0x281 newlib-libm.a(lib_a-ef_exp.o)
+ .debug_info    0x000849b7      0x17f newlib-libm.a(lib_a-ef_fmod.o)
+ .debug_info    0x00084b36      0x1bc newlib-libm.a(lib_a-ef_log10.o)
+ .debug_info    0x00084cf2      0x29a newlib-libm.a(lib_a-ef_log.o)
+ .debug_info    0x00084f8c      0x57e newlib-libm.a(lib_a-ef_pow.o)
+ .debug_info    0x0008550a      0x2eb newlib-libm.a(lib_a-ef_rem_pio2.o)
+ .debug_info    0x000857f5      0x1aa newlib-libm.a(lib_a-ef_sqrt.o)
+ .debug_info    0x0008599f      0x187 newlib-libm.a(lib_a-kf_cos.o)
+ .debug_info    0x00085b26      0x2e3 newlib-libm.a(lib_a-kf_rem_pio2.o)
+ .debug_info    0x00085e09      0x17d newlib-libm.a(lib_a-kf_sin.o)
+ .debug_info    0x00085f86      0x225 newlib-libm.a(lib_a-kf_tan.o)
+ .debug_info    0x000861ab      0x1f1 newlib-libm.a(lib_a-sf_atan.o)
+ .debug_info    0x0008639c       0xc4 newlib-libm.a(lib_a-sf_fabs.o)
+ .debug_info    0x00086460       0xc8 newlib-libm.a(lib_a-sf_finite.o)
+ .debug_info    0x00086528      0x155 newlib-libm.a(lib_a-sf_floor.o)
+ .debug_info    0x0008667d       0xc6 newlib-libm.a(lib_a-sf_fpclassify.o)
+ .debug_info    0x00086743       0xca newlib-libm.a(lib_a-sf_nan.o)
+ .debug_info    0x0008680d      0x1d7 newlib-libm.a(lib_a-sf_scalbn.o)
+ .debug_info    0x000869e4       0xc1 newlib-libm.a(lib_a-s_lib_ver.o)
+ .debug_info    0x00086aa5      0x131 newlib-libm.a(lib_a-s_matherr.o)
+ .debug_info    0x00086bd6       0xcd newlib-libm.a(lib_a-s_nan.o)
+ .debug_info    0x00086ca3      0x209 newlib-libm.a(lib_a-s_rint.o)
+ .debug_info    0x00086eac      0x122 newlib-libm.a(lib_a-sf_copysign.o)
 
 .debug_abbrev   0x00000000    0x119a3
  *(.debug_abbrev)
@@ -11997,7 +11997,7 @@ Linker script and memory map
  .debug_abbrev  0x000117d2      0x11b newlib-libm.a(lib_a-s_rint.o)
  .debug_abbrev  0x000118ed       0xb6 newlib-libm.a(lib_a-sf_copysign.o)
 
-.debug_line     0x00000000    0x25929
+.debug_line     0x00000000    0x25926
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000       0x2a version.o
  .debug_line    0x0000002a      0x5af backtrace.o
@@ -12052,72 +12052,72 @@ Linker script and memory map
  .debug_line    0x0001796e      0x70a imgconv.o
  .debug_line    0x00018078      0xbf7 histogram.o
  .debug_line    0x00018c6f      0x5d6 falsecolor.o
- .debug_line    0x00019245     0x1dfa zebra.o
- .debug_line    0x0001b03f      0x615 vectorscope.o
- .debug_line    0x0001b654      0x514 beep.o
- .debug_line    0x0001bb68      0x4c9 crop-mode-hack.o
- .debug_line    0x0001c031      0x52a ph_info_disp.o
- .debug_line    0x0001c55b      0x52d flexinfo.o
- .debug_line    0x0001ca88      0x593 screenshot.o
- .debug_line    0x0001d01b      0x535 fileprefix.o
- .debug_line    0x0001d550      0x72a lvinfo.o
- .debug_line    0x0001dc7a      0x283 builtin-enforcing.o
- .debug_line    0x0001defd      0x770 powersave.o
- .debug_line    0x0001e66d      0x640 ml-cbr.o
- .debug_line    0x0001ecad      0xd0e raw.o
- .debug_line    0x0001f9bb      0x773 chdk-dng.o
- .debug_line    0x0002012e      0x64a edmac-memcpy.o
- .debug_line    0x00020778      0x6f0 console.o
- .debug_line    0x00020e68      0x4ed tcc-glue.o
- .debug_line    0x00021355      0xb5b module.o
- .debug_line    0x00021eb0      0x4f3 misc.o
- .debug_line    0x000223a3      0x53a afma.o
- .debug_line    0x000228dd       0x6e newlib-libc.a(lib_a-setjmp.o)
- .debug_line    0x0002294b      0x197 newlib-libc.a(lib_a-memcpy-stub.o)
- .debug_line    0x00022ae2      0x133 newlib-libc.a(lib_a-memccpy.o)
- .debug_line    0x00022c15      0x181 newlib-libc.a(lib_a-memset.o)
- .debug_line    0x00022d96      0x136 newlib-libm.a(lib_a-sf_ceil.o)
- .debug_line    0x00022ecc      0x103 newlib-libm.a(lib_a-sf_cos.o)
- .debug_line    0x00022fcf      0x127 newlib-libm.a(lib_a-sf_frexp.o)
- .debug_line    0x000230f6       0x96 newlib-libm.a(lib_a-sf_log2.o)
- .debug_line    0x0002318c      0x109 newlib-libm.a(lib_a-sf_round.o)
- .debug_line    0x00023295      0x103 newlib-libm.a(lib_a-sf_sin.o)
- .debug_line    0x00023398       0xf7 newlib-libm.a(lib_a-sf_tan.o)
- .debug_line    0x0002348f       0xb5 newlib-libm.a(lib_a-wf_acos.o)
- .debug_line    0x00023544       0xb5 newlib-libm.a(lib_a-wf_asin.o)
- .debug_line    0x000235f9       0x95 newlib-libm.a(lib_a-wf_atan2.o)
- .debug_line    0x0002368e       0xc3 newlib-libm.a(lib_a-wf_exp.o)
- .debug_line    0x00023751       0xc1 newlib-libm.a(lib_a-wf_fmod.o)
- .debug_line    0x00023812       0xc5 newlib-libm.a(lib_a-wf_log10.o)
- .debug_line    0x000238d7       0xc7 newlib-libm.a(lib_a-wf_log.o)
- .debug_line    0x0002399e      0x15c newlib-libm.a(lib_a-wf_pow.o)
- .debug_line    0x00023afa       0xb5 newlib-libm.a(lib_a-wf_sqrt.o)
- .debug_line    0x00023baf      0x122 newlib-libm.a(lib_a-ef_acos.o)
- .debug_line    0x00023cd1      0x121 newlib-libm.a(lib_a-ef_asin.o)
- .debug_line    0x00023df2      0x130 newlib-libm.a(lib_a-ef_atan2.o)
- .debug_line    0x00023f22      0x126 newlib-libm.a(lib_a-ef_exp.o)
- .debug_line    0x00024048      0x10e newlib-libm.a(lib_a-ef_fmod.o)
- .debug_line    0x00024156      0x100 newlib-libm.a(lib_a-ef_log10.o)
- .debug_line    0x00024256      0x17a newlib-libm.a(lib_a-ef_log.o)
- .debug_line    0x000243d0      0x23c newlib-libm.a(lib_a-ef_pow.o)
- .debug_line    0x0002460c      0x18b newlib-libm.a(lib_a-ef_rem_pio2.o)
- .debug_line    0x00024797      0x11b newlib-libm.a(lib_a-ef_sqrt.o)
- .debug_line    0x000248b2       0xc9 newlib-libm.a(lib_a-kf_cos.o)
- .debug_line    0x0002497b      0x330 newlib-libm.a(lib_a-kf_rem_pio2.o)
- .debug_line    0x00024cab       0xbc newlib-libm.a(lib_a-kf_sin.o)
- .debug_line    0x00024d67      0x12d newlib-libm.a(lib_a-kf_tan.o)
- .debug_line    0x00024e94      0x15e newlib-libm.a(lib_a-sf_atan.o)
- .debug_line    0x00024ff2       0xe0 newlib-libm.a(lib_a-sf_fabs.o)
- .debug_line    0x000250d2       0xe5 newlib-libm.a(lib_a-sf_finite.o)
- .debug_line    0x000251b7      0x137 newlib-libm.a(lib_a-sf_floor.o)
- .debug_line    0x000252ee       0xf7 newlib-libm.a(lib_a-sf_fpclassify.o)
- .debug_line    0x000253e5       0x92 newlib-libm.a(lib_a-sf_nan.o)
- .debug_line    0x00025477      0x118 newlib-libm.a(lib_a-sf_scalbn.o)
- .debug_line    0x0002558f       0x57 newlib-libm.a(lib_a-s_lib_ver.o)
- .debug_line    0x000255e6       0x98 newlib-libm.a(lib_a-s_matherr.o)
- .debug_line    0x0002567e       0x93 newlib-libm.a(lib_a-s_nan.o)
- .debug_line    0x00025711      0x125 newlib-libm.a(lib_a-s_rint.o)
- .debug_line    0x00025836       0xf3 newlib-libm.a(lib_a-sf_copysign.o)
+ .debug_line    0x00019245     0x1df7 zebra.o
+ .debug_line    0x0001b03c      0x615 vectorscope.o
+ .debug_line    0x0001b651      0x514 beep.o
+ .debug_line    0x0001bb65      0x4c9 crop-mode-hack.o
+ .debug_line    0x0001c02e      0x52a ph_info_disp.o
+ .debug_line    0x0001c558      0x52d flexinfo.o
+ .debug_line    0x0001ca85      0x593 screenshot.o
+ .debug_line    0x0001d018      0x535 fileprefix.o
+ .debug_line    0x0001d54d      0x72a lvinfo.o
+ .debug_line    0x0001dc77      0x283 builtin-enforcing.o
+ .debug_line    0x0001defa      0x770 powersave.o
+ .debug_line    0x0001e66a      0x640 ml-cbr.o
+ .debug_line    0x0001ecaa      0xd0e raw.o
+ .debug_line    0x0001f9b8      0x773 chdk-dng.o
+ .debug_line    0x0002012b      0x64a edmac-memcpy.o
+ .debug_line    0x00020775      0x6f0 console.o
+ .debug_line    0x00020e65      0x4ed tcc-glue.o
+ .debug_line    0x00021352      0xb5b module.o
+ .debug_line    0x00021ead      0x4f3 misc.o
+ .debug_line    0x000223a0      0x53a afma.o
+ .debug_line    0x000228da       0x6e newlib-libc.a(lib_a-setjmp.o)
+ .debug_line    0x00022948      0x197 newlib-libc.a(lib_a-memcpy-stub.o)
+ .debug_line    0x00022adf      0x133 newlib-libc.a(lib_a-memccpy.o)
+ .debug_line    0x00022c12      0x181 newlib-libc.a(lib_a-memset.o)
+ .debug_line    0x00022d93      0x136 newlib-libm.a(lib_a-sf_ceil.o)
+ .debug_line    0x00022ec9      0x103 newlib-libm.a(lib_a-sf_cos.o)
+ .debug_line    0x00022fcc      0x127 newlib-libm.a(lib_a-sf_frexp.o)
+ .debug_line    0x000230f3       0x96 newlib-libm.a(lib_a-sf_log2.o)
+ .debug_line    0x00023189      0x109 newlib-libm.a(lib_a-sf_round.o)
+ .debug_line    0x00023292      0x103 newlib-libm.a(lib_a-sf_sin.o)
+ .debug_line    0x00023395       0xf7 newlib-libm.a(lib_a-sf_tan.o)
+ .debug_line    0x0002348c       0xb5 newlib-libm.a(lib_a-wf_acos.o)
+ .debug_line    0x00023541       0xb5 newlib-libm.a(lib_a-wf_asin.o)
+ .debug_line    0x000235f6       0x95 newlib-libm.a(lib_a-wf_atan2.o)
+ .debug_line    0x0002368b       0xc3 newlib-libm.a(lib_a-wf_exp.o)
+ .debug_line    0x0002374e       0xc1 newlib-libm.a(lib_a-wf_fmod.o)
+ .debug_line    0x0002380f       0xc5 newlib-libm.a(lib_a-wf_log10.o)
+ .debug_line    0x000238d4       0xc7 newlib-libm.a(lib_a-wf_log.o)
+ .debug_line    0x0002399b      0x15c newlib-libm.a(lib_a-wf_pow.o)
+ .debug_line    0x00023af7       0xb5 newlib-libm.a(lib_a-wf_sqrt.o)
+ .debug_line    0x00023bac      0x122 newlib-libm.a(lib_a-ef_acos.o)
+ .debug_line    0x00023cce      0x121 newlib-libm.a(lib_a-ef_asin.o)
+ .debug_line    0x00023def      0x130 newlib-libm.a(lib_a-ef_atan2.o)
+ .debug_line    0x00023f1f      0x126 newlib-libm.a(lib_a-ef_exp.o)
+ .debug_line    0x00024045      0x10e newlib-libm.a(lib_a-ef_fmod.o)
+ .debug_line    0x00024153      0x100 newlib-libm.a(lib_a-ef_log10.o)
+ .debug_line    0x00024253      0x17a newlib-libm.a(lib_a-ef_log.o)
+ .debug_line    0x000243cd      0x23c newlib-libm.a(lib_a-ef_pow.o)
+ .debug_line    0x00024609      0x18b newlib-libm.a(lib_a-ef_rem_pio2.o)
+ .debug_line    0x00024794      0x11b newlib-libm.a(lib_a-ef_sqrt.o)
+ .debug_line    0x000248af       0xc9 newlib-libm.a(lib_a-kf_cos.o)
+ .debug_line    0x00024978      0x330 newlib-libm.a(lib_a-kf_rem_pio2.o)
+ .debug_line    0x00024ca8       0xbc newlib-libm.a(lib_a-kf_sin.o)
+ .debug_line    0x00024d64      0x12d newlib-libm.a(lib_a-kf_tan.o)
+ .debug_line    0x00024e91      0x15e newlib-libm.a(lib_a-sf_atan.o)
+ .debug_line    0x00024fef       0xe0 newlib-libm.a(lib_a-sf_fabs.o)
+ .debug_line    0x000250cf       0xe5 newlib-libm.a(lib_a-sf_finite.o)
+ .debug_line    0x000251b4      0x137 newlib-libm.a(lib_a-sf_floor.o)
+ .debug_line    0x000252eb       0xf7 newlib-libm.a(lib_a-sf_fpclassify.o)
+ .debug_line    0x000253e2       0x92 newlib-libm.a(lib_a-sf_nan.o)
+ .debug_line    0x00025474      0x118 newlib-libm.a(lib_a-sf_scalbn.o)
+ .debug_line    0x0002558c       0x57 newlib-libm.a(lib_a-s_lib_ver.o)
+ .debug_line    0x000255e3       0x98 newlib-libm.a(lib_a-s_matherr.o)
+ .debug_line    0x0002567b       0x93 newlib-libm.a(lib_a-s_nan.o)
+ .debug_line    0x0002570e      0x125 newlib-libm.a(lib_a-s_rint.o)
+ .debug_line    0x00025833       0xf3 newlib-libm.a(lib_a-sf_copysign.o)
 
 .debug_frame    0x00000000     0xadb0
  *(.debug_frame)

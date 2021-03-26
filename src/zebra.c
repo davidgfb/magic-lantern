@@ -3992,9 +3992,7 @@ void update_lv_fps() // to be called every 10 seconds
 // Items which need a high FPS
 // Magic Zoom, Focus Peaking, zebra*, spotmeter*, false color*
 // * = not really high FPS, but still fluent
- static void
-livev_hipriority_task( void* unused )
-{
+static void livev_hipriority_task( void* unused ) {
     msleep(1000);
     
     #ifdef FEATURE_CROPMARKS
@@ -4165,24 +4163,35 @@ livev_hipriority_task( void* unused )
         if (should_draw_zoom_overlay()) m = 100;
         
         int kmm = k % m;
-        if (!gui_menu_shown()) // don't update everything in one step, to reduce magic zoom flicker
-        {
-            #if defined(CONFIG_550D) || defined(CONFIG_5D2) || defined(CONFIG_50D) || defined(CONFIG_7D)
-            if (kmm == 0)
-                BMP_LOCK( if (lv) black_bars(); )
-            #endif
-
-            if (kmm == 2)
-            {
-                BMP_LOCK( if (lv) update_lens_display(1,0); );
-                if (lens_display_dirty) lens_display_dirty--;
-            }
-
-            if (kmm == 8)
-            {
-                BMP_LOCK( if (lv) update_lens_display(0,1); );
-                if (lens_display_dirty) lens_display_dirty--;
-            }
+        if (!gui_menu_shown()) { // don't update everything in one step, to reduce magic zoom flicker
+        	
+        	switch (kmm) {
+        		#if defined(CONFIG_550D) || defined(CONFIG_5D2) || defined(CONFIG_50D) || defined(CONFIG_7D)
+		    		case 0:
+		    			BMP_LOCK( if (lv) {
+		            		black_bars(); 
+		            	} );
+		    			break;
+        		#endif
+        		
+        		case 2:
+        			BMP_LOCK( if (lv) {
+                		update_lens_display(1,0); 
+                	} );
+		            if (lens_display_dirty) {
+		            	lens_display_dirty--;
+		            }
+        			break;
+        		
+        		case 8:
+        			BMP_LOCK( if (lv) {
+                		update_lens_display(0,1);
+                	} );
+		            if (lens_display_dirty) {
+		            	lens_display_dirty--;
+		            }
+        			break;
+        	}
         }
     }
 }
@@ -4220,14 +4229,14 @@ static void livev_lopriority_task( void* unused ) {
         #endif
 
         loprio_sleep();
-        if (!zebra_should_run())
-        {
-            if (WAVEFORM_FULLSCREEN && liveview_display_idle() && get_global_draw() && !is_zoom_mode_so_no_zebras() && !gui_menu_shown())
-            {
-                if (get_halfshutter_pressed()) clrscr();
-                else draw_histogram_and_waveform(0);
+        if (!zebra_should_run()) {
+            if (WAVEFORM_FULLSCREEN && liveview_display_idle() && get_global_draw() && !is_zoom_mode_so_no_zebras() && !gui_menu_shown()) {
+                if (get_halfshutter_pressed()) {
+                	clrscr();
+                } else {
+                	draw_histogram_and_waveform(0);
+                }
             }
-            continue;
         }
 
         loprio_sleep();
