@@ -4,11 +4,69 @@ Magic Lantern Nightly.2021Mar26.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-26 11:23:06 by david@david-VirtualBox
+Built on : 2021-03-26 11:39:07 by david@david-VirtualBox
 
+diff -r 352a05ff20db src/imath.c
+--- a/src/imath.c	Wed Mar 24 17:35:08 2021 +0000
++++ b/src/imath.c	Fri Mar 26 12:39:07 2021 +0100
+@@ -3,36 +3,39 @@
+ #include "dryos.h"
+ #include "math.h"
+ 
+-int powi(int base, int power)
+-{
++int powi(int base, int power) {
+     int result = 1;
+-    while (power)
+-    {
+-        if (power & 1)
++    while (power) {
++        if (power & 1) {
+             result *= base;
++        }
+         power >>= 1;
+         base *= base;
+     }
+     return result;
+ }
+ 
+-int log2i(int x)
+-{
++int log2i(int x) {
+     int result = 0;
+-    while (x >>= 1) result++;
++    while (x >>= 1) {
++    	result++;
++    }
+     return result;
+ }
+ 
+-int log10i(int x)
+-{
++int log10i(int x) {
+     int result = 0;
+-    while(x /= 10) result++;
++    while(x /= 10) { 
++    	result++;
++    }
+     return result;
+ }
+ 
+ /* todo: integer-only implementation? */
+-uint32_t log_length(int v)
+-{
+-    if (!v) return 0;
+-    return (unsigned int)(log2f(v) * 100);
++uint32_t log_length(int v) {
++	uint32_t value = 0; 
++    if (v) {
++    	value = ((unsigned int)(log2f(v) * 100));
++    }
++    return value;
+ }
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Fri Mar 26 12:23:06 2021 +0100
++++ b/src/module.h	Fri Mar 26 12:39:07 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -23,7 +81,7 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Fri Mar 26 12:23:06 2021 +0100
++++ b/src/zebra.c	Fri Mar 26 12:39:07 2021 +0100
 @@ -3698,75 +3698,90 @@
      return 0;
  }
