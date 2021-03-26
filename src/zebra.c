@@ -3776,79 +3776,78 @@ void draw_histogram_and_waveform(int allow_play)
 }
 
 
-static void
-clearscreen_task( void* unused )
-{
+static void clearscreen_task( void* unused ) {
     idle_wakeup_reset_counters(0);
 
-    TASK_LOOP
-    {
-clearscreen_loop:
-        msleep(100);
+    TASK_LOOP {
+		clearscreen_loop:
+		    msleep(100);
 
-        //~ bmp_printf(FONT_MED, 100, 100, "%d %d %d", idle_countdown_display_dim, idle_countdown_display_off, idle_countdown_globaldraw);
-        
-        /* blink LED if screen is turned off */
-        idle_led_blink_step(k);
+		    //~ bmp_printf(FONT_MED, 100, 100, "%d %d %d", idle_countdown_display_dim, idle_countdown_display_off, idle_countdown_globaldraw);
+		    
+		    /* blink LED if screen is turned off */
+		    idle_led_blink_step(k);
 
-        if (!lv && !lv_paused) continue;
-        
-        #ifdef FEATURE_CLEAR_OVERLAYS
-        if (clearscreen == 3)
-        {
-            if (liveview_display_idle() && !gui_menu_shown())
-            {
-                bmp_off();
-            }
-            else
-            {
-                bmp_on();
-            }
-        }
-        
-        if (clearscreen == 4)
-        {
-            if (RECORDING)
-            {
-                bmp_off();
-            }
-            else
-            {
-                bmp_on();
-            }
-        }
-
-        // clear overlays on shutter halfpress
-        if (clearscreen == 1 && (get_halfshutter_pressed() || dofpreview) && !gui_menu_shown())
-        {
-            BMP_LOCK( clrscr_mirror(); )
-            int i;
-            for (i = 0; i < (int)clearscreen_delay/20; i++)
-            {
-                if (i % 10 == 0 && liveview_display_idle()) BMP_LOCK( update_lens_display(1,1); )
-                msleep(20);
-                if (!(get_halfshutter_pressed() || dofpreview))
-                    goto clearscreen_loop;
-            }
-            bmp_off();
-            while ((get_halfshutter_pressed() || dofpreview)) msleep(100);
-            bmp_on();
-            #ifdef CONFIG_ZOOM_BTN_NOT_WORKING_WHILE_RECORDING
-            msleep(100);
-            if (get_zoom_overlay_trigger_by_halfshutter()) // this long press should not trigger MZ
-                zoom_overlay_toggle();
-            #endif
-        }
-        #endif
-        
-        #ifdef FEATURE_POWERSAVE_LIVEVIEW
-        idle_powersave_step();
-        #endif
-        
-        #ifdef FEATURE_CROPMARKS
-        // since this task runs at 10Hz, I prefer cropmark redrawing here
-        cropmark_step();
-        #endif
+			/*
+		    if (!lv && !lv_paused) {
+		    	continue;
+		    }
+		    */
+		    
+		    #ifdef FEATURE_CLEAR_OVERLAYS
+		    	switch (clearscreen) {
+		    		case 3:
+		    			if (liveview_display_idle() && !gui_menu_shown()) {
+				        	bmp_off();
+						} else {
+						    bmp_on();
+						}
+		    			break;
+		    		
+		    		case 4:
+		    			if (RECORDING) {
+				        	bmp_off();
+						} else {
+						    bmp_on();
+						}
+		    			break;
+		    	}
+				
+				// clear overlays on shutter halfpress
+				if (clearscreen == 1 && (get_halfshutter_pressed() || dofpreview) && !gui_menu_shown()) {
+				    BMP_LOCK( clrscr_mirror(); );
+				    int i = 0;
+				    for (i = 0; i < (int)clearscreen_delay/20; i++) {
+				        if (i % 10 == 0 && liveview_display_idle()) {
+				        	BMP_LOCK( update_lens_display(1,1); );
+				        }
+				        msleep(20);
+				        if (!(get_halfshutter_pressed() || dofpreview)) {
+				            goto clearscreen_loop; //CUIDADO!
+				        }
+				    }
+				    bmp_off();
+				    while ((get_halfshutter_pressed() || dofpreview)) {
+				    	msleep(100);
+				    }
+				    bmp_on();
+				    #ifdef CONFIG_ZOOM_BTN_NOT_WORKING_WHILE_RECORDING
+						msleep(100);
+						if (get_zoom_overlay_trigger_by_halfshutter()) { // this long press should not trigger MZ
+						    zoom_overlay_toggle();
+						}
+				    #endif
+				}
+		    #endif
+		    
+		    #ifdef FEATURE_POWERSAVE_LIVEVIEW
+		    	idle_powersave_step();
+		    #endif
+		    
+		    #ifdef FEATURE_CROPMARKS
+				// since this task runs at 10Hz, I prefer cropmark redrawing here
+				cropmark_step();
+		    #endif
     }
 }
 
