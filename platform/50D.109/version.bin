@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar26.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-26 11:39:07 by david@david-VirtualBox
+Built on : 2021-03-26 11:43:20 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/imath.c
 --- a/src/imath.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/imath.c	Fri Mar 26 12:39:07 2021 +0100
++++ b/src/imath.c	Fri Mar 26 12:43:20 2021 +0100
 @@ -3,36 +3,39 @@
  #include "dryos.h"
  #include "math.h"
@@ -66,7 +66,7 @@ diff -r 352a05ff20db src/imath.c
  }
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Fri Mar 26 12:39:07 2021 +0100
++++ b/src/module.h	Fri Mar 26 12:43:20 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -79,9 +79,46 @@ diff -r 352a05ff20db src/module.h
 +*/
  
  #endif
+diff -r 352a05ff20db src/vsync-lite.c
+--- a/src/vsync-lite.c	Wed Mar 24 17:35:08 2021 +0000
++++ b/src/vsync-lite.c	Fri Mar 26 12:43:20 2021 +0100
+@@ -7,25 +7,22 @@
+ 
+ static struct msg_queue * vsync_msg_queue = 0;
+ 
+-
+-void lv_vsync_signal()
+-{
++void lv_vsync_signal() {
+     msg_queue_post(vsync_msg_queue, 1);
+ }
+ 
+-void lv_vsync(int mz)
+-{
++void lv_vsync(int mz) {
+     #if defined(CONFIG_DIGIC_V) || defined(CONFIG_60D)
+-    int msg;
+-    msg_queue_receive(vsync_msg_queue, (struct event**)&msg, 100);
++		int msg = 0;
++		msg_queue_receive(vsync_msg_queue, (struct event**)&msg, 100);
+     #else
+-    static int k = 0; k++;
+-    msleep(mz ? (k % 50 == 0 ? MIN_MSLEEP : 10) : MIN_MSLEEP);
++		static int k = 0; 
++		k++;
++		msleep(mz ? (k % 50 == 0 ? MIN_MSLEEP : 10) : MIN_MSLEEP);
+     #endif
+ }
+ 
+-static void vsync_init()
+-{
++static void vsync_init() {
+     vsync_msg_queue = (void*)msg_queue_create("vsync_mq", 1);
+ }
+ 
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Fri Mar 26 12:39:07 2021 +0100
++++ b/src/zebra.c	Fri Mar 26 12:43:20 2021 +0100
 @@ -3698,75 +3698,90 @@
      return 0;
  }
