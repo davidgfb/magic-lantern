@@ -3996,46 +3996,51 @@ static void livev_hipriority_task( void* unused ) {
     msleep(1000);
     
     #ifdef FEATURE_CROPMARKS
-    find_cropmarks();
+    	find_cropmarks();
     #endif
     
     #ifdef FEATURE_LV_DISPLAY_PRESETS
-    update_disp_mode_bits_from_params();
+    	update_disp_mode_bits_from_params();
     #endif
     
-    TASK_LOOP
-    {
+    TASK_LOOP {
         //~ vsync(&YUV422_LV_BUFFER_DISPLAY_ADDR);
         fps_ticks++;
 
-        while (is_mvr_buffer_almost_full())
-        {
+        while (is_mvr_buffer_almost_full()) {
             msleep(100);
         }
 
         int zd = zebra_draw && (lv_luma_is_accurate() || PLAY_OR_QR_MODE) && (zebra_rec || NOT_RECORDING); // when to draw zebras (should match the one from draw_zebra_and_focus)
-        if (!zd) digic_zebra_cleanup();
+        if (!zd) {
+        	digic_zebra_cleanup();
+        }
         
-#ifdef CONFIG_RAW_LIVEVIEW
-        static int raw_flag = 0;
-#endif
+		#ifdef CONFIG_RAW_LIVEVIEW
+        	static int raw_flag = 0;
+		#endif
         
-        if (!zebra_should_run())
-        {
-            while (clearscreen == 1 && (get_halfshutter_pressed() || dofpreview)) msleep(100);
-            while (RECORDING_H264_STARTING) msleep(100);
-            if (!zebra_should_run())
-            {
+        if (!zebra_should_run()) {
+            while ((clearscreen == 1 && (get_halfshutter_pressed() || dofpreview)) || RECORDING_H264_STARTING) {
+            	msleep(100);
+            }            
+            if (!zebra_should_run()) {
                 digic_zebra_cleanup();
-                if (lv && !gui_menu_shown()) redraw();
+                if (lv && !gui_menu_shown()) {
+                	redraw();
+                }
                 #ifdef CONFIG_ELECTRONIC_LEVEL
-                if (lv) disable_electronic_level();
+                	if (lv) {
+                		disable_electronic_level();
+                	}
                 #endif
                 #ifdef CONFIG_RAW_LIVEVIEW
-                if (raw_flag) { raw_lv_release(); raw_flag = 0; }
+                	if (raw_flag) { 
+                		raw_lv_release(); 
+                		raw_flag = 0; 
+                	}
                 #endif
-                while (!zebra_should_run()) 
-                {
+                while (!zebra_should_run()) { //^
                     msleep(100);
                 }
                 vram_params_set_dirty();
@@ -4043,11 +4048,12 @@ static void livev_hipriority_task( void* unused ) {
                 crop_set_dirty(10);
                 msleep(500);
             }
-            if (!zebra_should_run())
-            {
-                /* false alarm */
+            /*
+            if (!zebra_should_run()) {
+                // false alarm 
                 continue;
             }
+            */
         }
         #if 0
         draw_cropmark_area(); // just for debugging
@@ -4057,30 +4063,28 @@ static void livev_hipriority_task( void* unused ) {
         #endif
 
         #ifdef CONFIG_RAW_LIVEVIEW
-        int raw_needed = 0;
+		    int raw_needed = 0;
 
-        /* if picture quality is raw, switch the LiveView to raw mode (photo, zoom 1x) */
-        int raw = pic_quality & 0x60000;
-        if (raw && lv_dispsize == 1 && !is_movie_mode())
-        {
-            /* only raw zebras, raw histogram and raw spotmeter are working in LV raw mode */
-            if (zebra_draw && raw_zebra_enable == 1) raw_needed = 1;        /* raw zebras: always */
-            if (hist_draw && RAW_HISTOGRAM_ENABLED) raw_needed = 1;          /* raw hisogram (any kind) */
-            if (spotmeter_draw && spotmeter_formula == 3) raw_needed = 1;   /* spotmeter, units: raw */
-        }
+		    /* if picture quality is raw, switch the LiveView to raw mode (photo, zoom 1x) */
+		    int raw = pic_quality & 0x60000;
+		    if ((raw && lv_dispsize == 1 && !is_movie_mode()) && ((zebra_draw && raw_zebra_enable == 1) || (hist_draw && RAW_HISTOGRAM_ENABLED) || (spotmeter_draw && spotmeter_formula == 3))) {
+		        /* only raw zebras, raw histogram and raw spotmeter are working in LV raw mode */            
+		        raw_needed = 1;        
+		        /* raw zebras: always */
+		        /* raw hisogram (any kind) */
+		        /* spotmeter, units: raw */                      
+		    }
 
-        if (!raw_flag && raw_needed)
-        {
-            /* do we need any raw overlays? enable LV raw mode if we don't already have it */
-            raw_lv_request();
-            raw_flag = 1;
-        }
-        if (raw_flag && !raw_needed)
-        {
-            /* if we no longer need raw overlays, keep LiveView in normal mode (it does less stuff) */
-            raw_lv_release();
-            raw_flag = 0;
-        }
+		    if (!raw_flag && raw_needed) {
+		        /* do we need any raw overlays? enable LV raw mode if we don't already have it */
+		        raw_lv_request();
+		        raw_flag = 1;
+		    }
+		    if (raw_flag && !raw_needed) {
+		        /* if we no longer need raw overlays, keep LiveView in normal mode (it does less stuff) */
+		        raw_lv_release();
+		        raw_flag = 0;
+		    }
         #endif
 
         int mz = should_draw_zoom_overlay();
@@ -4089,60 +4093,67 @@ static void livev_hipriority_task( void* unused ) {
         guess_fastrefresh_direction();
 
         #ifdef FEATURE_MAGIC_ZOOM
-        if (mz)
-        {
-            //~ msleep(k % 50 == 0 ? MIN_MSLEEP : 10);
-            if (zoom_overlay_dirty) BMP_LOCK( clrscr_mirror(); )
-            draw_zoom_overlay(zoom_overlay_dirty);
-            //~ BMP_LOCK( if (lv)  )
-            zoom_overlay_dirty = 0;
-            //~ crop_set_dirty(10); // don't draw cropmarks while magic zoom is active
-            // but redraw them after MZ is turned off
-            //~ continue;
-        }
-        else
+		    if (mz) {
+		        //~ msleep(k % 50 == 0 ? MIN_MSLEEP : 10);
+		        if (zoom_overlay_dirty) {
+		        	BMP_LOCK( clrscr_mirror(); );
+		        }
+		        draw_zoom_overlay(zoom_overlay_dirty);
+		        //~ BMP_LOCK( if (lv)  )
+		        zoom_overlay_dirty = 0;
+		        //~ crop_set_dirty(10); // don't draw cropmarks while magic zoom is active
+		        // but redraw them after MZ is turned off
+		        //~ continue;
+		    } else //?
         #endif
         {
-            if (!zoom_overlay_dirty) { redraw(); msleep(700); } // redraw cropmarks after MZ is turned off
+            if (!zoom_overlay_dirty) { 
+            	redraw(); 
+            	msleep(700); 
+            } // redraw cropmarks after MZ is turned off
             zoom_overlay_dirty = 1;
 
             msleep(10);
 
             #ifdef CONFIG_DISPLAY_FILTERS
-            /* to refactor with CBR */
-            extern void display_filter_step(int frame_number);
-            display_filter_step(k);
+		        /* to refactor with CBR */
+		        extern void display_filter_step(int frame_number);
+		        display_filter_step(k);
             #endif
             
             #ifdef FEATURE_FALSE_COLOR
-            if (falsecolor_draw)
-            {
-                if (k % 4 == 0)
-                    BMP_LOCK( if (lv) draw_false_downsampled(); )
-            }
-            else
+		        if (falsecolor_draw) {
+		            if (k % 4 == 0) {
+		                BMP_LOCK( if (lv) {
+		                	draw_false_downsampled(); 
+		                } );
+		            }
+		        } else //?
             #endif
             {
-                BMP_LOCK(
-                    if (lv)
-                        draw_zebra_and_focus(
-                            k % ((focus_peaking ? 5 : 3) * (RECORDING ? 5 : 1)) == 0, /* should redraw zebras? */
-                            k % 2 == 1  /* should redraw focus peaking? */
-                        ); 
-                )
+                BMP_LOCK( if (lv) {
+                	draw_zebra_and_focus( k % ((focus_peaking ? 5 : 3) * (RECORDING ? 5 : 1)) == 0, k % 2 == 1  /* should redraw zebras?, should redraw focus peaking? */
+                    ); 
+                } );
             }
         }
 
         #ifdef FEATURE_SPOTMETER
-        // update spotmeter every second, not more often than that
-        static int spotmeter_aux = 0;
-        if (spotmeter_draw && should_run_polling_action(1000, &spotmeter_aux))
-            BMP_LOCK( if (lv) spotmeter_step(); )
+		    // update spotmeter every second, not more often than that
+		    static int spotmeter_aux = 0;
+		    if (spotmeter_draw && should_run_polling_action(1000, &spotmeter_aux)) {
+		        BMP_LOCK( if (lv) {
+		        	spotmeter_step(); 
+		        } );
+		    }
         #endif
 
         #ifdef CONFIG_ELECTRONIC_LEVEL
-        if (electronic_level && k % 2)
-            BMP_LOCK( if (lv) show_electronic_level(); )
+		    if (electronic_level && k % 2) {
+		        BMP_LOCK( if (lv) {
+		        	show_electronic_level(); 
+		        } );
+		    }
         #endif
 
         #ifdef FEATURE_REC_NOTIFY
@@ -4152,15 +4163,20 @@ static void livev_hipriority_task( void* unused ) {
         #endif
         
         #ifdef FEATURE_MAGIC_ZOOM
-        if (zoom_overlay_triggered_by_focus_ring_countdown)
-        {
-            zoom_overlay_triggered_by_focus_ring_countdown--;
-        }
+		    if (zoom_overlay_triggered_by_focus_ring_countdown) {
+		        zoom_overlay_triggered_by_focus_ring_countdown--;
+		    }
         #endif
                 
         int m = 100;
-        if (lens_display_dirty) m = 10;
-        if (should_draw_zoom_overlay()) m = 100;
+        if (lens_display_dirty) {
+        	m = 10;
+        }
+        /*
+        if (should_draw_zoom_overlay()) {
+        	m = 100;
+        }
+        */
         
         int kmm = k % m;
         if (!gui_menu_shown()) { // don't update everything in one step, to reduce magic zoom flicker
