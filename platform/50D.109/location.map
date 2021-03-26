@@ -9286,7 +9286,7 @@ Linker script and memory map
                 0x0007c818                falsecolor_display
                 0x0007c84c                falsecolor_display_palette
  *fill*         0x0007c898        0x8 
- .text          0x0007c8a0     0x84d8 zebra.o
+ .text          0x0007c8a0     0x84c0 zebra.o
                 0x0007dc70                get_y_skip_offset_for_overlays
                 0x0007dd38                get_y_skip_offset_for_histogram
                 0x0007dd94                lv_luma_is_accurate
@@ -9324,450 +9324,449 @@ Linker script and memory map
                 0x000830bc                handle_transparent_overlay
                 0x000835d8                lens_display_set_dirty
                 0x00083600                _redraw_do
-                0x000836dc                is_focus_peaking_enabled
-                0x00083758                update_disp_mode_bits_from_params
-                0x000849b8                update_disp_mode_params_from_bits
-                0x00084aa0                get_disp_mode
-                0x00084ab0                toggle_disp_mode
-                0x00084b94                handle_disp_preset_key
-                0x00084c4c                handle_overlays_playback
-                0x00084cd8                peaking_benchmark
- *fill*         0x00084d78        0x8 
- .text          0x00084d80      0x604 vectorscope.o
-                0x00084f20                vectorscope_addpixel
-                0x0008504c                vectorscope_should_draw
-                0x0008505c                vectorscope_request_draw
-                0x0008506c                vectorscope_start
-                0x000850a8                vectorscope_redraw
- *fill*         0x00085384        0xc 
- .text          0x00085390       0x1c beep.o
-                0x00085390                unsafe_beep
-                0x00085394                beep
-                0x00085398                Beep
-                0x0008539c                beep_times
-                0x000853a0                WAV_StartRecord
-                0x000853a4                WAV_StopRecord
-                0x000853a8                beep_custom
- *fill*         0x000853ac        0x4 
- .text          0x000853b0        0x0 crop-mode-hack.o
- .text          0x000853b0       0x24 ph_info_disp.o
-                0x000853b0                display_shooting_info
- *fill*         0x000853d4        0xc 
- .text          0x000853e0        0x0 flexinfo.o
- .text          0x000853e0      0x3f0 screenshot.o
-                0x000853e0                take_screenshot
- .text          0x000857d0      0x1c4 fileprefix.o
-                0x00085804                get_file_prefix
-                0x00085810                file_prefix_set
-                0x00085904                file_prefix_reset
- *fill*         0x00085994        0xc 
- .text          0x000859a0      0xc38 lvinfo.o
-                0x00086318                lvinfo_add_items
-                0x000863a0                lvinfo_add_item
-                0x000863a8                lvinfo_display
- .text          0x000865d8      0x320 builtin-enforcing.o
-                0x000865d8                unused_dummy_func
- *fill*         0x000868f8        0x8 
- .text          0x00086900      0xdd0 powersave.o
-                0x00086928                idle_globaldraw_dis
-                0x00086940                idle_globaldraw_en
-                0x00086a9c                idle_kill_flicker
-                0x00086c5c                powersave_prolong
-                0x00086c84                powersave_prohibit
-                0x00086cac                powersave_permit
-                0x00086cd4                PauseLiveView
-                0x00086de8                display_on
-                0x00086df0                display_off
-                0x00086ed8                idle_led_blink_step
-                0x00086f90                idle_is_powersave_enabled
-                0x00086fc8                idle_is_powersave_enabled_on_info_disp_key
-                0x00086ff0                idle_is_powersave_active
-                0x00087058                idle_force_powersave_in_1s
-                0x00087094                idle_force_powersave_now
-                0x000870d0                handle_powersave_key
-                0x00087168                idle_wakeup_reset_counters
-                0x000871dc                ResumeLiveView
-                0x0008740c                idle_powersave_step
- .text          0x000876d0      0x620 ml-cbr.o
-                0x000877a8                ml_register_cbr
-                0x00087980                ml_unregister_cbr
-                0x00087a64                ml_notify_cbr
-                0x00087b24                debug_cbr_tree
-                0x00087bb4                _ml_cbr_init
- .text          0x00087cf0     0x2a48 raw.o
-                0x00087d14                raw_red_pixel
-                0x00087d54                raw_green_pixel
-                0x00087d98                raw_blue_pixel
-                0x00087de0                raw_red_pixel_dark
-                0x00087e48                raw_green_pixel_dark
-                0x00087eb8                raw_blue_pixel_dark
-                0x00087f2c                raw_red_pixel_bright
-                0x00087f94                raw_green_pixel_bright
-                0x00088004                raw_blue_pixel_bright
-                0x00088afc                raw_set_dirty
-                0x00088b10                raw_set_preview_rect
-                0x00088bf8                raw_set_geometry
-                0x00088d3c                raw_get_pixel
-                0x000890f4                raw_get_pixel_ex
-                0x00089208                raw_set_pixel
-                0x000893b8                raw_get_gray_pixel
-                0x000895c8                raw_to_ev
-                0x000896d0                ev_to_raw
-                0x00089734                raw_lv_redirect_edmac
-                0x00089748                raw_lv_settings_still_valid
-                0x000897b0                raw_preview_fast_ex
-                0x00089870                raw_preview_fast
-                0x000898c4                raw_lv_is_enabled
-                0x000898d4                raw_force_aspect_ratio_1to1
-                0x000899b0                get_dxo_dynamic_range
-                0x00089a4c                can_use_raw_overlays_photo
-                0x0008a360                raw_update_params
-                0x0008a4c0                raw_lv_request
-                0x0008a54c                raw_lv_release
-                0x0008a5ac                can_use_raw_overlays
-                0x0008a63c                can_use_raw_overlays_menu
-                0x0008a6bc                menu_set_warning_raw
-                0x0008a710                menu_checkdep_raw
- *fill*         0x0008a738        0x8 
- .text          0x0008a740     0x1380 chdk-dng.o
-                0x0008b4bc                reverse_bytes_order
-                0x0008b584                dng_set_thumbnail_size
-                0x0008b598                dng_set_camname
-                0x0008b5ac                dng_set_camserial
-                0x0008b5c0                dng_set_description
-                0x0008b5d4                dng_set_lensmodel
-                0x0008b5e8                dng_set_focal
-                0x0008b5fc                dng_set_aperture
-                0x0008b610                dng_set_shutter
-                0x0008b624                dng_set_framerate
-                0x0008b63c                dng_set_framerate_rational
-                0x0008b650                dng_set_iso
-                0x0008b660                dng_set_wbgain
-                0x0008b68c                dng_set_datetime
-                0x0008b6c0                save_dng
- .text          0x0008bac0      0x720 edmac-memcpy.o
-                0x0008bbb4                edmac_memcpy_res_lock
-                0x0008bbec                edmac_memcpy_res_unlock
-                0x0008bbfc                edmac_copy_rectangle_cbr_start
-                0x0008be14                edmac_copy_rectangle_adv_cleanup
-                0x0008be64                edmac_copy_rectangle_adv_finish
-                0x0008be9c                edmac_copy_rectangle_adv_start
-                0x0008bf00                edmac_copy_rectangle_adv
-                0x0008bf54                edmac_copy_rectangle
-                0x0008bf88                edmac_copy_rectangle_start
-                0x0008bfbc                edmac_copy_rectangle_finish
-                0x0008bfc0                edmac_memset
-                0x0008c090                edmac_find_divider
-                0x0008c118                edmac_memcpy_start
-                0x0008c1c4                edmac_memcpy_finish
-                0x0008c1c8                edmac_memcpy
- .text          0x0008c1e0      0x854 console.o
-                0x0008c6bc                console_show
-                0x0008c6d0                console_hide
-                0x0008c6f8                console_toggle
-                0x0008c714                console_clear
-                0x0008c738                console_puts
-                0x0008c98c                console_draw_from_menu
-                0x0008c9a8                printf
-                0x0008ca18                puts
- *fill*         0x0008ca34        0xc 
- .text          0x0008ca40      0x180 tcc-glue.o
-                0x0008ca40                _tcc_exit
-                0x0008ca64                _tcc_open
-                0x0008cb2c                _tcc_read
-                0x0008cb74                _tcc_close
-                0x0008cb84                _tcc_lseek
- .text          0x0008cbc0     0x4218 ../../tcc/libtccx.o
-                0x0008d80c                tcc_delete
-                0x0008dc04                tcc_add_file
-                0x0008dd9c                tcc_add_symbol
-                0x0008df0c                tcc_new
-                0x0008e150                tcc_set_options
-                0x0008ef48                tcc_get_symbol
-                0x000909e8                tcc_load_offline_section
-                0x00090d08                tcc_relocate
- *fill*         0x00090dd8        0x8 
- .text          0x00090de0     0x2690 module.o
-                0x00091e44                module_load
-                0x00091edc                module_get_symbol
-                0x00091ee8                module_exec
-                0x00092094                module_unload
-                0x000920a4                module_exec_cbr
-                0x00092120                module_translate_key
-                0x00092500                module_send_keypress
-                0x00092518                handle_module_keys
-                0x000925e8                module_display_filter_enabled
-                0x00092660                module_display_filter_update
-                0x000926fc                module_get_string
-                0x000931cc                module_get_name
-                0x000931e8                module_get_next_loaded
-                0x00093234                module_get_config_var
-                0x000932a4                module_config_var_lookup
-                0x00093308                module_save_configs
-                0x000933ac                module_shutdown
- .text          0x00093470       0x28 misc.o
-                0x00093470                sound_recording_enabled_canon
-                0x00093478                sound_recording_enabled
-                0x00093480                audio_meters_are_drawn
-                0x00093488                volume_up
-                0x0009348c                volume_down
-                0x00093490                out_volume_up
-                0x00093494                out_volume_down
- *fill*         0x00093498        0x8 
- .text          0x000934a0      0x1a8 afma.o
-                0x00093524                get_afma
-                0x0009355c                set_afma
-                0x000935ec                set_afma_mode
-                0x00093628                get_afma_mode
-                0x00093638                get_afma_max
-                0x00093640                get_config_afma_wide_tele
- .text          0x00093648       0x28 dietlibc.a(strrchr.o)
-                0x00093648                strrchr
-                0x00093648                rindex
- .text          0x00093670       0x20 dietlibc.a(strncpy.o)
-                0x00093670                strncpy
- .text          0x00093690       0x1c dietlibc.a(strlen.o)
-                0x00093690                strlen
- .text          0x000936ac       0x38 dietlibc.a(strncmp.o)
-                0x000936ac                strncmp
- .text          0x000936e4       0x1c dietlibc.a(strcpy.o)
-                0x000936e4                strcpy
- .text          0x00093700       0x30 dietlibc.a(strcmp.o)
-                0x00093700                strcoll
-                0x00093700                strcmp
- .text          0x00093730       0x44 dietlibc.a(strcasecmp.o)
-                0x00093730                strcasecmp
- .text          0x00093774      0x208 dietlibc.a(strtoull.o)
-                0x00093774                strtoumax
-                0x00093774                strtoull
-                0x00093774                strtouq
- .text          0x0009397c      0x19c dietlibc.a(strtoul.o)
-                0x0009397c                strtoul
- .text          0x00093b18       0x2c dietlibc.a(strchr.o)
-                0x00093b18                index
-                0x00093b18                strchr
- .text          0x00093b44       0x8c dietlibc.a(strstr.o)
-                0x00093b44                strstr
- .text          0x00093bd0       0x38 dietlibc.a(memcmp.o)
-                0x00093bd0                bcmp
-                0x00093bd0                memcmp
- .text          0x00093c08       0x68 dietlibc.a(memmove.o)
-                0x00093c08                memmove
- .text          0x00093c70       0x7c dietlibc.a(atol.o)
-                0x00093c70                atol
-                0x00093c70                atoi
- .text          0x00093cec        0x0 dietlibc.a(errno.o)
- .text          0x00093cec       0x2c newlib-libc.a(lib_a-setjmp.o)
-                0x00093cec                setjmp
-                0x00093d00                longjmp
- .text          0x00093d18      0x168 newlib-libc.a(lib_a-memcpy-stub.o)
-                0x00093d18                memcpy
- .text          0x00093e80       0xac newlib-libc.a(lib_a-memccpy.o)
-                0x00093e80                memccpy
- .text          0x00093f2c      0x188 newlib-libc.a(lib_a-memset.o)
-                0x00093f2c                memset
- .text          0x000940b4       0xd0 newlib-libm.a(lib_a-sf_ceil.o)
-                0x000940b4                ceilf
- .text          0x00094184       0xa4 newlib-libm.a(lib_a-sf_cos.o)
-                0x00094184                cosf
- .text          0x00094228       0x88 newlib-libm.a(lib_a-sf_frexp.o)
-                0x00094228                frexpf
- .text          0x000942b0       0x1c newlib-libm.a(lib_a-sf_log2.o)
-                0x000942b0                log2f
- .text          0x000942cc       0x7c newlib-libm.a(lib_a-sf_round.o)
-                0x000942cc                roundf
- .text          0x00094348       0xbc newlib-libm.a(lib_a-sf_sin.o)
-                0x00094348                sinf
- .text          0x00094404       0x74 newlib-libm.a(lib_a-sf_tan.o)
-                0x00094404                tanf
- .text          0x00094478      0x10c newlib-libm.a(lib_a-wf_acos.o)
-                0x00094478                acosf
- .text          0x00094584      0x10c newlib-libm.a(lib_a-wf_asin.o)
-                0x00094584                asinf
- .text          0x00094690       0x10 newlib-libm.a(lib_a-wf_atan2.o)
-                0x00094690                atan2f
- .text          0x000946a0      0x178 newlib-libm.a(lib_a-wf_exp.o)
-                0x000946a0                expf
- .text          0x00094818      0x13c newlib-libm.a(lib_a-wf_fmod.o)
-                0x00094818                fmodf
- .text          0x00094954      0x164 newlib-libm.a(lib_a-wf_log10.o)
-                0x00094954                log10f
- .text          0x00094ab8      0x164 newlib-libm.a(lib_a-wf_log.o)
-                0x00094ab8                logf
- .text          0x00094c1c      0x504 newlib-libm.a(lib_a-wf_pow.o)
-                0x00094c1c                powf
- .text          0x00095120      0x11c newlib-libm.a(lib_a-wf_sqrt.o)
-                0x00095120                sqrtf
- .text          0x0009523c      0x3bc newlib-libm.a(lib_a-ef_acos.o)
-                0x0009523c                __ieee754_acosf
- .text          0x000955f8      0x38c newlib-libm.a(lib_a-ef_asin.o)
-                0x000955f8                __ieee754_asinf
- .text          0x00095984      0x1b4 newlib-libm.a(lib_a-ef_atan2.o)
-                0x00095984                __ieee754_atan2f
- .text          0x00095b38      0x2b4 newlib-libm.a(lib_a-ef_exp.o)
-                0x00095b38                __ieee754_expf
- .text          0x00095dec      0x18c newlib-libm.a(lib_a-ef_fmod.o)
-                0x00095dec                __ieee754_fmodf
- .text          0x00095f78       0xf8 newlib-libm.a(lib_a-ef_log10.o)
-                0x00095f78                __ieee754_log10f
- .text          0x00096070      0x3b8 newlib-libm.a(lib_a-ef_log.o)
-                0x00096070                __ieee754_logf
- .text          0x00096428      0x998 newlib-libm.a(lib_a-ef_pow.o)
-                0x00096428                __ieee754_powf
- .text          0x00096dc0      0x454 newlib-libm.a(lib_a-ef_rem_pio2.o)
-                0x00096dc0                __ieee754_rem_pio2f
- .text          0x00097214      0x114 newlib-libm.a(lib_a-ef_sqrt.o)
-                0x00097214                __ieee754_sqrtf
- .text          0x00097328      0x214 newlib-libm.a(lib_a-kf_cos.o)
-                0x00097328                __kernel_cosf
- .text          0x0009753c      0x950 newlib-libm.a(lib_a-kf_rem_pio2.o)
-                0x0009753c                __kernel_rem_pio2f
- .text          0x00097e8c      0x14c newlib-libm.a(lib_a-kf_sin.o)
-                0x00097e8c                __kernel_sinf
- .text          0x00097fd8      0x360 newlib-libm.a(lib_a-kf_tan.o)
-                0x00097fd8                __kernel_tanf
- .text          0x00098338      0x2fc newlib-libm.a(lib_a-sf_atan.o)
-                0x00098338                atanf
- .text          0x00098634        0x8 newlib-libm.a(lib_a-sf_fabs.o)
-                0x00098634                fabsf
- .text          0x0009863c       0x1c newlib-libm.a(lib_a-sf_finite.o)
-                0x0009863c                finitef
- .text          0x00098658       0xd4 newlib-libm.a(lib_a-sf_floor.o)
-                0x00098658                floorf
- .text          0x0009872c       0x6c newlib-libm.a(lib_a-sf_fpclassify.o)
-                0x0009872c                __fpclassifyf
- .text          0x00098798        0xc newlib-libm.a(lib_a-sf_nan.o)
-                0x00098798                nanf
- .text          0x000987a4      0x11c newlib-libm.a(lib_a-sf_scalbn.o)
-                0x000987a4                scalbnf
- .text          0x000988c0        0x0 newlib-libm.a(lib_a-s_lib_ver.o)
- .text          0x000988c0        0x8 newlib-libm.a(lib_a-s_matherr.o)
-                0x000988c0                matherr
- .text          0x000988c8       0x10 newlib-libm.a(lib_a-s_nan.o)
-                0x000988c8                nan
- .text          0x000988d8      0x1a0 newlib-libm.a(lib_a-s_rint.o)
-                0x000988d8                rint
- .text          0x00098a78       0x10 newlib-libm.a(lib_a-sf_copysign.o)
-                0x00098a78                copysignf
- .text          0x00098a88      0x114 gcc-libgcc.a(_udivsi3.o)
-                0x00098a88                __udivsi3
-                0x00098a88                __aeabi_uidiv
-                0x00098b7c                __aeabi_uidivmod
- .text          0x00098b9c      0x148 gcc-libgcc.a(_divsi3.o)
-                0x00098b9c                __aeabi_idiv
-                0x00098b9c                __divsi3
-                0x00098cc4                __aeabi_idivmod
- .text          0x00098ce4        0x4 gcc-libgcc.a(_dvmd_tls.o)
-                0x00098ce4                __aeabi_ldiv0
-                0x00098ce4                __aeabi_idiv0
- .text          0x00098ce8      0x41c gcc-libgcc.a(_arm_addsubdf3.o)
-                0x00098ce8                __aeabi_drsub
-                0x00098cf0                __aeabi_dsub
-                0x00098cf0                __subdf3
-                0x00098cf4                __adddf3
-                0x00098cf4                __aeabi_dadd
-                0x00099004                __aeabi_ui2d
-                0x00099004                __floatunsidf
-                0x00099028                __floatsidf
-                0x00099028                __aeabi_i2d
-                0x00099050                __extendsfdf2
-                0x00099050                __aeabi_f2d
-                0x00099090                __aeabi_ul2d
-                0x00099090                __floatundidf
-                0x000990a4                __floatdidf
-                0x000990a4                __aeabi_l2d
- .text          0x00099104      0x49c gcc-libgcc.a(_arm_muldivdf3.o)
-                0x00099104                __aeabi_dmul
-                0x00099104                __muldf3
-                0x00099394                __aeabi_ddiv
-                0x00099394                __divdf3
- .text          0x000995a0      0x144 gcc-libgcc.a(_arm_cmpdf2.o)
-                0x000995a0                __gtdf2
-                0x000995a0                __gedf2
-                0x000995a8                __ltdf2
-                0x000995a8                __ledf2
-                0x000995b0                __cmpdf2
-                0x000995b0                __eqdf2
-                0x000995b0                __nedf2
-                0x00099638                __aeabi_cdrcmple
-                0x00099654                __aeabi_cdcmple
-                0x00099654                __aeabi_cdcmpeq
-                0x0009966c                __aeabi_dcmpeq
-                0x00099684                __aeabi_dcmplt
-                0x0009969c                __aeabi_dcmple
-                0x000996b4                __aeabi_dcmpge
-                0x000996cc                __aeabi_dcmpgt
- .text          0x000996e4       0x5c gcc-libgcc.a(_arm_fixdfsi.o)
-                0x000996e4                __fixdfsi
-                0x000996e4                __aeabi_d2iz
- .text          0x00099740       0xa0 gcc-libgcc.a(_arm_truncdfsf2.o)
-                0x00099740                __aeabi_d2f
-                0x00099740                __truncdfsf2
- .text          0x000997e0      0x2ac gcc-libgcc.a(_arm_addsubsf3.o)
-                0x000997e0                __aeabi_frsub
-                0x000997e8                __subsf3
-                0x000997e8                __aeabi_fsub
-                0x000997ec                __aeabi_fadd
-                0x000997ec                __addsf3
-                0x000999a8                __aeabi_ui2f
-                0x000999a8                __floatunsisf
-                0x000999b0                __aeabi_i2f
-                0x000999b0                __floatsisf
-                0x000999d0                __floatundisf
-                0x000999d0                __aeabi_ul2f
-                0x000999e0                __floatdisf
-                0x000999e0                __aeabi_l2f
- .text          0x00099a8c      0x2f8 gcc-libgcc.a(_arm_muldivsf3.o)
-                0x00099a8c                __mulsf3
-                0x00099a8c                __aeabi_fmul
-                0x00099c24                __divsf3
-                0x00099c24                __aeabi_fdiv
- .text          0x00099d84      0x114 gcc-libgcc.a(_arm_cmpsf2.o)
-                0x00099d84                __gtsf2
-                0x00099d84                __gesf2
-                0x00099d8c                __lesf2
-                0x00099d8c                __ltsf2
-                0x00099d94                __nesf2
-                0x00099d94                __eqsf2
-                0x00099d94                __cmpsf2
-                0x00099df8                __aeabi_cfrcmple
-                0x00099e08                __aeabi_cfcmple
-                0x00099e08                __aeabi_cfcmpeq
-                0x00099e20                __aeabi_fcmpeq
-                0x00099e38                __aeabi_fcmplt
-                0x00099e50                __aeabi_fcmple
-                0x00099e68                __aeabi_fcmpge
-                0x00099e80                __aeabi_fcmpgt
- .text          0x00099e98       0x5c gcc-libgcc.a(_arm_fixsfsi.o)
-                0x00099e98                __fixsfsi
-                0x00099e98                __aeabi_f2iz
- .text          0x00099ef4       0x54 gcc-libgcc.a(_arm_fixunssfsi.o)
-                0x00099ef4                __aeabi_f2uiz
-                0x00099ef4                __fixunssfsi
- .text          0x00099f48       0xd4 gcc-libgcc.a(_aeabi_ldivmod.o)
-                0x00099f48                __aeabi_ldivmod
- .text          0x0009a01c       0x3c gcc-libgcc.a(_aeabi_uldivmod.o)
-                0x0009a01c                __aeabi_uldivmod
- .text          0x0009a058       0x44 gcc-libgcc.a(_popcountsi2.o)
-                0x0009a058                __popcountsi2
- .text          0x0009a09c       0x40 gcc-libgcc.a(_fixsfdi.o)
-                0x0009a09c                __aeabi_f2lz
-                0x0009a09c                __fixsfdi
- .text          0x0009a0dc       0x70 gcc-libgcc.a(_fixunssfdi.o)
-                0x0009a0dc                __aeabi_f2ulz
-                0x0009a0dc                __fixunssfdi
- .text          0x0009a14c      0x12c gcc-libgcc.a(_udivmoddi4.o)
-                0x0009a14c                __udivmoddi4
- .text          0x0009a278       0x54 gcc-libgcc.a(_arm_fixunsdfsi.o)
-                0x0009a278                __fixunsdfsi
-                0x0009a278                __aeabi_d2uiz
- .text          0x0009a2cc       0x28 gcc-libgcc.a(_clzdi2.o)
-                0x0009a2cc                __clzdi2
- .text          0x0009a2f4       0x48 gcc-libgcc.a(_clzsi2.o)
-                0x0009a2f4                __clzsi2
-                0x0009a33c                _text_end = .
+                0x000836c4                is_focus_peaking_enabled
+                0x00083740                update_disp_mode_bits_from_params
+                0x000849a0                update_disp_mode_params_from_bits
+                0x00084a88                get_disp_mode
+                0x00084a98                toggle_disp_mode
+                0x00084b7c                handle_disp_preset_key
+                0x00084c34                handle_overlays_playback
+                0x00084cc0                peaking_benchmark
+ .text          0x00084d60      0x604 vectorscope.o
+                0x00084f00                vectorscope_addpixel
+                0x0008502c                vectorscope_should_draw
+                0x0008503c                vectorscope_request_draw
+                0x0008504c                vectorscope_start
+                0x00085088                vectorscope_redraw
+ *fill*         0x00085364        0xc 
+ .text          0x00085370       0x1c beep.o
+                0x00085370                unsafe_beep
+                0x00085374                beep
+                0x00085378                Beep
+                0x0008537c                beep_times
+                0x00085380                WAV_StartRecord
+                0x00085384                WAV_StopRecord
+                0x00085388                beep_custom
+ *fill*         0x0008538c        0x4 
+ .text          0x00085390        0x0 crop-mode-hack.o
+ .text          0x00085390       0x24 ph_info_disp.o
+                0x00085390                display_shooting_info
+ *fill*         0x000853b4        0xc 
+ .text          0x000853c0        0x0 flexinfo.o
+ .text          0x000853c0      0x3f0 screenshot.o
+                0x000853c0                take_screenshot
+ .text          0x000857b0      0x1c4 fileprefix.o
+                0x000857e4                get_file_prefix
+                0x000857f0                file_prefix_set
+                0x000858e4                file_prefix_reset
+ *fill*         0x00085974        0xc 
+ .text          0x00085980      0xc38 lvinfo.o
+                0x000862f8                lvinfo_add_items
+                0x00086380                lvinfo_add_item
+                0x00086388                lvinfo_display
+ .text          0x000865b8      0x320 builtin-enforcing.o
+                0x000865b8                unused_dummy_func
+ *fill*         0x000868d8        0x8 
+ .text          0x000868e0      0xdd0 powersave.o
+                0x00086908                idle_globaldraw_dis
+                0x00086920                idle_globaldraw_en
+                0x00086a7c                idle_kill_flicker
+                0x00086c3c                powersave_prolong
+                0x00086c64                powersave_prohibit
+                0x00086c8c                powersave_permit
+                0x00086cb4                PauseLiveView
+                0x00086dc8                display_on
+                0x00086dd0                display_off
+                0x00086eb8                idle_led_blink_step
+                0x00086f70                idle_is_powersave_enabled
+                0x00086fa8                idle_is_powersave_enabled_on_info_disp_key
+                0x00086fd0                idle_is_powersave_active
+                0x00087038                idle_force_powersave_in_1s
+                0x00087074                idle_force_powersave_now
+                0x000870b0                handle_powersave_key
+                0x00087148                idle_wakeup_reset_counters
+                0x000871bc                ResumeLiveView
+                0x000873ec                idle_powersave_step
+ .text          0x000876b0      0x620 ml-cbr.o
+                0x00087788                ml_register_cbr
+                0x00087960                ml_unregister_cbr
+                0x00087a44                ml_notify_cbr
+                0x00087b04                debug_cbr_tree
+                0x00087b94                _ml_cbr_init
+ .text          0x00087cd0     0x2a48 raw.o
+                0x00087cf4                raw_red_pixel
+                0x00087d34                raw_green_pixel
+                0x00087d78                raw_blue_pixel
+                0x00087dc0                raw_red_pixel_dark
+                0x00087e28                raw_green_pixel_dark
+                0x00087e98                raw_blue_pixel_dark
+                0x00087f0c                raw_red_pixel_bright
+                0x00087f74                raw_green_pixel_bright
+                0x00087fe4                raw_blue_pixel_bright
+                0x00088adc                raw_set_dirty
+                0x00088af0                raw_set_preview_rect
+                0x00088bd8                raw_set_geometry
+                0x00088d1c                raw_get_pixel
+                0x000890d4                raw_get_pixel_ex
+                0x000891e8                raw_set_pixel
+                0x00089398                raw_get_gray_pixel
+                0x000895a8                raw_to_ev
+                0x000896b0                ev_to_raw
+                0x00089714                raw_lv_redirect_edmac
+                0x00089728                raw_lv_settings_still_valid
+                0x00089790                raw_preview_fast_ex
+                0x00089850                raw_preview_fast
+                0x000898a4                raw_lv_is_enabled
+                0x000898b4                raw_force_aspect_ratio_1to1
+                0x00089990                get_dxo_dynamic_range
+                0x00089a2c                can_use_raw_overlays_photo
+                0x0008a340                raw_update_params
+                0x0008a4a0                raw_lv_request
+                0x0008a52c                raw_lv_release
+                0x0008a58c                can_use_raw_overlays
+                0x0008a61c                can_use_raw_overlays_menu
+                0x0008a69c                menu_set_warning_raw
+                0x0008a6f0                menu_checkdep_raw
+ *fill*         0x0008a718        0x8 
+ .text          0x0008a720     0x1380 chdk-dng.o
+                0x0008b49c                reverse_bytes_order
+                0x0008b564                dng_set_thumbnail_size
+                0x0008b578                dng_set_camname
+                0x0008b58c                dng_set_camserial
+                0x0008b5a0                dng_set_description
+                0x0008b5b4                dng_set_lensmodel
+                0x0008b5c8                dng_set_focal
+                0x0008b5dc                dng_set_aperture
+                0x0008b5f0                dng_set_shutter
+                0x0008b604                dng_set_framerate
+                0x0008b61c                dng_set_framerate_rational
+                0x0008b630                dng_set_iso
+                0x0008b640                dng_set_wbgain
+                0x0008b66c                dng_set_datetime
+                0x0008b6a0                save_dng
+ .text          0x0008baa0      0x720 edmac-memcpy.o
+                0x0008bb94                edmac_memcpy_res_lock
+                0x0008bbcc                edmac_memcpy_res_unlock
+                0x0008bbdc                edmac_copy_rectangle_cbr_start
+                0x0008bdf4                edmac_copy_rectangle_adv_cleanup
+                0x0008be44                edmac_copy_rectangle_adv_finish
+                0x0008be7c                edmac_copy_rectangle_adv_start
+                0x0008bee0                edmac_copy_rectangle_adv
+                0x0008bf34                edmac_copy_rectangle
+                0x0008bf68                edmac_copy_rectangle_start
+                0x0008bf9c                edmac_copy_rectangle_finish
+                0x0008bfa0                edmac_memset
+                0x0008c070                edmac_find_divider
+                0x0008c0f8                edmac_memcpy_start
+                0x0008c1a4                edmac_memcpy_finish
+                0x0008c1a8                edmac_memcpy
+ .text          0x0008c1c0      0x854 console.o
+                0x0008c69c                console_show
+                0x0008c6b0                console_hide
+                0x0008c6d8                console_toggle
+                0x0008c6f4                console_clear
+                0x0008c718                console_puts
+                0x0008c96c                console_draw_from_menu
+                0x0008c988                printf
+                0x0008c9f8                puts
+ *fill*         0x0008ca14        0xc 
+ .text          0x0008ca20      0x180 tcc-glue.o
+                0x0008ca20                _tcc_exit
+                0x0008ca44                _tcc_open
+                0x0008cb0c                _tcc_read
+                0x0008cb54                _tcc_close
+                0x0008cb64                _tcc_lseek
+ .text          0x0008cba0     0x4218 ../../tcc/libtccx.o
+                0x0008d7ec                tcc_delete
+                0x0008dbe4                tcc_add_file
+                0x0008dd7c                tcc_add_symbol
+                0x0008deec                tcc_new
+                0x0008e130                tcc_set_options
+                0x0008ef28                tcc_get_symbol
+                0x000909c8                tcc_load_offline_section
+                0x00090ce8                tcc_relocate
+ *fill*         0x00090db8        0x8 
+ .text          0x00090dc0     0x2690 module.o
+                0x00091e24                module_load
+                0x00091ebc                module_get_symbol
+                0x00091ec8                module_exec
+                0x00092074                module_unload
+                0x00092084                module_exec_cbr
+                0x00092100                module_translate_key
+                0x000924e0                module_send_keypress
+                0x000924f8                handle_module_keys
+                0x000925c8                module_display_filter_enabled
+                0x00092640                module_display_filter_update
+                0x000926dc                module_get_string
+                0x000931ac                module_get_name
+                0x000931c8                module_get_next_loaded
+                0x00093214                module_get_config_var
+                0x00093284                module_config_var_lookup
+                0x000932e8                module_save_configs
+                0x0009338c                module_shutdown
+ .text          0x00093450       0x28 misc.o
+                0x00093450                sound_recording_enabled_canon
+                0x00093458                sound_recording_enabled
+                0x00093460                audio_meters_are_drawn
+                0x00093468                volume_up
+                0x0009346c                volume_down
+                0x00093470                out_volume_up
+                0x00093474                out_volume_down
+ *fill*         0x00093478        0x8 
+ .text          0x00093480      0x1a8 afma.o
+                0x00093504                get_afma
+                0x0009353c                set_afma
+                0x000935cc                set_afma_mode
+                0x00093608                get_afma_mode
+                0x00093618                get_afma_max
+                0x00093620                get_config_afma_wide_tele
+ .text          0x00093628       0x28 dietlibc.a(strrchr.o)
+                0x00093628                strrchr
+                0x00093628                rindex
+ .text          0x00093650       0x20 dietlibc.a(strncpy.o)
+                0x00093650                strncpy
+ .text          0x00093670       0x1c dietlibc.a(strlen.o)
+                0x00093670                strlen
+ .text          0x0009368c       0x38 dietlibc.a(strncmp.o)
+                0x0009368c                strncmp
+ .text          0x000936c4       0x1c dietlibc.a(strcpy.o)
+                0x000936c4                strcpy
+ .text          0x000936e0       0x30 dietlibc.a(strcmp.o)
+                0x000936e0                strcoll
+                0x000936e0                strcmp
+ .text          0x00093710       0x44 dietlibc.a(strcasecmp.o)
+                0x00093710                strcasecmp
+ .text          0x00093754      0x208 dietlibc.a(strtoull.o)
+                0x00093754                strtoumax
+                0x00093754                strtoull
+                0x00093754                strtouq
+ .text          0x0009395c      0x19c dietlibc.a(strtoul.o)
+                0x0009395c                strtoul
+ .text          0x00093af8       0x2c dietlibc.a(strchr.o)
+                0x00093af8                index
+                0x00093af8                strchr
+ .text          0x00093b24       0x8c dietlibc.a(strstr.o)
+                0x00093b24                strstr
+ .text          0x00093bb0       0x38 dietlibc.a(memcmp.o)
+                0x00093bb0                bcmp
+                0x00093bb0                memcmp
+ .text          0x00093be8       0x68 dietlibc.a(memmove.o)
+                0x00093be8                memmove
+ .text          0x00093c50       0x7c dietlibc.a(atol.o)
+                0x00093c50                atol
+                0x00093c50                atoi
+ .text          0x00093ccc        0x0 dietlibc.a(errno.o)
+ .text          0x00093ccc       0x2c newlib-libc.a(lib_a-setjmp.o)
+                0x00093ccc                setjmp
+                0x00093ce0                longjmp
+ .text          0x00093cf8      0x168 newlib-libc.a(lib_a-memcpy-stub.o)
+                0x00093cf8                memcpy
+ .text          0x00093e60       0xac newlib-libc.a(lib_a-memccpy.o)
+                0x00093e60                memccpy
+ .text          0x00093f0c      0x188 newlib-libc.a(lib_a-memset.o)
+                0x00093f0c                memset
+ .text          0x00094094       0xd0 newlib-libm.a(lib_a-sf_ceil.o)
+                0x00094094                ceilf
+ .text          0x00094164       0xa4 newlib-libm.a(lib_a-sf_cos.o)
+                0x00094164                cosf
+ .text          0x00094208       0x88 newlib-libm.a(lib_a-sf_frexp.o)
+                0x00094208                frexpf
+ .text          0x00094290       0x1c newlib-libm.a(lib_a-sf_log2.o)
+                0x00094290                log2f
+ .text          0x000942ac       0x7c newlib-libm.a(lib_a-sf_round.o)
+                0x000942ac                roundf
+ .text          0x00094328       0xbc newlib-libm.a(lib_a-sf_sin.o)
+                0x00094328                sinf
+ .text          0x000943e4       0x74 newlib-libm.a(lib_a-sf_tan.o)
+                0x000943e4                tanf
+ .text          0x00094458      0x10c newlib-libm.a(lib_a-wf_acos.o)
+                0x00094458                acosf
+ .text          0x00094564      0x10c newlib-libm.a(lib_a-wf_asin.o)
+                0x00094564                asinf
+ .text          0x00094670       0x10 newlib-libm.a(lib_a-wf_atan2.o)
+                0x00094670                atan2f
+ .text          0x00094680      0x178 newlib-libm.a(lib_a-wf_exp.o)
+                0x00094680                expf
+ .text          0x000947f8      0x13c newlib-libm.a(lib_a-wf_fmod.o)
+                0x000947f8                fmodf
+ .text          0x00094934      0x164 newlib-libm.a(lib_a-wf_log10.o)
+                0x00094934                log10f
+ .text          0x00094a98      0x164 newlib-libm.a(lib_a-wf_log.o)
+                0x00094a98                logf
+ .text          0x00094bfc      0x504 newlib-libm.a(lib_a-wf_pow.o)
+                0x00094bfc                powf
+ .text          0x00095100      0x11c newlib-libm.a(lib_a-wf_sqrt.o)
+                0x00095100                sqrtf
+ .text          0x0009521c      0x3bc newlib-libm.a(lib_a-ef_acos.o)
+                0x0009521c                __ieee754_acosf
+ .text          0x000955d8      0x38c newlib-libm.a(lib_a-ef_asin.o)
+                0x000955d8                __ieee754_asinf
+ .text          0x00095964      0x1b4 newlib-libm.a(lib_a-ef_atan2.o)
+                0x00095964                __ieee754_atan2f
+ .text          0x00095b18      0x2b4 newlib-libm.a(lib_a-ef_exp.o)
+                0x00095b18                __ieee754_expf
+ .text          0x00095dcc      0x18c newlib-libm.a(lib_a-ef_fmod.o)
+                0x00095dcc                __ieee754_fmodf
+ .text          0x00095f58       0xf8 newlib-libm.a(lib_a-ef_log10.o)
+                0x00095f58                __ieee754_log10f
+ .text          0x00096050      0x3b8 newlib-libm.a(lib_a-ef_log.o)
+                0x00096050                __ieee754_logf
+ .text          0x00096408      0x998 newlib-libm.a(lib_a-ef_pow.o)
+                0x00096408                __ieee754_powf
+ .text          0x00096da0      0x454 newlib-libm.a(lib_a-ef_rem_pio2.o)
+                0x00096da0                __ieee754_rem_pio2f
+ .text          0x000971f4      0x114 newlib-libm.a(lib_a-ef_sqrt.o)
+                0x000971f4                __ieee754_sqrtf
+ .text          0x00097308      0x214 newlib-libm.a(lib_a-kf_cos.o)
+                0x00097308                __kernel_cosf
+ .text          0x0009751c      0x950 newlib-libm.a(lib_a-kf_rem_pio2.o)
+                0x0009751c                __kernel_rem_pio2f
+ .text          0x00097e6c      0x14c newlib-libm.a(lib_a-kf_sin.o)
+                0x00097e6c                __kernel_sinf
+ .text          0x00097fb8      0x360 newlib-libm.a(lib_a-kf_tan.o)
+                0x00097fb8                __kernel_tanf
+ .text          0x00098318      0x2fc newlib-libm.a(lib_a-sf_atan.o)
+                0x00098318                atanf
+ .text          0x00098614        0x8 newlib-libm.a(lib_a-sf_fabs.o)
+                0x00098614                fabsf
+ .text          0x0009861c       0x1c newlib-libm.a(lib_a-sf_finite.o)
+                0x0009861c                finitef
+ .text          0x00098638       0xd4 newlib-libm.a(lib_a-sf_floor.o)
+                0x00098638                floorf
+ .text          0x0009870c       0x6c newlib-libm.a(lib_a-sf_fpclassify.o)
+                0x0009870c                __fpclassifyf
+ .text          0x00098778        0xc newlib-libm.a(lib_a-sf_nan.o)
+                0x00098778                nanf
+ .text          0x00098784      0x11c newlib-libm.a(lib_a-sf_scalbn.o)
+                0x00098784                scalbnf
+ .text          0x000988a0        0x0 newlib-libm.a(lib_a-s_lib_ver.o)
+ .text          0x000988a0        0x8 newlib-libm.a(lib_a-s_matherr.o)
+                0x000988a0                matherr
+ .text          0x000988a8       0x10 newlib-libm.a(lib_a-s_nan.o)
+                0x000988a8                nan
+ .text          0x000988b8      0x1a0 newlib-libm.a(lib_a-s_rint.o)
+                0x000988b8                rint
+ .text          0x00098a58       0x10 newlib-libm.a(lib_a-sf_copysign.o)
+                0x00098a58                copysignf
+ .text          0x00098a68      0x114 gcc-libgcc.a(_udivsi3.o)
+                0x00098a68                __udivsi3
+                0x00098a68                __aeabi_uidiv
+                0x00098b5c                __aeabi_uidivmod
+ .text          0x00098b7c      0x148 gcc-libgcc.a(_divsi3.o)
+                0x00098b7c                __aeabi_idiv
+                0x00098b7c                __divsi3
+                0x00098ca4                __aeabi_idivmod
+ .text          0x00098cc4        0x4 gcc-libgcc.a(_dvmd_tls.o)
+                0x00098cc4                __aeabi_ldiv0
+                0x00098cc4                __aeabi_idiv0
+ .text          0x00098cc8      0x41c gcc-libgcc.a(_arm_addsubdf3.o)
+                0x00098cc8                __aeabi_drsub
+                0x00098cd0                __aeabi_dsub
+                0x00098cd0                __subdf3
+                0x00098cd4                __adddf3
+                0x00098cd4                __aeabi_dadd
+                0x00098fe4                __aeabi_ui2d
+                0x00098fe4                __floatunsidf
+                0x00099008                __floatsidf
+                0x00099008                __aeabi_i2d
+                0x00099030                __extendsfdf2
+                0x00099030                __aeabi_f2d
+                0x00099070                __aeabi_ul2d
+                0x00099070                __floatundidf
+                0x00099084                __floatdidf
+                0x00099084                __aeabi_l2d
+ .text          0x000990e4      0x49c gcc-libgcc.a(_arm_muldivdf3.o)
+                0x000990e4                __aeabi_dmul
+                0x000990e4                __muldf3
+                0x00099374                __aeabi_ddiv
+                0x00099374                __divdf3
+ .text          0x00099580      0x144 gcc-libgcc.a(_arm_cmpdf2.o)
+                0x00099580                __gtdf2
+                0x00099580                __gedf2
+                0x00099588                __ltdf2
+                0x00099588                __ledf2
+                0x00099590                __cmpdf2
+                0x00099590                __eqdf2
+                0x00099590                __nedf2
+                0x00099618                __aeabi_cdrcmple
+                0x00099634                __aeabi_cdcmple
+                0x00099634                __aeabi_cdcmpeq
+                0x0009964c                __aeabi_dcmpeq
+                0x00099664                __aeabi_dcmplt
+                0x0009967c                __aeabi_dcmple
+                0x00099694                __aeabi_dcmpge
+                0x000996ac                __aeabi_dcmpgt
+ .text          0x000996c4       0x5c gcc-libgcc.a(_arm_fixdfsi.o)
+                0x000996c4                __fixdfsi
+                0x000996c4                __aeabi_d2iz
+ .text          0x00099720       0xa0 gcc-libgcc.a(_arm_truncdfsf2.o)
+                0x00099720                __aeabi_d2f
+                0x00099720                __truncdfsf2
+ .text          0x000997c0      0x2ac gcc-libgcc.a(_arm_addsubsf3.o)
+                0x000997c0                __aeabi_frsub
+                0x000997c8                __subsf3
+                0x000997c8                __aeabi_fsub
+                0x000997cc                __aeabi_fadd
+                0x000997cc                __addsf3
+                0x00099988                __aeabi_ui2f
+                0x00099988                __floatunsisf
+                0x00099990                __aeabi_i2f
+                0x00099990                __floatsisf
+                0x000999b0                __floatundisf
+                0x000999b0                __aeabi_ul2f
+                0x000999c0                __floatdisf
+                0x000999c0                __aeabi_l2f
+ .text          0x00099a6c      0x2f8 gcc-libgcc.a(_arm_muldivsf3.o)
+                0x00099a6c                __mulsf3
+                0x00099a6c                __aeabi_fmul
+                0x00099c04                __divsf3
+                0x00099c04                __aeabi_fdiv
+ .text          0x00099d64      0x114 gcc-libgcc.a(_arm_cmpsf2.o)
+                0x00099d64                __gtsf2
+                0x00099d64                __gesf2
+                0x00099d6c                __lesf2
+                0x00099d6c                __ltsf2
+                0x00099d74                __nesf2
+                0x00099d74                __eqsf2
+                0x00099d74                __cmpsf2
+                0x00099dd8                __aeabi_cfrcmple
+                0x00099de8                __aeabi_cfcmple
+                0x00099de8                __aeabi_cfcmpeq
+                0x00099e00                __aeabi_fcmpeq
+                0x00099e18                __aeabi_fcmplt
+                0x00099e30                __aeabi_fcmple
+                0x00099e48                __aeabi_fcmpge
+                0x00099e60                __aeabi_fcmpgt
+ .text          0x00099e78       0x5c gcc-libgcc.a(_arm_fixsfsi.o)
+                0x00099e78                __fixsfsi
+                0x00099e78                __aeabi_f2iz
+ .text          0x00099ed4       0x54 gcc-libgcc.a(_arm_fixunssfsi.o)
+                0x00099ed4                __aeabi_f2uiz
+                0x00099ed4                __fixunssfsi
+ .text          0x00099f28       0xd4 gcc-libgcc.a(_aeabi_ldivmod.o)
+                0x00099f28                __aeabi_ldivmod
+ .text          0x00099ffc       0x3c gcc-libgcc.a(_aeabi_uldivmod.o)
+                0x00099ffc                __aeabi_uldivmod
+ .text          0x0009a038       0x44 gcc-libgcc.a(_popcountsi2.o)
+                0x0009a038                __popcountsi2
+ .text          0x0009a07c       0x40 gcc-libgcc.a(_fixsfdi.o)
+                0x0009a07c                __aeabi_f2lz
+                0x0009a07c                __fixsfdi
+ .text          0x0009a0bc       0x70 gcc-libgcc.a(_fixunssfdi.o)
+                0x0009a0bc                __aeabi_f2ulz
+                0x0009a0bc                __fixunssfdi
+ .text          0x0009a12c      0x12c gcc-libgcc.a(_udivmoddi4.o)
+                0x0009a12c                __udivmoddi4
+ .text          0x0009a258       0x54 gcc-libgcc.a(_arm_fixunsdfsi.o)
+                0x0009a258                __fixunsdfsi
+                0x0009a258                __aeabi_d2uiz
+ .text          0x0009a2ac       0x28 gcc-libgcc.a(_clzdi2.o)
+                0x0009a2ac                __clzdi2
+ .text          0x0009a2d4       0x48 gcc-libgcc.a(_clzsi2.o)
+                0x0009a2d4                __clzsi2
+                0x0009a31c                _text_end = .
                 0x0009a340                . = ALIGN (0x40)
- *fill*         0x0009a33c        0x4 
+ *fill*         0x0009a31c       0x24 
                 0x0009a340                _rodata_start = .
  *(.rodata)
  .rodata        0x0009a340       0x5d version.o
@@ -11753,7 +11752,7 @@ Linker script and memory map
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x86fb8
+.debug_info     0x00000000    0x86fc6
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000       0xcd version.o
  .debug_info    0x000000cd      0xcc8 backtrace.o
@@ -11808,72 +11807,72 @@ Linker script and memory map
  .debug_info    0x0005d05c      0xc4f imgconv.o
  .debug_info    0x0005dcab     0x2bcd histogram.o
  .debug_info    0x00060878      0xb8f falsecolor.o
- .debug_info    0x00061407     0xaa7a zebra.o
- .debug_info    0x0006be81     0x120c vectorscope.o
- .debug_info    0x0006d08d      0x349 beep.o
- .debug_info    0x0006d3d6      0x190 crop-mode-hack.o
- .debug_info    0x0006d566      0x745 ph_info_disp.o
- .debug_info    0x0006dcab      0x6f5 flexinfo.o
- .debug_info    0x0006e3a0     0x103a screenshot.o
- .debug_info    0x0006f3da      0xaac fileprefix.o
- .debug_info    0x0006fe86     0x194c lvinfo.o
- .debug_info    0x000717d2      0x389 builtin-enforcing.o
- .debug_info    0x00071b5b     0x2291 powersave.o
- .debug_info    0x00073dec      0xe67 ml-cbr.o
- .debug_info    0x00074c53     0x3b3e raw.o
- .debug_info    0x00078791     0x20a4 chdk-dng.o
- .debug_info    0x0007a835     0x13dc edmac-memcpy.o
- .debug_info    0x0007bc11      0xa96 console.o
- .debug_info    0x0007c6a7      0xcf7 tcc-glue.o
- .debug_info    0x0007d39e     0x41bf module.o
- .debug_info    0x0008155d      0x72f misc.o
- .debug_info    0x00081c8c      0xa5c afma.o
- .debug_info    0x000826e8       0x9c newlib-libc.a(lib_a-setjmp.o)
- .debug_info    0x00082784      0x130 newlib-libc.a(lib_a-memcpy-stub.o)
- .debug_info    0x000828b4      0x192 newlib-libc.a(lib_a-memccpy.o)
- .debug_info    0x00082a46      0x116 newlib-libc.a(lib_a-memset.o)
- .debug_info    0x00082b5c      0x155 newlib-libm.a(lib_a-sf_ceil.o)
- .debug_info    0x00082cb1      0x119 newlib-libm.a(lib_a-sf_cos.o)
- .debug_info    0x00082dca      0x170 newlib-libm.a(lib_a-sf_frexp.o)
- .debug_info    0x00082f3a       0xbb newlib-libm.a(lib_a-sf_log2.o)
- .debug_info    0x00082ff5      0x14a newlib-libm.a(lib_a-sf_round.o)
- .debug_info    0x0008313f      0x100 newlib-libm.a(lib_a-sf_sin.o)
- .debug_info    0x0008323f      0x100 newlib-libm.a(lib_a-sf_tan.o)
- .debug_info    0x0008333f      0x17f newlib-libm.a(lib_a-wf_acos.o)
- .debug_info    0x000834be      0x17f newlib-libm.a(lib_a-wf_asin.o)
- .debug_info    0x0008363d       0xbd newlib-libm.a(lib_a-wf_atan2.o)
- .debug_info    0x000836fa      0x1a4 newlib-libm.a(lib_a-wf_exp.o)
- .debug_info    0x0008389e      0x18d newlib-libm.a(lib_a-wf_fmod.o)
- .debug_info    0x00083a2b      0x17f newlib-libm.a(lib_a-wf_log10.o)
- .debug_info    0x00083baa      0x17f newlib-libm.a(lib_a-wf_log.o)
- .debug_info    0x00083d29      0x18c newlib-libm.a(lib_a-wf_pow.o)
- .debug_info    0x00083eb5      0x17f newlib-libm.a(lib_a-wf_sqrt.o)
- .debug_info    0x00084034      0x282 newlib-libm.a(lib_a-ef_acos.o)
- .debug_info    0x000842b6      0x28c newlib-libm.a(lib_a-ef_asin.o)
- .debug_info    0x00084542      0x1de newlib-libm.a(lib_a-ef_atan2.o)
- .debug_info    0x00084720      0x281 newlib-libm.a(lib_a-ef_exp.o)
- .debug_info    0x000849a1      0x17f newlib-libm.a(lib_a-ef_fmod.o)
- .debug_info    0x00084b20      0x1bc newlib-libm.a(lib_a-ef_log10.o)
- .debug_info    0x00084cdc      0x29a newlib-libm.a(lib_a-ef_log.o)
- .debug_info    0x00084f76      0x57e newlib-libm.a(lib_a-ef_pow.o)
- .debug_info    0x000854f4      0x2eb newlib-libm.a(lib_a-ef_rem_pio2.o)
- .debug_info    0x000857df      0x1aa newlib-libm.a(lib_a-ef_sqrt.o)
- .debug_info    0x00085989      0x187 newlib-libm.a(lib_a-kf_cos.o)
- .debug_info    0x00085b10      0x2e3 newlib-libm.a(lib_a-kf_rem_pio2.o)
- .debug_info    0x00085df3      0x17d newlib-libm.a(lib_a-kf_sin.o)
- .debug_info    0x00085f70      0x225 newlib-libm.a(lib_a-kf_tan.o)
- .debug_info    0x00086195      0x1f1 newlib-libm.a(lib_a-sf_atan.o)
- .debug_info    0x00086386       0xc4 newlib-libm.a(lib_a-sf_fabs.o)
- .debug_info    0x0008644a       0xc8 newlib-libm.a(lib_a-sf_finite.o)
- .debug_info    0x00086512      0x155 newlib-libm.a(lib_a-sf_floor.o)
- .debug_info    0x00086667       0xc6 newlib-libm.a(lib_a-sf_fpclassify.o)
- .debug_info    0x0008672d       0xca newlib-libm.a(lib_a-sf_nan.o)
- .debug_info    0x000867f7      0x1d7 newlib-libm.a(lib_a-sf_scalbn.o)
- .debug_info    0x000869ce       0xc1 newlib-libm.a(lib_a-s_lib_ver.o)
- .debug_info    0x00086a8f      0x131 newlib-libm.a(lib_a-s_matherr.o)
- .debug_info    0x00086bc0       0xcd newlib-libm.a(lib_a-s_nan.o)
- .debug_info    0x00086c8d      0x209 newlib-libm.a(lib_a-s_rint.o)
- .debug_info    0x00086e96      0x122 newlib-libm.a(lib_a-sf_copysign.o)
+ .debug_info    0x00061407     0xaa88 zebra.o
+ .debug_info    0x0006be8f     0x120c vectorscope.o
+ .debug_info    0x0006d09b      0x349 beep.o
+ .debug_info    0x0006d3e4      0x190 crop-mode-hack.o
+ .debug_info    0x0006d574      0x745 ph_info_disp.o
+ .debug_info    0x0006dcb9      0x6f5 flexinfo.o
+ .debug_info    0x0006e3ae     0x103a screenshot.o
+ .debug_info    0x0006f3e8      0xaac fileprefix.o
+ .debug_info    0x0006fe94     0x194c lvinfo.o
+ .debug_info    0x000717e0      0x389 builtin-enforcing.o
+ .debug_info    0x00071b69     0x2291 powersave.o
+ .debug_info    0x00073dfa      0xe67 ml-cbr.o
+ .debug_info    0x00074c61     0x3b3e raw.o
+ .debug_info    0x0007879f     0x20a4 chdk-dng.o
+ .debug_info    0x0007a843     0x13dc edmac-memcpy.o
+ .debug_info    0x0007bc1f      0xa96 console.o
+ .debug_info    0x0007c6b5      0xcf7 tcc-glue.o
+ .debug_info    0x0007d3ac     0x41bf module.o
+ .debug_info    0x0008156b      0x72f misc.o
+ .debug_info    0x00081c9a      0xa5c afma.o
+ .debug_info    0x000826f6       0x9c newlib-libc.a(lib_a-setjmp.o)
+ .debug_info    0x00082792      0x130 newlib-libc.a(lib_a-memcpy-stub.o)
+ .debug_info    0x000828c2      0x192 newlib-libc.a(lib_a-memccpy.o)
+ .debug_info    0x00082a54      0x116 newlib-libc.a(lib_a-memset.o)
+ .debug_info    0x00082b6a      0x155 newlib-libm.a(lib_a-sf_ceil.o)
+ .debug_info    0x00082cbf      0x119 newlib-libm.a(lib_a-sf_cos.o)
+ .debug_info    0x00082dd8      0x170 newlib-libm.a(lib_a-sf_frexp.o)
+ .debug_info    0x00082f48       0xbb newlib-libm.a(lib_a-sf_log2.o)
+ .debug_info    0x00083003      0x14a newlib-libm.a(lib_a-sf_round.o)
+ .debug_info    0x0008314d      0x100 newlib-libm.a(lib_a-sf_sin.o)
+ .debug_info    0x0008324d      0x100 newlib-libm.a(lib_a-sf_tan.o)
+ .debug_info    0x0008334d      0x17f newlib-libm.a(lib_a-wf_acos.o)
+ .debug_info    0x000834cc      0x17f newlib-libm.a(lib_a-wf_asin.o)
+ .debug_info    0x0008364b       0xbd newlib-libm.a(lib_a-wf_atan2.o)
+ .debug_info    0x00083708      0x1a4 newlib-libm.a(lib_a-wf_exp.o)
+ .debug_info    0x000838ac      0x18d newlib-libm.a(lib_a-wf_fmod.o)
+ .debug_info    0x00083a39      0x17f newlib-libm.a(lib_a-wf_log10.o)
+ .debug_info    0x00083bb8      0x17f newlib-libm.a(lib_a-wf_log.o)
+ .debug_info    0x00083d37      0x18c newlib-libm.a(lib_a-wf_pow.o)
+ .debug_info    0x00083ec3      0x17f newlib-libm.a(lib_a-wf_sqrt.o)
+ .debug_info    0x00084042      0x282 newlib-libm.a(lib_a-ef_acos.o)
+ .debug_info    0x000842c4      0x28c newlib-libm.a(lib_a-ef_asin.o)
+ .debug_info    0x00084550      0x1de newlib-libm.a(lib_a-ef_atan2.o)
+ .debug_info    0x0008472e      0x281 newlib-libm.a(lib_a-ef_exp.o)
+ .debug_info    0x000849af      0x17f newlib-libm.a(lib_a-ef_fmod.o)
+ .debug_info    0x00084b2e      0x1bc newlib-libm.a(lib_a-ef_log10.o)
+ .debug_info    0x00084cea      0x29a newlib-libm.a(lib_a-ef_log.o)
+ .debug_info    0x00084f84      0x57e newlib-libm.a(lib_a-ef_pow.o)
+ .debug_info    0x00085502      0x2eb newlib-libm.a(lib_a-ef_rem_pio2.o)
+ .debug_info    0x000857ed      0x1aa newlib-libm.a(lib_a-ef_sqrt.o)
+ .debug_info    0x00085997      0x187 newlib-libm.a(lib_a-kf_cos.o)
+ .debug_info    0x00085b1e      0x2e3 newlib-libm.a(lib_a-kf_rem_pio2.o)
+ .debug_info    0x00085e01      0x17d newlib-libm.a(lib_a-kf_sin.o)
+ .debug_info    0x00085f7e      0x225 newlib-libm.a(lib_a-kf_tan.o)
+ .debug_info    0x000861a3      0x1f1 newlib-libm.a(lib_a-sf_atan.o)
+ .debug_info    0x00086394       0xc4 newlib-libm.a(lib_a-sf_fabs.o)
+ .debug_info    0x00086458       0xc8 newlib-libm.a(lib_a-sf_finite.o)
+ .debug_info    0x00086520      0x155 newlib-libm.a(lib_a-sf_floor.o)
+ .debug_info    0x00086675       0xc6 newlib-libm.a(lib_a-sf_fpclassify.o)
+ .debug_info    0x0008673b       0xca newlib-libm.a(lib_a-sf_nan.o)
+ .debug_info    0x00086805      0x1d7 newlib-libm.a(lib_a-sf_scalbn.o)
+ .debug_info    0x000869dc       0xc1 newlib-libm.a(lib_a-s_lib_ver.o)
+ .debug_info    0x00086a9d      0x131 newlib-libm.a(lib_a-s_matherr.o)
+ .debug_info    0x00086bce       0xcd newlib-libm.a(lib_a-s_nan.o)
+ .debug_info    0x00086c9b      0x209 newlib-libm.a(lib_a-s_rint.o)
+ .debug_info    0x00086ea4      0x122 newlib-libm.a(lib_a-sf_copysign.o)
 
 .debug_abbrev   0x00000000    0x119a3
  *(.debug_abbrev)
@@ -11997,7 +11996,7 @@ Linker script and memory map
  .debug_abbrev  0x000117d2      0x11b newlib-libm.a(lib_a-s_rint.o)
  .debug_abbrev  0x000118ed       0xb6 newlib-libm.a(lib_a-sf_copysign.o)
 
-.debug_line     0x00000000    0x25904
+.debug_line     0x00000000    0x25903
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000       0x2a version.o
  .debug_line    0x0000002a      0x5af backtrace.o
@@ -12052,74 +12051,74 @@ Linker script and memory map
  .debug_line    0x0001796e      0x70a imgconv.o
  .debug_line    0x00018078      0xbf7 histogram.o
  .debug_line    0x00018c6f      0x5d6 falsecolor.o
- .debug_line    0x00019245     0x1dd5 zebra.o
- .debug_line    0x0001b01a      0x615 vectorscope.o
- .debug_line    0x0001b62f      0x514 beep.o
- .debug_line    0x0001bb43      0x4c9 crop-mode-hack.o
- .debug_line    0x0001c00c      0x52a ph_info_disp.o
- .debug_line    0x0001c536      0x52d flexinfo.o
- .debug_line    0x0001ca63      0x593 screenshot.o
- .debug_line    0x0001cff6      0x535 fileprefix.o
- .debug_line    0x0001d52b      0x72a lvinfo.o
- .debug_line    0x0001dc55      0x283 builtin-enforcing.o
- .debug_line    0x0001ded8      0x770 powersave.o
- .debug_line    0x0001e648      0x640 ml-cbr.o
- .debug_line    0x0001ec88      0xd0e raw.o
- .debug_line    0x0001f996      0x773 chdk-dng.o
- .debug_line    0x00020109      0x64a edmac-memcpy.o
- .debug_line    0x00020753      0x6f0 console.o
- .debug_line    0x00020e43      0x4ed tcc-glue.o
- .debug_line    0x00021330      0xb5b module.o
- .debug_line    0x00021e8b      0x4f3 misc.o
- .debug_line    0x0002237e      0x53a afma.o
- .debug_line    0x000228b8       0x6e newlib-libc.a(lib_a-setjmp.o)
- .debug_line    0x00022926      0x197 newlib-libc.a(lib_a-memcpy-stub.o)
- .debug_line    0x00022abd      0x133 newlib-libc.a(lib_a-memccpy.o)
- .debug_line    0x00022bf0      0x181 newlib-libc.a(lib_a-memset.o)
- .debug_line    0x00022d71      0x136 newlib-libm.a(lib_a-sf_ceil.o)
- .debug_line    0x00022ea7      0x103 newlib-libm.a(lib_a-sf_cos.o)
- .debug_line    0x00022faa      0x127 newlib-libm.a(lib_a-sf_frexp.o)
- .debug_line    0x000230d1       0x96 newlib-libm.a(lib_a-sf_log2.o)
- .debug_line    0x00023167      0x109 newlib-libm.a(lib_a-sf_round.o)
- .debug_line    0x00023270      0x103 newlib-libm.a(lib_a-sf_sin.o)
- .debug_line    0x00023373       0xf7 newlib-libm.a(lib_a-sf_tan.o)
- .debug_line    0x0002346a       0xb5 newlib-libm.a(lib_a-wf_acos.o)
- .debug_line    0x0002351f       0xb5 newlib-libm.a(lib_a-wf_asin.o)
- .debug_line    0x000235d4       0x95 newlib-libm.a(lib_a-wf_atan2.o)
- .debug_line    0x00023669       0xc3 newlib-libm.a(lib_a-wf_exp.o)
- .debug_line    0x0002372c       0xc1 newlib-libm.a(lib_a-wf_fmod.o)
- .debug_line    0x000237ed       0xc5 newlib-libm.a(lib_a-wf_log10.o)
- .debug_line    0x000238b2       0xc7 newlib-libm.a(lib_a-wf_log.o)
- .debug_line    0x00023979      0x15c newlib-libm.a(lib_a-wf_pow.o)
- .debug_line    0x00023ad5       0xb5 newlib-libm.a(lib_a-wf_sqrt.o)
- .debug_line    0x00023b8a      0x122 newlib-libm.a(lib_a-ef_acos.o)
- .debug_line    0x00023cac      0x121 newlib-libm.a(lib_a-ef_asin.o)
- .debug_line    0x00023dcd      0x130 newlib-libm.a(lib_a-ef_atan2.o)
- .debug_line    0x00023efd      0x126 newlib-libm.a(lib_a-ef_exp.o)
- .debug_line    0x00024023      0x10e newlib-libm.a(lib_a-ef_fmod.o)
- .debug_line    0x00024131      0x100 newlib-libm.a(lib_a-ef_log10.o)
- .debug_line    0x00024231      0x17a newlib-libm.a(lib_a-ef_log.o)
- .debug_line    0x000243ab      0x23c newlib-libm.a(lib_a-ef_pow.o)
- .debug_line    0x000245e7      0x18b newlib-libm.a(lib_a-ef_rem_pio2.o)
- .debug_line    0x00024772      0x11b newlib-libm.a(lib_a-ef_sqrt.o)
- .debug_line    0x0002488d       0xc9 newlib-libm.a(lib_a-kf_cos.o)
- .debug_line    0x00024956      0x330 newlib-libm.a(lib_a-kf_rem_pio2.o)
- .debug_line    0x00024c86       0xbc newlib-libm.a(lib_a-kf_sin.o)
- .debug_line    0x00024d42      0x12d newlib-libm.a(lib_a-kf_tan.o)
- .debug_line    0x00024e6f      0x15e newlib-libm.a(lib_a-sf_atan.o)
- .debug_line    0x00024fcd       0xe0 newlib-libm.a(lib_a-sf_fabs.o)
- .debug_line    0x000250ad       0xe5 newlib-libm.a(lib_a-sf_finite.o)
- .debug_line    0x00025192      0x137 newlib-libm.a(lib_a-sf_floor.o)
- .debug_line    0x000252c9       0xf7 newlib-libm.a(lib_a-sf_fpclassify.o)
- .debug_line    0x000253c0       0x92 newlib-libm.a(lib_a-sf_nan.o)
- .debug_line    0x00025452      0x118 newlib-libm.a(lib_a-sf_scalbn.o)
- .debug_line    0x0002556a       0x57 newlib-libm.a(lib_a-s_lib_ver.o)
- .debug_line    0x000255c1       0x98 newlib-libm.a(lib_a-s_matherr.o)
- .debug_line    0x00025659       0x93 newlib-libm.a(lib_a-s_nan.o)
- .debug_line    0x000256ec      0x125 newlib-libm.a(lib_a-s_rint.o)
- .debug_line    0x00025811       0xf3 newlib-libm.a(lib_a-sf_copysign.o)
+ .debug_line    0x00019245     0x1dd4 zebra.o
+ .debug_line    0x0001b019      0x615 vectorscope.o
+ .debug_line    0x0001b62e      0x514 beep.o
+ .debug_line    0x0001bb42      0x4c9 crop-mode-hack.o
+ .debug_line    0x0001c00b      0x52a ph_info_disp.o
+ .debug_line    0x0001c535      0x52d flexinfo.o
+ .debug_line    0x0001ca62      0x593 screenshot.o
+ .debug_line    0x0001cff5      0x535 fileprefix.o
+ .debug_line    0x0001d52a      0x72a lvinfo.o
+ .debug_line    0x0001dc54      0x283 builtin-enforcing.o
+ .debug_line    0x0001ded7      0x770 powersave.o
+ .debug_line    0x0001e647      0x640 ml-cbr.o
+ .debug_line    0x0001ec87      0xd0e raw.o
+ .debug_line    0x0001f995      0x773 chdk-dng.o
+ .debug_line    0x00020108      0x64a edmac-memcpy.o
+ .debug_line    0x00020752      0x6f0 console.o
+ .debug_line    0x00020e42      0x4ed tcc-glue.o
+ .debug_line    0x0002132f      0xb5b module.o
+ .debug_line    0x00021e8a      0x4f3 misc.o
+ .debug_line    0x0002237d      0x53a afma.o
+ .debug_line    0x000228b7       0x6e newlib-libc.a(lib_a-setjmp.o)
+ .debug_line    0x00022925      0x197 newlib-libc.a(lib_a-memcpy-stub.o)
+ .debug_line    0x00022abc      0x133 newlib-libc.a(lib_a-memccpy.o)
+ .debug_line    0x00022bef      0x181 newlib-libc.a(lib_a-memset.o)
+ .debug_line    0x00022d70      0x136 newlib-libm.a(lib_a-sf_ceil.o)
+ .debug_line    0x00022ea6      0x103 newlib-libm.a(lib_a-sf_cos.o)
+ .debug_line    0x00022fa9      0x127 newlib-libm.a(lib_a-sf_frexp.o)
+ .debug_line    0x000230d0       0x96 newlib-libm.a(lib_a-sf_log2.o)
+ .debug_line    0x00023166      0x109 newlib-libm.a(lib_a-sf_round.o)
+ .debug_line    0x0002326f      0x103 newlib-libm.a(lib_a-sf_sin.o)
+ .debug_line    0x00023372       0xf7 newlib-libm.a(lib_a-sf_tan.o)
+ .debug_line    0x00023469       0xb5 newlib-libm.a(lib_a-wf_acos.o)
+ .debug_line    0x0002351e       0xb5 newlib-libm.a(lib_a-wf_asin.o)
+ .debug_line    0x000235d3       0x95 newlib-libm.a(lib_a-wf_atan2.o)
+ .debug_line    0x00023668       0xc3 newlib-libm.a(lib_a-wf_exp.o)
+ .debug_line    0x0002372b       0xc1 newlib-libm.a(lib_a-wf_fmod.o)
+ .debug_line    0x000237ec       0xc5 newlib-libm.a(lib_a-wf_log10.o)
+ .debug_line    0x000238b1       0xc7 newlib-libm.a(lib_a-wf_log.o)
+ .debug_line    0x00023978      0x15c newlib-libm.a(lib_a-wf_pow.o)
+ .debug_line    0x00023ad4       0xb5 newlib-libm.a(lib_a-wf_sqrt.o)
+ .debug_line    0x00023b89      0x122 newlib-libm.a(lib_a-ef_acos.o)
+ .debug_line    0x00023cab      0x121 newlib-libm.a(lib_a-ef_asin.o)
+ .debug_line    0x00023dcc      0x130 newlib-libm.a(lib_a-ef_atan2.o)
+ .debug_line    0x00023efc      0x126 newlib-libm.a(lib_a-ef_exp.o)
+ .debug_line    0x00024022      0x10e newlib-libm.a(lib_a-ef_fmod.o)
+ .debug_line    0x00024130      0x100 newlib-libm.a(lib_a-ef_log10.o)
+ .debug_line    0x00024230      0x17a newlib-libm.a(lib_a-ef_log.o)
+ .debug_line    0x000243aa      0x23c newlib-libm.a(lib_a-ef_pow.o)
+ .debug_line    0x000245e6      0x18b newlib-libm.a(lib_a-ef_rem_pio2.o)
+ .debug_line    0x00024771      0x11b newlib-libm.a(lib_a-ef_sqrt.o)
+ .debug_line    0x0002488c       0xc9 newlib-libm.a(lib_a-kf_cos.o)
+ .debug_line    0x00024955      0x330 newlib-libm.a(lib_a-kf_rem_pio2.o)
+ .debug_line    0x00024c85       0xbc newlib-libm.a(lib_a-kf_sin.o)
+ .debug_line    0x00024d41      0x12d newlib-libm.a(lib_a-kf_tan.o)
+ .debug_line    0x00024e6e      0x15e newlib-libm.a(lib_a-sf_atan.o)
+ .debug_line    0x00024fcc       0xe0 newlib-libm.a(lib_a-sf_fabs.o)
+ .debug_line    0x000250ac       0xe5 newlib-libm.a(lib_a-sf_finite.o)
+ .debug_line    0x00025191      0x137 newlib-libm.a(lib_a-sf_floor.o)
+ .debug_line    0x000252c8       0xf7 newlib-libm.a(lib_a-sf_fpclassify.o)
+ .debug_line    0x000253bf       0x92 newlib-libm.a(lib_a-sf_nan.o)
+ .debug_line    0x00025451      0x118 newlib-libm.a(lib_a-sf_scalbn.o)
+ .debug_line    0x00025569       0x57 newlib-libm.a(lib_a-s_lib_ver.o)
+ .debug_line    0x000255c0       0x98 newlib-libm.a(lib_a-s_matherr.o)
+ .debug_line    0x00025658       0x93 newlib-libm.a(lib_a-s_nan.o)
+ .debug_line    0x000256eb      0x125 newlib-libm.a(lib_a-s_rint.o)
+ .debug_line    0x00025810       0xf3 newlib-libm.a(lib_a-sf_copysign.o)
 
-.debug_frame    0x00000000     0xadb0
+.debug_frame    0x00000000     0xada0
  *(.debug_frame)
  .debug_frame   0x00000000       0x6c backtrace.o
  .debug_frame   0x0000006c      0x1a0 boot-hack.o
@@ -12169,76 +12168,76 @@ Linker script and memory map
  .debug_frame   0x00007b48      0x1a8 imgconv.o
  .debug_frame   0x00007cf0      0x268 histogram.o
  .debug_frame   0x00007f58       0xec falsecolor.o
- .debug_frame   0x00008044      0xc08 zebra.o
- .debug_frame   0x00008c4c      0x128 vectorscope.o
- .debug_frame   0x00008d74       0x80 beep.o
- .debug_frame   0x00008df4       0x2c ph_info_disp.o
- .debug_frame   0x00008e20       0x40 screenshot.o
- .debug_frame   0x00008e60       0x74 fileprefix.o
- .debug_frame   0x00008ed4      0x1a8 lvinfo.o
- .debug_frame   0x0000907c       0x38 builtin-enforcing.o
- .debug_frame   0x000090b4      0x32c powersave.o
- .debug_frame   0x000093e0       0xe0 ml-cbr.o
- .debug_frame   0x000094c0      0x554 raw.o
- .debug_frame   0x00009a14      0x1bc chdk-dng.o
- .debug_frame   0x00009bd0      0x218 edmac-memcpy.o
- .debug_frame   0x00009de8      0x138 console.o
- .debug_frame   0x00009f20       0x90 tcc-glue.o
- .debug_frame   0x00009fb0      0x374 module.o
- .debug_frame   0x0000a324       0x80 misc.o
- .debug_frame   0x0000a3a4       0xbc afma.o
- .debug_frame   0x0000a460       0x30 newlib-libc.a(lib_a-memcpy-stub.o)
- .debug_frame   0x0000a490       0x30 newlib-libc.a(lib_a-memccpy.o)
- .debug_frame   0x0000a4c0       0x30 newlib-libc.a(lib_a-memset.o)
- .debug_frame   0x0000a4f0       0x30 newlib-libm.a(lib_a-sf_ceil.o)
- .debug_frame   0x0000a520       0x28 newlib-libm.a(lib_a-sf_cos.o)
- .debug_frame   0x0000a548       0x2c newlib-libm.a(lib_a-sf_frexp.o)
- .debug_frame   0x0000a574       0x28 newlib-libm.a(lib_a-sf_log2.o)
- .debug_frame   0x0000a59c       0x28 newlib-libm.a(lib_a-sf_round.o)
- .debug_frame   0x0000a5c4       0x28 newlib-libm.a(lib_a-sf_sin.o)
- .debug_frame   0x0000a5ec       0x28 newlib-libm.a(lib_a-sf_tan.o)
- .debug_frame   0x0000a614       0x30 newlib-libm.a(lib_a-wf_acos.o)
- .debug_frame   0x0000a644       0x30 newlib-libm.a(lib_a-wf_asin.o)
- .debug_frame   0x0000a674       0x28 newlib-libm.a(lib_a-wf_atan2.o)
- .debug_frame   0x0000a69c       0x30 newlib-libm.a(lib_a-wf_exp.o)
- .debug_frame   0x0000a6cc       0x34 newlib-libm.a(lib_a-wf_fmod.o)
- .debug_frame   0x0000a700       0x30 newlib-libm.a(lib_a-wf_log10.o)
- .debug_frame   0x0000a730       0x30 newlib-libm.a(lib_a-wf_log.o)
- .debug_frame   0x0000a760       0x34 newlib-libm.a(lib_a-wf_pow.o)
- .debug_frame   0x0000a794       0x30 newlib-libm.a(lib_a-wf_sqrt.o)
- .debug_frame   0x0000a7c4       0x30 newlib-libm.a(lib_a-ef_acos.o)
- .debug_frame   0x0000a7f4       0x34 newlib-libm.a(lib_a-ef_asin.o)
- .debug_frame   0x0000a828       0x30 newlib-libm.a(lib_a-ef_atan2.o)
- .debug_frame   0x0000a858       0x34 newlib-libm.a(lib_a-ef_exp.o)
- .debug_frame   0x0000a88c       0x2c newlib-libm.a(lib_a-ef_fmod.o)
- .debug_frame   0x0000a8b8       0x2c newlib-libm.a(lib_a-ef_log10.o)
- .debug_frame   0x0000a8e4       0x34 newlib-libm.a(lib_a-ef_log.o)
- .debug_frame   0x0000a918       0x38 newlib-libm.a(lib_a-ef_pow.o)
- .debug_frame   0x0000a950       0x38 newlib-libm.a(lib_a-ef_rem_pio2.o)
- .debug_frame   0x0000a988       0x30 newlib-libm.a(lib_a-ef_sqrt.o)
- .debug_frame   0x0000a9b8       0x34 newlib-libm.a(lib_a-kf_cos.o)
- .debug_frame   0x0000a9ec       0x3c newlib-libm.a(lib_a-kf_rem_pio2.o)
- .debug_frame   0x0000aa28       0x34 newlib-libm.a(lib_a-kf_sin.o)
- .debug_frame   0x0000aa5c       0x38 newlib-libm.a(lib_a-kf_tan.o)
- .debug_frame   0x0000aa94       0x30 newlib-libm.a(lib_a-sf_atan.o)
- .debug_frame   0x0000aac4       0x20 newlib-libm.a(lib_a-sf_fabs.o)
- .debug_frame   0x0000aae4       0x20 newlib-libm.a(lib_a-sf_finite.o)
- .debug_frame   0x0000ab04       0x30 newlib-libm.a(lib_a-sf_floor.o)
- .debug_frame   0x0000ab34       0x20 newlib-libm.a(lib_a-sf_fpclassify.o)
- .debug_frame   0x0000ab54       0x20 newlib-libm.a(lib_a-sf_nan.o)
- .debug_frame   0x0000ab74       0x28 newlib-libm.a(lib_a-sf_scalbn.o)
- .debug_frame   0x0000ab9c       0x20 newlib-libm.a(lib_a-s_matherr.o)
- .debug_frame   0x0000abbc       0x20 newlib-libm.a(lib_a-s_nan.o)
- .debug_frame   0x0000abdc       0x34 newlib-libm.a(lib_a-s_rint.o)
- .debug_frame   0x0000ac10       0x20 newlib-libm.a(lib_a-sf_copysign.o)
- .debug_frame   0x0000ac30       0x20 gcc-libgcc.a(_udivsi3.o)
- .debug_frame   0x0000ac50       0x20 gcc-libgcc.a(_divsi3.o)
- .debug_frame   0x0000ac70       0x44 gcc-libgcc.a(_aeabi_ldivmod.o)
- .debug_frame   0x0000acb4       0x2c gcc-libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x0000ace0       0x20 gcc-libgcc.a(_popcountsi2.o)
- .debug_frame   0x0000ad00       0x34 gcc-libgcc.a(_fixsfdi.o)
- .debug_frame   0x0000ad34       0x34 gcc-libgcc.a(_fixunssfdi.o)
- .debug_frame   0x0000ad68       0x48 gcc-libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x00008044      0xbf8 zebra.o
+ .debug_frame   0x00008c3c      0x128 vectorscope.o
+ .debug_frame   0x00008d64       0x80 beep.o
+ .debug_frame   0x00008de4       0x2c ph_info_disp.o
+ .debug_frame   0x00008e10       0x40 screenshot.o
+ .debug_frame   0x00008e50       0x74 fileprefix.o
+ .debug_frame   0x00008ec4      0x1a8 lvinfo.o
+ .debug_frame   0x0000906c       0x38 builtin-enforcing.o
+ .debug_frame   0x000090a4      0x32c powersave.o
+ .debug_frame   0x000093d0       0xe0 ml-cbr.o
+ .debug_frame   0x000094b0      0x554 raw.o
+ .debug_frame   0x00009a04      0x1bc chdk-dng.o
+ .debug_frame   0x00009bc0      0x218 edmac-memcpy.o
+ .debug_frame   0x00009dd8      0x138 console.o
+ .debug_frame   0x00009f10       0x90 tcc-glue.o
+ .debug_frame   0x00009fa0      0x374 module.o
+ .debug_frame   0x0000a314       0x80 misc.o
+ .debug_frame   0x0000a394       0xbc afma.o
+ .debug_frame   0x0000a450       0x30 newlib-libc.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x0000a480       0x30 newlib-libc.a(lib_a-memccpy.o)
+ .debug_frame   0x0000a4b0       0x30 newlib-libc.a(lib_a-memset.o)
+ .debug_frame   0x0000a4e0       0x30 newlib-libm.a(lib_a-sf_ceil.o)
+ .debug_frame   0x0000a510       0x28 newlib-libm.a(lib_a-sf_cos.o)
+ .debug_frame   0x0000a538       0x2c newlib-libm.a(lib_a-sf_frexp.o)
+ .debug_frame   0x0000a564       0x28 newlib-libm.a(lib_a-sf_log2.o)
+ .debug_frame   0x0000a58c       0x28 newlib-libm.a(lib_a-sf_round.o)
+ .debug_frame   0x0000a5b4       0x28 newlib-libm.a(lib_a-sf_sin.o)
+ .debug_frame   0x0000a5dc       0x28 newlib-libm.a(lib_a-sf_tan.o)
+ .debug_frame   0x0000a604       0x30 newlib-libm.a(lib_a-wf_acos.o)
+ .debug_frame   0x0000a634       0x30 newlib-libm.a(lib_a-wf_asin.o)
+ .debug_frame   0x0000a664       0x28 newlib-libm.a(lib_a-wf_atan2.o)
+ .debug_frame   0x0000a68c       0x30 newlib-libm.a(lib_a-wf_exp.o)
+ .debug_frame   0x0000a6bc       0x34 newlib-libm.a(lib_a-wf_fmod.o)
+ .debug_frame   0x0000a6f0       0x30 newlib-libm.a(lib_a-wf_log10.o)
+ .debug_frame   0x0000a720       0x30 newlib-libm.a(lib_a-wf_log.o)
+ .debug_frame   0x0000a750       0x34 newlib-libm.a(lib_a-wf_pow.o)
+ .debug_frame   0x0000a784       0x30 newlib-libm.a(lib_a-wf_sqrt.o)
+ .debug_frame   0x0000a7b4       0x30 newlib-libm.a(lib_a-ef_acos.o)
+ .debug_frame   0x0000a7e4       0x34 newlib-libm.a(lib_a-ef_asin.o)
+ .debug_frame   0x0000a818       0x30 newlib-libm.a(lib_a-ef_atan2.o)
+ .debug_frame   0x0000a848       0x34 newlib-libm.a(lib_a-ef_exp.o)
+ .debug_frame   0x0000a87c       0x2c newlib-libm.a(lib_a-ef_fmod.o)
+ .debug_frame   0x0000a8a8       0x2c newlib-libm.a(lib_a-ef_log10.o)
+ .debug_frame   0x0000a8d4       0x34 newlib-libm.a(lib_a-ef_log.o)
+ .debug_frame   0x0000a908       0x38 newlib-libm.a(lib_a-ef_pow.o)
+ .debug_frame   0x0000a940       0x38 newlib-libm.a(lib_a-ef_rem_pio2.o)
+ .debug_frame   0x0000a978       0x30 newlib-libm.a(lib_a-ef_sqrt.o)
+ .debug_frame   0x0000a9a8       0x34 newlib-libm.a(lib_a-kf_cos.o)
+ .debug_frame   0x0000a9dc       0x3c newlib-libm.a(lib_a-kf_rem_pio2.o)
+ .debug_frame   0x0000aa18       0x34 newlib-libm.a(lib_a-kf_sin.o)
+ .debug_frame   0x0000aa4c       0x38 newlib-libm.a(lib_a-kf_tan.o)
+ .debug_frame   0x0000aa84       0x30 newlib-libm.a(lib_a-sf_atan.o)
+ .debug_frame   0x0000aab4       0x20 newlib-libm.a(lib_a-sf_fabs.o)
+ .debug_frame   0x0000aad4       0x20 newlib-libm.a(lib_a-sf_finite.o)
+ .debug_frame   0x0000aaf4       0x30 newlib-libm.a(lib_a-sf_floor.o)
+ .debug_frame   0x0000ab24       0x20 newlib-libm.a(lib_a-sf_fpclassify.o)
+ .debug_frame   0x0000ab44       0x20 newlib-libm.a(lib_a-sf_nan.o)
+ .debug_frame   0x0000ab64       0x28 newlib-libm.a(lib_a-sf_scalbn.o)
+ .debug_frame   0x0000ab8c       0x20 newlib-libm.a(lib_a-s_matherr.o)
+ .debug_frame   0x0000abac       0x20 newlib-libm.a(lib_a-s_nan.o)
+ .debug_frame   0x0000abcc       0x34 newlib-libm.a(lib_a-s_rint.o)
+ .debug_frame   0x0000ac00       0x20 newlib-libm.a(lib_a-sf_copysign.o)
+ .debug_frame   0x0000ac20       0x20 gcc-libgcc.a(_udivsi3.o)
+ .debug_frame   0x0000ac40       0x20 gcc-libgcc.a(_divsi3.o)
+ .debug_frame   0x0000ac60       0x44 gcc-libgcc.a(_aeabi_ldivmod.o)
+ .debug_frame   0x0000aca4       0x2c gcc-libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x0000acd0       0x20 gcc-libgcc.a(_popcountsi2.o)
+ .debug_frame   0x0000acf0       0x34 gcc-libgcc.a(_fixsfdi.o)
+ .debug_frame   0x0000ad24       0x34 gcc-libgcc.a(_fixunssfdi.o)
+ .debug_frame   0x0000ad58       0x48 gcc-libgcc.a(_udivmoddi4.o)
 
 .debug_str      0x00000000    0x2c258
  *(.debug_str)
@@ -12479,7 +12478,7 @@ Linker script and memory map
  .debug_str     0x0002c21f       0x39 newlib-libm.a(lib_a-sf_copysign.o)
                                 0x192 (size before relaxing)
 
-.debug_loc      0x00000000    0x3ea37
+.debug_loc      0x00000000    0x3ea56
  *(.debug_loc)
  .debug_loc     0x00000000      0x532 backtrace.o
  .debug_loc     0x00000532      0x61c boot-hack.o
@@ -12528,64 +12527,64 @@ Linker script and memory map
  .debug_loc     0x000271f8     0x166c imgconv.o
  .debug_loc     0x00028864     0x1b78 histogram.o
  .debug_loc     0x0002a3dc      0x37e falsecolor.o
- .debug_loc     0x0002a75a     0x69a8 zebra.o
- .debug_loc     0x00031102      0x718 vectorscope.o
- .debug_loc     0x0003181a      0x437 screenshot.o
- .debug_loc     0x00031c51      0x14f fileprefix.o
- .debug_loc     0x00031da0      0xcc2 lvinfo.o
- .debug_loc     0x00032a62      0x481 powersave.o
- .debug_loc     0x00032ee3      0x4ad ml-cbr.o
- .debug_loc     0x00033390     0x3073 raw.o
- .debug_loc     0x00036403      0xac8 chdk-dng.o
- .debug_loc     0x00036ecb      0x98e edmac-memcpy.o
- .debug_loc     0x00037859      0x5b2 console.o
- .debug_loc     0x00037e0b      0x283 tcc-glue.o
- .debug_loc     0x0003808e     0x21f5 module.o
- .debug_loc     0x0003a283      0x25d afma.o
- .debug_loc     0x0003a4e0      0x1ed newlib-libc.a(lib_a-memcpy-stub.o)
- .debug_loc     0x0003a6cd      0x1ea newlib-libc.a(lib_a-memccpy.o)
- .debug_loc     0x0003a8b7      0x227 newlib-libc.a(lib_a-memset.o)
- .debug_loc     0x0003aade       0xbf newlib-libm.a(lib_a-sf_ceil.o)
- .debug_loc     0x0003ab9d       0x91 newlib-libm.a(lib_a-sf_cos.o)
- .debug_loc     0x0003ac2e       0xea newlib-libm.a(lib_a-sf_frexp.o)
- .debug_loc     0x0003ad18       0x33 newlib-libm.a(lib_a-sf_log2.o)
- .debug_loc     0x0003ad4b      0x16e newlib-libm.a(lib_a-sf_round.o)
- .debug_loc     0x0003aeb9       0x91 newlib-libm.a(lib_a-sf_sin.o)
- .debug_loc     0x0003af4a       0x91 newlib-libm.a(lib_a-sf_tan.o)
- .debug_loc     0x0003afdb       0x7e newlib-libm.a(lib_a-wf_acos.o)
- .debug_loc     0x0003b059       0x7e newlib-libm.a(lib_a-wf_asin.o)
- .debug_loc     0x0003b0d7       0x46 newlib-libm.a(lib_a-wf_atan2.o)
- .debug_loc     0x0003b11d       0x73 newlib-libm.a(lib_a-wf_exp.o)
- .debug_loc     0x0003b190       0x92 newlib-libm.a(lib_a-wf_fmod.o)
- .debug_loc     0x0003b222       0x68 newlib-libm.a(lib_a-wf_log10.o)
- .debug_loc     0x0003b28a       0x68 newlib-libm.a(lib_a-wf_log.o)
- .debug_loc     0x0003b2f2      0x10b newlib-libm.a(lib_a-wf_pow.o)
- .debug_loc     0x0003b3fd       0x68 newlib-libm.a(lib_a-wf_sqrt.o)
- .debug_loc     0x0003b465      0x1ca newlib-libm.a(lib_a-ef_acos.o)
- .debug_loc     0x0003b62f      0x26f newlib-libm.a(lib_a-ef_asin.o)
- .debug_loc     0x0003b89e      0x22e newlib-libm.a(lib_a-ef_atan2.o)
- .debug_loc     0x0003bacc      0x2cd newlib-libm.a(lib_a-ef_exp.o)
- .debug_loc     0x0003bd99      0x1fc newlib-libm.a(lib_a-ef_fmod.o)
- .debug_loc     0x0003bf95      0x14b newlib-libm.a(lib_a-ef_log10.o)
- .debug_loc     0x0003c0e0      0x3b2 newlib-libm.a(lib_a-ef_log.o)
- .debug_loc     0x0003c492      0xa9a newlib-libm.a(lib_a-ef_pow.o)
- .debug_loc     0x0003cf2c      0x507 newlib-libm.a(lib_a-ef_rem_pio2.o)
- .debug_loc     0x0003d433      0x1ee newlib-libm.a(lib_a-ef_sqrt.o)
- .debug_loc     0x0003d621      0x144 newlib-libm.a(lib_a-kf_cos.o)
- .debug_loc     0x0003d765      0x660 newlib-libm.a(lib_a-kf_rem_pio2.o)
- .debug_loc     0x0003ddc5      0x134 newlib-libm.a(lib_a-kf_sin.o)
- .debug_loc     0x0003def9      0x34d newlib-libm.a(lib_a-kf_tan.o)
- .debug_loc     0x0003e246      0x2b8 newlib-libm.a(lib_a-sf_atan.o)
- .debug_loc     0x0003e4fe       0x13 newlib-libm.a(lib_a-sf_fabs.o)
- .debug_loc     0x0003e511       0x39 newlib-libm.a(lib_a-sf_finite.o)
- .debug_loc     0x0003e54a       0xbf newlib-libm.a(lib_a-sf_floor.o)
- .debug_loc     0x0003e609       0x13 newlib-libm.a(lib_a-sf_fpclassify.o)
- .debug_loc     0x0003e61c       0x13 newlib-libm.a(lib_a-sf_nan.o)
- .debug_loc     0x0003e62f      0x17d newlib-libm.a(lib_a-sf_scalbn.o)
- .debug_loc     0x0003e7ac       0x13 newlib-libm.a(lib_a-s_matherr.o)
- .debug_loc     0x0003e7bf       0x13 newlib-libm.a(lib_a-s_nan.o)
- .debug_loc     0x0003e7d2      0x23f newlib-libm.a(lib_a-s_rint.o)
- .debug_loc     0x0003ea11       0x26 newlib-libm.a(lib_a-sf_copysign.o)
+ .debug_loc     0x0002a75a     0x69c7 zebra.o
+ .debug_loc     0x00031121      0x718 vectorscope.o
+ .debug_loc     0x00031839      0x437 screenshot.o
+ .debug_loc     0x00031c70      0x14f fileprefix.o
+ .debug_loc     0x00031dbf      0xcc2 lvinfo.o
+ .debug_loc     0x00032a81      0x481 powersave.o
+ .debug_loc     0x00032f02      0x4ad ml-cbr.o
+ .debug_loc     0x000333af     0x3073 raw.o
+ .debug_loc     0x00036422      0xac8 chdk-dng.o
+ .debug_loc     0x00036eea      0x98e edmac-memcpy.o
+ .debug_loc     0x00037878      0x5b2 console.o
+ .debug_loc     0x00037e2a      0x283 tcc-glue.o
+ .debug_loc     0x000380ad     0x21f5 module.o
+ .debug_loc     0x0003a2a2      0x25d afma.o
+ .debug_loc     0x0003a4ff      0x1ed newlib-libc.a(lib_a-memcpy-stub.o)
+ .debug_loc     0x0003a6ec      0x1ea newlib-libc.a(lib_a-memccpy.o)
+ .debug_loc     0x0003a8d6      0x227 newlib-libc.a(lib_a-memset.o)
+ .debug_loc     0x0003aafd       0xbf newlib-libm.a(lib_a-sf_ceil.o)
+ .debug_loc     0x0003abbc       0x91 newlib-libm.a(lib_a-sf_cos.o)
+ .debug_loc     0x0003ac4d       0xea newlib-libm.a(lib_a-sf_frexp.o)
+ .debug_loc     0x0003ad37       0x33 newlib-libm.a(lib_a-sf_log2.o)
+ .debug_loc     0x0003ad6a      0x16e newlib-libm.a(lib_a-sf_round.o)
+ .debug_loc     0x0003aed8       0x91 newlib-libm.a(lib_a-sf_sin.o)
+ .debug_loc     0x0003af69       0x91 newlib-libm.a(lib_a-sf_tan.o)
+ .debug_loc     0x0003affa       0x7e newlib-libm.a(lib_a-wf_acos.o)
+ .debug_loc     0x0003b078       0x7e newlib-libm.a(lib_a-wf_asin.o)
+ .debug_loc     0x0003b0f6       0x46 newlib-libm.a(lib_a-wf_atan2.o)
+ .debug_loc     0x0003b13c       0x73 newlib-libm.a(lib_a-wf_exp.o)
+ .debug_loc     0x0003b1af       0x92 newlib-libm.a(lib_a-wf_fmod.o)
+ .debug_loc     0x0003b241       0x68 newlib-libm.a(lib_a-wf_log10.o)
+ .debug_loc     0x0003b2a9       0x68 newlib-libm.a(lib_a-wf_log.o)
+ .debug_loc     0x0003b311      0x10b newlib-libm.a(lib_a-wf_pow.o)
+ .debug_loc     0x0003b41c       0x68 newlib-libm.a(lib_a-wf_sqrt.o)
+ .debug_loc     0x0003b484      0x1ca newlib-libm.a(lib_a-ef_acos.o)
+ .debug_loc     0x0003b64e      0x26f newlib-libm.a(lib_a-ef_asin.o)
+ .debug_loc     0x0003b8bd      0x22e newlib-libm.a(lib_a-ef_atan2.o)
+ .debug_loc     0x0003baeb      0x2cd newlib-libm.a(lib_a-ef_exp.o)
+ .debug_loc     0x0003bdb8      0x1fc newlib-libm.a(lib_a-ef_fmod.o)
+ .debug_loc     0x0003bfb4      0x14b newlib-libm.a(lib_a-ef_log10.o)
+ .debug_loc     0x0003c0ff      0x3b2 newlib-libm.a(lib_a-ef_log.o)
+ .debug_loc     0x0003c4b1      0xa9a newlib-libm.a(lib_a-ef_pow.o)
+ .debug_loc     0x0003cf4b      0x507 newlib-libm.a(lib_a-ef_rem_pio2.o)
+ .debug_loc     0x0003d452      0x1ee newlib-libm.a(lib_a-ef_sqrt.o)
+ .debug_loc     0x0003d640      0x144 newlib-libm.a(lib_a-kf_cos.o)
+ .debug_loc     0x0003d784      0x660 newlib-libm.a(lib_a-kf_rem_pio2.o)
+ .debug_loc     0x0003dde4      0x134 newlib-libm.a(lib_a-kf_sin.o)
+ .debug_loc     0x0003df18      0x34d newlib-libm.a(lib_a-kf_tan.o)
+ .debug_loc     0x0003e265      0x2b8 newlib-libm.a(lib_a-sf_atan.o)
+ .debug_loc     0x0003e51d       0x13 newlib-libm.a(lib_a-sf_fabs.o)
+ .debug_loc     0x0003e530       0x39 newlib-libm.a(lib_a-sf_finite.o)
+ .debug_loc     0x0003e569       0xbf newlib-libm.a(lib_a-sf_floor.o)
+ .debug_loc     0x0003e628       0x13 newlib-libm.a(lib_a-sf_fpclassify.o)
+ .debug_loc     0x0003e63b       0x13 newlib-libm.a(lib_a-sf_nan.o)
+ .debug_loc     0x0003e64e      0x17d newlib-libm.a(lib_a-sf_scalbn.o)
+ .debug_loc     0x0003e7cb       0x13 newlib-libm.a(lib_a-s_matherr.o)
+ .debug_loc     0x0003e7de       0x13 newlib-libm.a(lib_a-s_nan.o)
+ .debug_loc     0x0003e7f1      0x23f newlib-libm.a(lib_a-s_rint.o)
+ .debug_loc     0x0003ea30       0x26 newlib-libm.a(lib_a-sf_copysign.o)
 
 .debug_macinfo
  *(.debug_macinfo)

@@ -3860,26 +3860,29 @@ CONFIG_INT("display.dont.mirror", display_dont_mirror, 1);
 // this should be synchronized with
 // * graphics code (like zebra); otherwise zebras will remain frozen on screen
 // * gui_main_task (to make sure Canon won't call redraw in parallel => crash)
-void _redraw_do()
-{
+void _redraw_do() {
     extern int ml_started;
-    if (!ml_started) return;
-    if (gui_menu_shown()) { menu_redraw(); return; }
+    /*
+    if (!ml_started) {
+    	return;
+    }
+    */
+    if (gui_menu_shown()) { 
+    	menu_redraw(); 
+    }
     
 BMP_LOCK (
 
-#ifdef CONFIG_VARIANGLE_DISPLAY
-    if (display_dont_mirror && display_dont_mirror_dirty)
-    {
-        if (lcd_position == 1)
-        {
-            /* Canon stub, usually available only on cameras with variable displays */
-            extern void NormalDisplay();
-            NormalDisplay();
-        }
-        display_dont_mirror_dirty = 0;
-    }
-#endif
+	#ifdef CONFIG_VARIANGLE_DISPLAY
+		if (display_dont_mirror && display_dont_mirror_dirty) {
+		    if (lcd_position == 1) {
+		        /* Canon stub, usually available only on cameras with variable displays */
+		        extern void NormalDisplay();
+		        NormalDisplay();
+		    }
+		    display_dont_mirror_dirty = 0;
+		}
+	#endif
 
     //~ if (disable_redraw) 
     //~ {
@@ -3890,41 +3893,37 @@ BMP_LOCK (
         struct gui_task * current = gui_task_list.current;
         struct dialog * dialog = current->priv;
 
-        if (dialog && streq(dialog->type, "DIALOG")) // if dialog seems valid
-        {
+        if (dialog && streq(dialog->type, "DIALOG")) { // if dialog seems valid
+        
             // to redraw, we need access to front buffer
             int front_buffer_disabled = canon_gui_front_buffer_disabled();
-            if (front_buffer_disabled)
-            {
+            if (front_buffer_disabled) {
                 /* temporarily enable front buffer to allow the redraw */
                 canon_gui_enable_front_buffer(0);
             }
             
             dialog_redraw(dialog); // try to redraw (this has semaphores for winsys)
             
-            if (front_buffer_disabled)
-            {
+            if (front_buffer_disabled) {
                 /* disable it back */
                 
                 #ifdef CONFIG_KILL_FLICKER
-                idle_kill_flicker();
+                	idle_kill_flicker();
                 #else
-                canon_gui_disable_front_buffer();
+                	canon_gui_disable_front_buffer();
                 #endif
             }
-        }
-        else
-        {
+        } else {
             clrscr(); // out of luck, fallback
         }
     }
-)
+);
 
     // ask other stuff to redraw
     afframe_set_dirty();
 
     #ifdef FEATURE_CROPMARKS
-    crop_set_dirty(cropmark_cache_is_valid() ? 2 : 10);
+    	crop_set_dirty(cropmark_cache_is_valid() ? 2 : 10);
     #endif
     
     menu_set_dirty();
@@ -3932,61 +3931,51 @@ BMP_LOCK (
     zoom_overlay_dirty = 1;
 }
 
-void redraw()
-{
+void redraw() {
     fake_simple_button(MLEV_REDRAW);
 }
 
 #ifdef FEATURE_GHOST_IMAGE
-static int transparent_overlay_flag = 0;
-void schedule_transparent_overlay()
-{
-    transparent_overlay_flag = 1;
-}
+	static int transparent_overlay_flag = 0;
+	void schedule_transparent_overlay() {
+		transparent_overlay_flag = 1;
+	}
 #endif
 
 static int lens_display_dirty = 0;
-void lens_display_set_dirty() 
-{ 
+void lens_display_set_dirty() { 
     lens_display_dirty = 4; 
-    if (menu_active_but_hidden()) // in this case, menu will display bottom bar, force a redraw
+    if (menu_active_but_hidden()) { // in this case, menu will display bottom bar, force a redraw
         menu_set_dirty(); 
-}
-
-int is_focus_peaking_enabled()
-{
-#ifdef FEATURE_FOCUS_PEAK
-    return
-        focus_peaking &&
-        (lv || (QR_MODE && ZEBRAS_IN_QUICKREVIEW))
-        && get_global_draw()
-        && !should_draw_zoom_overlay()
-    ;
-#else
-    return 0;
-#endif
-}
-
-static void digic_zebra_cleanup()
-{
-#ifdef FEATURE_ZEBRA_FAST
-    if (zebra_digic_dirty)
-    {
-        if (!DISPLAY_IS_ON) return;
-        EngDrvOut(DIGIC_ZEBRA_REGISTER, 0); 
-        clrscr_mirror();
-        alter_bitmap_palette_entry(FAST_ZEBRA_GRID_COLOR, FAST_ZEBRA_GRID_COLOR, 256, 256);
-        zebra_digic_dirty = 0;
     }
-#endif
+}
+
+int is_focus_peaking_enabled() {
+	int value = 0;
+	#ifdef FEATURE_FOCUS_PEAK
+		value = (focus_peaking && (lv || (QR_MODE && ZEBRAS_IN_QUICKREVIEW)) && get_global_draw() && !should_draw_zoom_overlay());		
+	#endif
+	return value;
+}
+
+static void digic_zebra_cleanup() {
+	#ifdef FEATURE_ZEBRA_FAST
+		if (zebra_digic_dirty && DISPLAY_IS_ON) {        
+			EngDrvOut(DIGIC_ZEBRA_REGISTER, 0); 
+			clrscr_mirror();
+			alter_bitmap_palette_entry(FAST_ZEBRA_GRID_COLOR, FAST_ZEBRA_GRID_COLOR, 256, 256);
+			zebra_digic_dirty = 0;        
+		}
+	#endif
 }
 
 #ifdef FEATURE_SHOW_OVERLAY_FPS
-void update_lv_fps() // to be called every 10 seconds
-{
-    if (show_lv_fps) bmp_printf(FONT_MED, 50, 50, "%d.%d fps ", fps_ticks/10, fps_ticks%10);
-    fps_ticks = 0;
-}
+	void update_lv_fps() { // to be called every 10 seconds
+		if (show_lv_fps) { 
+			bmp_printf(FONT_MED, 50, 50, "%d.%d fps ", fps_ticks/10, fps_ticks%10);
+		}
+		fps_ticks = 0;
+	}
 #endif
 
 // Items which need a high FPS
