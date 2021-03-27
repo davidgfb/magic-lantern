@@ -12,18 +12,16 @@
 #include "gui.h"
 #include "lens.h"
 
-void* get_current_dialog_handler()
-{
+void* get_current_dialog_handler() {
+	void* value = 0;
     struct gui_task * current = gui_task_list.current;
-    if (current)
-    {
+    if (current) {
         struct dialog * dialog = current->priv;
-        if (dialog)
-        {
-            return dialog->handler;
+        if (dialog) {
+        	value = dialog->handler;
         }
     }
-    return 0;
+    return value;
 }
 
 static void print_dialog_handler_stack()
