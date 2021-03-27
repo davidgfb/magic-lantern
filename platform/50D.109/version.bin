@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar27.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-27 10:58:17 by david@david-VirtualBox
+Built on : 2021-03-27 11:10:37 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/crc32.c
 --- a/src/crc32.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/crc32.c	Sat Mar 27 11:58:17 2021 +0100
++++ b/src/crc32.c	Sat Mar 27 12:10:37 2021 +0100
 @@ -2,14 +2,11 @@
   *
   * License: GPL v2
@@ -69,9 +69,21 @@ diff -r 352a05ff20db src/crc32.c
 +		crc32table[i] = crc;
 +	}
  }
+diff -r 352a05ff20db src/fps-engio.c
+--- a/src/fps-engio.c	Wed Mar 24 17:35:08 2021 +0000
++++ b/src/fps-engio.c	Sat Mar 27 12:10:37 2021 +0100
+@@ -297,7 +297,7 @@
+     #define FPS_TIMER_B_MIN (ZOOM ? 1490 : MV720 ? 873 : raw_lv_is_enabled() ? 1500 : 1580)
+ #endif
+ 
+-static int fps_timer_b_method = 0;
++//static int fps_timer_b_method = 0;
+ #ifdef NEW_FPS_METHOD
+ static uint16_t * sensor_timing_table_original = 0;
+ static uint16_t sensor_timing_table_patched[175*2];
 diff -r 352a05ff20db src/imath.c
 --- a/src/imath.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/imath.c	Sat Mar 27 11:58:17 2021 +0100
++++ b/src/imath.c	Sat Mar 27 12:10:37 2021 +0100
 @@ -3,36 +3,39 @@
  #include "dryos.h"
  #include "math.h"
@@ -129,7 +141,7 @@ diff -r 352a05ff20db src/imath.c
  }
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Sat Mar 27 11:58:17 2021 +0100
++++ b/src/module.h	Sat Mar 27 12:10:37 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -144,7 +156,7 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/util.c
 --- a/src/util.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/util.c	Sat Mar 27 11:58:17 2021 +0100
++++ b/src/util.c	Sat Mar 27 12:10:37 2021 +0100
 @@ -1,19 +1,15 @@
 -
 -
@@ -201,7 +213,7 @@ diff -r 352a05ff20db src/util.c
  }
 diff -r 352a05ff20db src/vsync-lite.c
 --- a/src/vsync-lite.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/vsync-lite.c	Sat Mar 27 11:58:17 2021 +0100
++++ b/src/vsync-lite.c	Sat Mar 27 12:10:37 2021 +0100
 @@ -7,25 +7,22 @@
  
  static struct msg_queue * vsync_msg_queue = 0;
@@ -238,8 +250,41 @@ diff -r 352a05ff20db src/vsync-lite.c
  
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Sat Mar 27 11:58:17 2021 +0100
-@@ -3698,75 +3698,90 @@
++++ b/src/zebra.c	Sat Mar 27 12:10:37 2021 +0100
+@@ -3363,21 +3363,23 @@
+ 
+     // select buffer where MZ should be written (camera-specific, guesswork)
+     #if defined(CONFIG_5D2) || defined(CONFIG_EOSM) || defined(CONFIG_50D)
+-    #warning FIXME: this method uses busy waiting, which causes high CPU usage and overheating when using Magic Zoom
+-    void busy_vsync(int hd, int timeout_ms)
+-    {
++    //warning FIXME: this method uses busy waiting, which causes high CPU usage and overheating when using Magic Zoom
++    void busy_vsync(int hd, int timeout_ms) {
+         int timeout_us = timeout_ms * 1000;
+         void* old = (void*)shamem_read(hd ? REG_EDMAC_WRITE_HD_ADDR : REG_EDMAC_WRITE_LV_ADDR);
+         int t0 = *(uint32_t*)0xC0242014;
+-        while(1)
+-        {
++        bool open = true;
++        while(open) {
+             int t1 = *(uint32_t*)0xC0242014;
+             int dt = MOD(t1 - t0, 1048576);
+             void* new = (void*)shamem_read(hd ? REG_EDMAC_WRITE_HD_ADDR : REG_EDMAC_WRITE_LV_ADDR);
+-            if (old != new) break;
+-            if (dt > timeout_us)
+-                return;
+-            for (int i = 0; i < 100; i++) asm("nop"); // don't stress the digic too much
++            if (old == new) {            
++		        if (dt <= timeout_us) {		            
++				    for (int i = 0; i < 100; i++) {
++				    	asm("nop"); // don't stress the digic too much
++				    }
++				}
++		    }
+         }
+     }
+     lvr = (uint16_t*) shamem_read(REG_EDMAC_WRITE_LV_ADDR);
+@@ -3698,75 +3700,90 @@
      return 0;
  }
  
@@ -371,7 +416,7 @@ diff -r 352a05ff20db src/zebra.c
      }
  #endif
  
-@@ -3776,79 +3791,78 @@
+@@ -3776,79 +3793,78 @@
  }
  
  
@@ -521,7 +566,7 @@ diff -r 352a05ff20db src/zebra.c
      }
  }
  
-@@ -3860,26 +3874,29 @@
+@@ -3860,26 +3876,29 @@
  // this should be synchronized with
  // * graphics code (like zebra); otherwise zebras will remain frozen on screen
  // * gui_main_task (to make sure Canon won't call redraw in parallel => crash)
@@ -567,7 +612,7 @@ diff -r 352a05ff20db src/zebra.c
  
      //~ if (disable_redraw) 
      //~ {
-@@ -3890,41 +3907,37 @@
+@@ -3890,41 +3909,37 @@
          struct gui_task * current = gui_task_list.current;
          struct dialog * dialog = current->priv;
  
@@ -618,7 +663,7 @@ diff -r 352a05ff20db src/zebra.c
      #endif
      
      menu_set_dirty();
-@@ -3932,112 +3945,105 @@
+@@ -3932,112 +3947,105 @@
      zoom_overlay_dirty = 1;
  }
  
@@ -787,7 +832,7 @@ diff -r 352a05ff20db src/zebra.c
                      msleep(100);
                  }
                  vram_params_set_dirty();
-@@ -4045,11 +4051,12 @@
+@@ -4045,11 +4053,12 @@
                  crop_set_dirty(10);
                  msleep(500);
              }
@@ -803,7 +848,7 @@ diff -r 352a05ff20db src/zebra.c
          }
          #if 0
          draw_cropmark_area(); // just for debugging
-@@ -4059,30 +4066,28 @@
+@@ -4059,30 +4068,28 @@
          #endif
  
          #ifdef CONFIG_RAW_LIVEVIEW
@@ -856,7 +901,7 @@ diff -r 352a05ff20db src/zebra.c
          #endif
  
          int mz = should_draw_zoom_overlay();
-@@ -4091,60 +4096,67 @@
+@@ -4091,60 +4098,67 @@
          guess_fastrefresh_direction();
  
          #ifdef FEATURE_MAGIC_ZOOM
@@ -959,7 +1004,7 @@ diff -r 352a05ff20db src/zebra.c
          #endif
  
          #ifdef FEATURE_REC_NOTIFY
-@@ -4154,89 +4166,101 @@
+@@ -4154,89 +4168,101 @@
          #endif
          
          #ifdef FEATURE_MAGIC_ZOOM
@@ -1120,7 +1165,7 @@ diff -r 352a05ff20db src/zebra.c
              draw_histogram_and_waveform(0);
          }
      }
-@@ -4248,229 +4272,233 @@
+@@ -4248,229 +4274,233 @@
  TASK_CREATE( "livev_loprio_task", livev_lopriority_task, 0, 0x1f, 0x8000 );
  
  // these may be out of order for config compatibility
@@ -1545,7 +1590,7 @@ diff -r 352a05ff20db src/zebra.c
      //~ draw_cropmark_area();
      msleep(1000);
      //~ bvram_mirror_init();
-@@ -4480,99 +4508,91 @@
+@@ -4480,99 +4510,91 @@
  
      struct vram_info * vram = get_yuv422_vram();
      uint8_t * const lvram = vram->vram;
@@ -1720,7 +1765,7 @@ diff -r 352a05ff20db src/zebra.c
      /* go to play mode if not already there */
      enter_play_mode();
      
-@@ -4585,12 +4605,13 @@
+@@ -4585,12 +4607,13 @@
      /* the overlay will now be displayed from cropmarks.c */
  }
  
@@ -1737,7 +1782,7 @@ diff -r 352a05ff20db src/zebra.c
      
      #ifdef FEATURE_EXPO_OVERRIDE
      bv_auto_update();
-@@ -4601,8 +4622,7 @@
+@@ -4601,8 +4624,7 @@
      #endif
  }
  
@@ -1747,7 +1792,7 @@ diff -r 352a05ff20db src/zebra.c
      int old_lv = lv;
      int old_peaking = focus_peaking;
      focus_peaking = 1;
-@@ -4611,8 +4631,7 @@
+@@ -4611,8 +4633,7 @@
      msleep(2000);
      int a = get_seconds_clock();
      lv = 1; // lie, to force using the liveview algorithm which is relevant for benchmarking

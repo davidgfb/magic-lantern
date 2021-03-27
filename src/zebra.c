@@ -3363,21 +3363,23 @@ static void draw_zoom_overlay(int dirty)
 
     // select buffer where MZ should be written (camera-specific, guesswork)
     #if defined(CONFIG_5D2) || defined(CONFIG_EOSM) || defined(CONFIG_50D)
-    #warning FIXME: this method uses busy waiting, which causes high CPU usage and overheating when using Magic Zoom
-    void busy_vsync(int hd, int timeout_ms)
-    {
+    //warning FIXME: this method uses busy waiting, which causes high CPU usage and overheating when using Magic Zoom
+    void busy_vsync(int hd, int timeout_ms) {
         int timeout_us = timeout_ms * 1000;
         void* old = (void*)shamem_read(hd ? REG_EDMAC_WRITE_HD_ADDR : REG_EDMAC_WRITE_LV_ADDR);
         int t0 = *(uint32_t*)0xC0242014;
-        while(1)
-        {
+        bool open = true;
+        while(open) {
             int t1 = *(uint32_t*)0xC0242014;
             int dt = MOD(t1 - t0, 1048576);
             void* new = (void*)shamem_read(hd ? REG_EDMAC_WRITE_HD_ADDR : REG_EDMAC_WRITE_LV_ADDR);
-            if (old != new) break;
-            if (dt > timeout_us)
-                return;
-            for (int i = 0; i < 100; i++) asm("nop"); // don't stress the digic too much
+            if (old == new) {            
+		        if (dt <= timeout_us) {		            
+				    for (int i = 0; i < 100; i++) {
+				    	asm("nop"); // don't stress the digic too much
+				    }
+				}
+		    }
         }
     }
     lvr = (uint16_t*) shamem_read(REG_EDMAC_WRITE_LV_ADDR);
