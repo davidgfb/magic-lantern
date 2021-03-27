@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar27.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-27 11:51:43 by david@david-VirtualBox
+Built on : 2021-03-27 12:00:18 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/asm.c
 --- a/src/asm.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/asm.c	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/asm.c	Sat Mar 27 13:00:18 2021 +0100
 @@ -6,45 +6,44 @@
  #include "compiler.h"
  #include "string.h"
@@ -82,7 +82,7 @@ diff -r 352a05ff20db src/asm.c
  }
 diff -r 352a05ff20db src/crc32.c
 --- a/src/crc32.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/crc32.c	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/crc32.c	Sat Mar 27 13:00:18 2021 +0100
 @@ -2,14 +2,11 @@
   *
   * License: GPL v2
@@ -145,7 +145,7 @@ diff -r 352a05ff20db src/crc32.c
  }
 diff -r 352a05ff20db src/dialog_test.c
 --- a/src/dialog_test.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/dialog_test.c	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/dialog_test.c	Sat Mar 27 13:00:18 2021 +0100
 @@ -12,58 +12,55 @@
  #include "gui.h"
  #include "lens.h"
@@ -240,7 +240,7 @@ diff -r 352a05ff20db src/dialog_test.c
 +}
 diff -r 352a05ff20db src/fps-engio.c
 --- a/src/fps-engio.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/fps-engio.c	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/fps-engio.c	Sat Mar 27 13:00:18 2021 +0100
 @@ -297,7 +297,7 @@
      #define FPS_TIMER_B_MIN (ZOOM ? 1490 : MV720 ? 873 : raw_lv_is_enabled() ? 1500 : 1580)
  #endif
@@ -252,7 +252,7 @@ diff -r 352a05ff20db src/fps-engio.c
  static uint16_t sensor_timing_table_patched[175*2];
 diff -r 352a05ff20db src/imath.c
 --- a/src/imath.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/imath.c	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/imath.c	Sat Mar 27 13:00:18 2021 +0100
 @@ -3,36 +3,39 @@
  #include "dryos.h"
  #include "math.h"
@@ -310,7 +310,7 @@ diff -r 352a05ff20db src/imath.c
  }
 diff -r 352a05ff20db src/menuhelp_dummy.c
 --- a/src/menuhelp_dummy.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/menuhelp_dummy.c	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/menuhelp_dummy.c	Sat Mar 27 13:00:18 2021 +0100
 @@ -35,34 +35,27 @@
  int current_page = 1;
  extern int help_pages;
@@ -361,7 +361,7 @@ diff -r 352a05ff20db src/menuhelp_dummy.c
  
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/module.h	Sat Mar 27 13:00:18 2021 +0100
 @@ -169,8 +169,7 @@
  
  
@@ -416,9 +416,109 @@ diff -r 352a05ff20db src/module.h
 +*/
  
  #endif
+diff -r 352a05ff20db src/ph_info_disp.c
+--- a/src/ph_info_disp.c	Wed Mar 24 17:35:08 2021 +0000
++++ b/src/ph_info_disp.c	Sat Mar 27 13:00:18 2021 +0100
+@@ -1,6 +1,4 @@
+ // additional info on photo screen
+-
+-
+ #include <dryos.h>
+ #include <property.h>
+ #include <bmp.h>
+@@ -8,7 +6,7 @@
+ #include <consts.h>
+ #include <lens.h>
+ #ifdef STROBO_READY_AND_WE_CAN_USE_IT
+-#include <strobo.h>
++	#include <strobo.h>
+ #endif
+ #include <version.h>
+ 
+@@ -16,48 +14,45 @@
+ #include <shoot.h>
+ 
+ #ifdef FEATURE_LCD_SENSOR_REMOTE
+-#include <lcdsensor.h>
++	#include <lcdsensor.h>
+ #endif
+ 
+-#if  !defined(AUDIO_REM_SHOT_POS_X) && !defined(AUDIO_REM_SHOT_POS_Y)
++#if !defined(AUDIO_REM_SHOT_POS_X) && !defined(AUDIO_REM_SHOT_POS_Y)
+     #define AUDIO_REM_SHOT_POS_X 20
+     #define AUDIO_REM_SHOT_POS_Y 40
+ #endif
+ 
+-void display_shooting_info() // called from debug task
+-{
+-    if (lv) return;
+-
+-    #ifdef FEATURE_FLEXINFO
+-    // from flexinfo.c
+-    info_print_screen();
+-    #endif
++void display_shooting_info() { // called from debug task
++    if (!lv) {    			
++		#ifdef FEATURE_FLEXINFO
++			// from flexinfo.c
++			info_print_screen();
++		#endif
+ 
+-    // the following is stuff not yet ported to flexinfo
+-    #ifdef FEATURE_LCD_SENSOR_REMOTE
+-    display_lcd_remote_icon(555, 460);
+-    #endif
+-    
+-    // hack for Rebel cameras to display intermediate ISOs
+-    iso_refresh_display();
+-    
+-    display_trap_focus_info();
++		// the following is stuff not yet ported to flexinfo
++		#ifdef FEATURE_LCD_SENSOR_REMOTE
++			display_lcd_remote_icon(555, 460);
++		#endif
++		
++		// hack for Rebel cameras to display intermediate ISOs
++		iso_refresh_display();
++		
++		display_trap_focus_info();
+ 
+-#ifdef STROBO_READY_AND_WE_CAN_USE_IT
+-    int col_field = bmp_getpixel(20,10);
+-    if (flash_info.mode==STROBO_FLASH_MODE_MANUAL)
+-    {
+-        uint32_t fntl = FONT(FONT_LARGE, COLOR_YELLOW, col_field);
+-        fnt = FONT(FONT_SMALL, COLOR_CYAN, col_field);
+-        bmp_printf(fnt, 488, 188, "A");
+-        bmp_printf(fntl, 498, 185, "%3d", 1 << flash_info.group_a_output);
+-        bmp_printf(fnt, 556, 188, "B");
+-        bmp_printf(fntl, 564, 185, "%3d", 1 << flash_info.group_b_output );
+-        bmp_printf(fnt, 624, 188, "C");
+-        bmp_printf(fntl, 632, 185, "%3d", 1 << flash_info.group_c_output);
+-        bmp_fill(col_bg,486,212,212,6);
+-    }
+-#endif
+-
++	#ifdef STROBO_READY_AND_WE_CAN_USE_IT
++		int col_field = bmp_getpixel(20,10);
++		if (flash_info.mode==STROBO_FLASH_MODE_MANUAL) {
++		    uint32_t fntl = FONT(FONT_LARGE, COLOR_YELLOW, col_field);
++		    fnt = FONT(FONT_SMALL, COLOR_CYAN, col_field);
++		    bmp_printf(fnt, 488, 188, "A");
++		    bmp_printf(fntl, 498, 185, "%3d", 1 << flash_info.group_a_output);
++		    bmp_printf(fnt, 556, 188, "B");
++		    bmp_printf(fntl, 564, 185, "%3d", 1 << flash_info.group_b_output );
++		    bmp_printf(fnt, 624, 188, "C");
++		    bmp_printf(fntl, 632, 185, "%3d", 1 << flash_info.group_c_output);
++		    bmp_fill(col_bg,486,212,212,6);
++		}
++	#endif
++	}
+ }
+ 
 diff -r 352a05ff20db src/util.c
 --- a/src/util.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/util.c	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/util.c	Sat Mar 27 13:00:18 2021 +0100
 @@ -1,19 +1,15 @@
 -
 -
@@ -475,7 +575,7 @@ diff -r 352a05ff20db src/util.c
  }
 diff -r 352a05ff20db src/vsync-lite.c
 --- a/src/vsync-lite.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/vsync-lite.c	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/vsync-lite.c	Sat Mar 27 13:00:18 2021 +0100
 @@ -7,25 +7,22 @@
  
  static struct msg_queue * vsync_msg_queue = 0;
@@ -512,7 +612,7 @@ diff -r 352a05ff20db src/vsync-lite.c
  
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Sat Mar 27 12:51:43 2021 +0100
++++ b/src/zebra.c	Sat Mar 27 13:00:18 2021 +0100
 @@ -3363,21 +3363,23 @@
  
      // select buffer where MZ should be written (camera-specific, guesswork)
