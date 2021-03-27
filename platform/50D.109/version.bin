@@ -1,14 +1,14 @@
 
 
-Magic Lantern Nightly.2021Mar26.50D109
+Magic Lantern Nightly.2021Mar27.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-26 11:43:20 by david@david-VirtualBox
+Built on : 2021-03-27 10:37:03 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/imath.c
 --- a/src/imath.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/imath.c	Fri Mar 26 12:43:20 2021 +0100
++++ b/src/imath.c	Sat Mar 27 11:37:03 2021 +0100
 @@ -3,36 +3,39 @@
  #include "dryos.h"
  #include "math.h"
@@ -66,7 +66,7 @@ diff -r 352a05ff20db src/imath.c
  }
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Fri Mar 26 12:43:20 2021 +0100
++++ b/src/module.h	Sat Mar 27 11:37:03 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -79,9 +79,66 @@ diff -r 352a05ff20db src/module.h
 +*/
  
  #endif
+diff -r 352a05ff20db src/util.c
+--- a/src/util.c	Wed Mar 24 17:35:08 2021 +0000
++++ b/src/util.c	Sat Mar 27 11:37:03 2021 +0100
+@@ -1,19 +1,15 @@
+-
+-
+ #include <dryos.h>
+ #include <property.h>
+ #include <util.h>
+ 
+ /* helper functions for atomic in-/decrasing variables */
+-void util_atomic_inc(uint32_t *value)
+-{
++void util_atomic_inc(uint32_t *value) {
+     uint32_t old_int = cli();
+     (*value)++;
+     sei(old_int);
+ }
+ 
+-void util_atomic_dec(uint32_t *value)
+-{
++void util_atomic_dec(uint32_t *value) {
+     uint32_t old_int = cli();
+     (*value)--;
+     sei(old_int);
+@@ -21,13 +17,23 @@
+ 
+ /* simple binary search */
+ /* crit returns negative if the tested value is too high, positive if too low, 0 if perfect */
+-int bin_search(int lo, int hi, CritFunc crit)
+-{
++int bin_search(int lo, int hi, CritFunc crit) {
++	int value = 0;
+     ASSERT(crit);
+-    if (lo >= hi-1) return lo;
+-    int m = (lo+hi)/2;
+-    int c = crit(m);
+-    if (c == 0) return m;
+-    if (c > 0) return bin_search(m, hi, crit);
+-    return bin_search(lo, m, crit);
++    if (lo >= hi-1) {
++    	value = lo;
++    } else {
++		int m = (lo+hi)/2;
++		int c = crit(m);
++		if (c == 0) {
++			value = m;
++		} else {
++			if (c > 0) {
++				value = bin_search(m, hi, crit);
++			} else {
++				value = bin_search(lo, m, crit);
++			}
++		}
++	}
++	return value;
+ }
 diff -r 352a05ff20db src/vsync-lite.c
 --- a/src/vsync-lite.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/vsync-lite.c	Fri Mar 26 12:43:20 2021 +0100
++++ b/src/vsync-lite.c	Sat Mar 27 11:37:03 2021 +0100
 @@ -7,25 +7,22 @@
  
  static struct msg_queue * vsync_msg_queue = 0;
@@ -118,7 +175,7 @@ diff -r 352a05ff20db src/vsync-lite.c
  
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Fri Mar 26 12:43:20 2021 +0100
++++ b/src/zebra.c	Sat Mar 27 11:37:03 2021 +0100
 @@ -3698,75 +3698,90 @@
      return 0;
  }
