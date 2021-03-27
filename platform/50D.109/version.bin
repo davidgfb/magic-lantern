@@ -4,11 +4,74 @@ Magic Lantern Nightly.2021Mar27.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-27 10:37:03 by david@david-VirtualBox
+Built on : 2021-03-27 10:58:17 by david@david-VirtualBox
 
+diff -r 352a05ff20db src/crc32.c
+--- a/src/crc32.c	Wed Mar 24 17:35:08 2021 +0000
++++ b/src/crc32.c	Sat Mar 27 11:58:17 2021 +0100
+@@ -2,14 +2,11 @@
+  *
+  * License: GPL v2
+  * Author:  Matthias Hopf <mat@mshopf.de>
+- */
+-
+-/*
++ 
+  * CRC32 functions
+  * Based on public domain implementation by Finn Yannick Jacobs.
+- */
+-
+-/* Written and copyright 1999 by Finn Yannick Jacobs
++ 
++  Written and copyright 1999 by Finn Yannick Jacobs
+  * No rights were reserved to this, so feel free to
+  * manipulate or do with it, what you want or desire :)
+  */
+@@ -22,25 +19,24 @@
+ /* Calculate crc32. Little endian.
+  * Standard seed is 0xffffffff or 0.
+  * Some implementations xor result with 0xffffffff after calculation. */
+-uint32_t crc32 (void *data, unsigned int len, uint32_t seed)
+-{
+-  uint8_t *d = data;
+-  while (len--)
+-    seed = ((seed>>8) & 0x00FFFFFF) ^ crc32table [(seed ^ *d++) & 0xFF];
+-  return seed;
++uint32_t crc32 (void *data, unsigned int len, uint32_t seed) {
++    uint8_t *d = data;
++    while (len--) {
++    	seed = ((seed>>8) & 0x00FFFFFF) ^ crc32table [(seed ^ *d++) & 0xFF];
++  	}
++    return seed;
+ }
+ 
+ /* Calculate crc32table */
+-void crc32_init()
+-{
+-  uint32_t poly = 0xEDB88320L;
+-  uint32_t crc;
+-  int i, j;
++void crc32_init() {
++    uint32_t poly = 0xEDB88320L;
++	uint32_t crc = 0;
+ 
+-  for (i=0; i<256; i++) {
+-    crc = i;
+-    for (j=8; j>0; j--)
+-      crc = (crc>>1) ^ ((crc&1) ? poly : 0);
+-    crc32table[i] = crc;
+-  }
++	for (int i=0; i<256; i++) {
++		crc = (uint32_t) i; //explicit is better than implicit 
++		for (int j=8; j>0; j--) {
++			crc = (crc>>1) ^ ((crc&1) ? poly : 0);
++		}
++		crc32table[i] = crc;
++	}
+ }
 diff -r 352a05ff20db src/imath.c
 --- a/src/imath.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/imath.c	Sat Mar 27 11:37:03 2021 +0100
++++ b/src/imath.c	Sat Mar 27 11:58:17 2021 +0100
 @@ -3,36 +3,39 @@
  #include "dryos.h"
  #include "math.h"
@@ -66,7 +129,7 @@ diff -r 352a05ff20db src/imath.c
  }
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Sat Mar 27 11:37:03 2021 +0100
++++ b/src/module.h	Sat Mar 27 11:58:17 2021 +0100
 @@ -340,8 +340,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
@@ -81,7 +144,7 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/util.c
 --- a/src/util.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/util.c	Sat Mar 27 11:37:03 2021 +0100
++++ b/src/util.c	Sat Mar 27 11:58:17 2021 +0100
 @@ -1,19 +1,15 @@
 -
 -
@@ -138,7 +201,7 @@ diff -r 352a05ff20db src/util.c
  }
 diff -r 352a05ff20db src/vsync-lite.c
 --- a/src/vsync-lite.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/vsync-lite.c	Sat Mar 27 11:37:03 2021 +0100
++++ b/src/vsync-lite.c	Sat Mar 27 11:58:17 2021 +0100
 @@ -7,25 +7,22 @@
  
  static struct msg_queue * vsync_msg_queue = 0;
@@ -175,7 +238,7 @@ diff -r 352a05ff20db src/vsync-lite.c
  
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Sat Mar 27 11:37:03 2021 +0100
++++ b/src/zebra.c	Sat Mar 27 11:58:17 2021 +0100
 @@ -3698,75 +3698,90 @@
      return 0;
  }
