@@ -169,8 +169,7 @@ typedef struct
 
 
 /* index of all loaded modules */
-typedef struct
-{
+typedef struct {
     char name[MODULE_NAME_LENGTH+1];
     char filename[MODULE_FILENAME_LENGTH+1];
     char long_filename[MODULE_FILENAME_LENGTH+1];
@@ -187,19 +186,18 @@ typedef struct
 } module_entry_t;
 
 
-#define MODULE_INFO_START()                                     MODULE_INFO_START_(MODULE_INFO_PREFIX,MODULE_NAME)
-#define MODULE_INFO_START_(prefix,modname)                      MODULE_INFO_START__(prefix,modname)
-#define MODULE_INFO_START__(prefix,modname)                     module_info_t prefix##modname = \
-                                                                {\
-                                                                    .api_magic = MODULE_MAGIC, \
-                                                                    .api_major = MODULE_MAJOR, \
-                                                                    .api_minor = MODULE_MINOR, \
-                                                                    .api_patch = MODULE_PATCH, \
-                                                                    .name = #modname,
-#define MODULE_INIT(func)                                           .init = &func,
-#define MODULE_DEINIT(func)                                         .deinit = &func,
-#define MODULE_LONGNAME(name)                                       .long_name = name,
-#define MODULE_INFO_END()                                       }; \
+#define MODULE_INFO_START()  MODULE_INFO_START_(MODULE_INFO_PREFIX,MODULE_NAME)
+#define MODULE_INFO_START_(prefix,modname)  MODULE_INFO_START__(prefix,modname)
+#define MODULE_INFO_START__(prefix,modname) module_info_t  prefix##modname = \ { \
+	.api_magic = MODULE_MAGIC, \
+	.api_major = MODULE_MAJOR, \
+	.api_minor = MODULE_MINOR, \
+	.api_patch = MODULE_PATCH, \
+	.name = #modname,
+	#define MODULE_INIT(func) .init = &func,
+	#define  MODULE_DEINIT(func) .deinit = &func,
+	#define MODULE_LONGNAME(name) .long_name = name,
+	#define MODULE_INFO_END()}; \
     MODULE_STRINGS();
 /* ^^^ module strings are auto-included after the info block
  * => they end up only in the file that defines module info.

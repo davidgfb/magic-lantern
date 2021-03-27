@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar27.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-27 11:10:37 by david@david-VirtualBox
+Built on : 2021-03-27 11:21:17 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/crc32.c
 --- a/src/crc32.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/crc32.c	Sat Mar 27 12:10:37 2021 +0100
++++ b/src/crc32.c	Sat Mar 27 12:21:17 2021 +0100
 @@ -2,14 +2,11 @@
   *
   * License: GPL v2
@@ -71,7 +71,7 @@ diff -r 352a05ff20db src/crc32.c
  }
 diff -r 352a05ff20db src/fps-engio.c
 --- a/src/fps-engio.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/fps-engio.c	Sat Mar 27 12:10:37 2021 +0100
++++ b/src/fps-engio.c	Sat Mar 27 12:21:17 2021 +0100
 @@ -297,7 +297,7 @@
      #define FPS_TIMER_B_MIN (ZOOM ? 1490 : MV720 ? 873 : raw_lv_is_enabled() ? 1500 : 1580)
  #endif
@@ -83,7 +83,7 @@ diff -r 352a05ff20db src/fps-engio.c
  static uint16_t sensor_timing_table_patched[175*2];
 diff -r 352a05ff20db src/imath.c
 --- a/src/imath.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/imath.c	Sat Mar 27 12:10:37 2021 +0100
++++ b/src/imath.c	Sat Mar 27 12:21:17 2021 +0100
 @@ -3,36 +3,39 @@
  #include "dryos.h"
  #include "math.h"
@@ -141,8 +141,50 @@ diff -r 352a05ff20db src/imath.c
  }
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Sat Mar 27 12:10:37 2021 +0100
-@@ -340,8 +340,10 @@
++++ b/src/module.h	Sat Mar 27 12:21:17 2021 +0100
+@@ -169,8 +169,7 @@
+ 
+ 
+ /* index of all loaded modules */
+-typedef struct
+-{
++typedef struct {
+     char name[MODULE_NAME_LENGTH+1];
+     char filename[MODULE_FILENAME_LENGTH+1];
+     char long_filename[MODULE_FILENAME_LENGTH+1];
+@@ -187,19 +186,18 @@
+ } module_entry_t;
+ 
+ 
+-#define MODULE_INFO_START()                                     MODULE_INFO_START_(MODULE_INFO_PREFIX,MODULE_NAME)
+-#define MODULE_INFO_START_(prefix,modname)                      MODULE_INFO_START__(prefix,modname)
+-#define MODULE_INFO_START__(prefix,modname)                     module_info_t prefix##modname = \
+-                                                                {\
+-                                                                    .api_magic = MODULE_MAGIC, \
+-                                                                    .api_major = MODULE_MAJOR, \
+-                                                                    .api_minor = MODULE_MINOR, \
+-                                                                    .api_patch = MODULE_PATCH, \
+-                                                                    .name = #modname,
+-#define MODULE_INIT(func)                                           .init = &func,
+-#define MODULE_DEINIT(func)                                         .deinit = &func,
+-#define MODULE_LONGNAME(name)                                       .long_name = name,
+-#define MODULE_INFO_END()                                       }; \
++#define MODULE_INFO_START()  MODULE_INFO_START_(MODULE_INFO_PREFIX,MODULE_NAME)
++#define MODULE_INFO_START_(prefix,modname)  MODULE_INFO_START__(prefix,modname)
++#define MODULE_INFO_START__(prefix,modname) module_info_t  prefix##modname = \ { \
++	.api_magic = MODULE_MAGIC, \
++	.api_major = MODULE_MAJOR, \
++	.api_minor = MODULE_MINOR, \
++	.api_patch = MODULE_PATCH, \
++	.name = #modname,
++	#define MODULE_INIT(func) .init = &func,
++	#define  MODULE_DEINIT(func) .deinit = &func,
++	#define MODULE_LONGNAME(name) .long_name = name,
++	#define MODULE_INFO_END()}; \
+     MODULE_STRINGS();
+ /* ^^^ module strings are auto-included after the info block
+  * => they end up only in the file that defines module info.
+@@ -340,8 +338,10 @@
  /* see propvalues.c */
  extern int is_camera(const char * model, const char * firmware);
  
@@ -156,7 +198,7 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/util.c
 --- a/src/util.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/util.c	Sat Mar 27 12:10:37 2021 +0100
++++ b/src/util.c	Sat Mar 27 12:21:17 2021 +0100
 @@ -1,19 +1,15 @@
 -
 -
@@ -213,7 +255,7 @@ diff -r 352a05ff20db src/util.c
  }
 diff -r 352a05ff20db src/vsync-lite.c
 --- a/src/vsync-lite.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/vsync-lite.c	Sat Mar 27 12:10:37 2021 +0100
++++ b/src/vsync-lite.c	Sat Mar 27 12:21:17 2021 +0100
 @@ -7,25 +7,22 @@
  
  static struct msg_queue * vsync_msg_queue = 0;
@@ -250,7 +292,7 @@ diff -r 352a05ff20db src/vsync-lite.c
  
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Sat Mar 27 12:10:37 2021 +0100
++++ b/src/zebra.c	Sat Mar 27 12:21:17 2021 +0100
 @@ -3363,21 +3363,23 @@
  
      // select buffer where MZ should be written (camera-specific, guesswork)
