@@ -35,34 +35,27 @@ extern int menu_help_active;
 int current_page = 1;
 extern int help_pages;
 
-void menu_help_show_page(int page)
-{
+void menu_help_show_page(int page) {
+
 }
 
-void menu_help_redraw()
-{
+void menu_help_redraw() {
+
 }
 
-void menu_help_next_page()
-{
+void menu_help_next_page() {
+
 }
 
-void menu_help_prev_page()
-{
+void menu_help_prev_page() {
+
 }
 
-void menu_help_go_to_page(int page)
-{
+void menu_help_go_to_page(int page) {
+
 }
 
-void
-menu_help_section_print(
-    void *          priv,
-    int         x,
-    int         y,
-    int         selected
-)
-{
+void menu_help_section_print(void * priv,int x,int y,int selected) {
     
 }
 
