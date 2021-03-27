@@ -4,11 +4,11 @@ Magic Lantern Nightly.2021Mar27.50D109
 Camera   : 50D
 Firmware : 109
 Changeset: 352a05ff20db+ (qemu)
-Built on : 2021-03-27 11:37:22 by david@david-VirtualBox
+Built on : 2021-03-27 11:44:29 by david@david-VirtualBox
 
 diff -r 352a05ff20db src/asm.c
 --- a/src/asm.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/asm.c	Sat Mar 27 12:37:22 2021 +0100
++++ b/src/asm.c	Sat Mar 27 12:44:29 2021 +0100
 @@ -6,45 +6,44 @@
  #include "compiler.h"
  #include "string.h"
@@ -82,7 +82,7 @@ diff -r 352a05ff20db src/asm.c
  }
 diff -r 352a05ff20db src/crc32.c
 --- a/src/crc32.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/crc32.c	Sat Mar 27 12:37:22 2021 +0100
++++ b/src/crc32.c	Sat Mar 27 12:44:29 2021 +0100
 @@ -2,14 +2,11 @@
   *
   * License: GPL v2
@@ -145,8 +145,8 @@ diff -r 352a05ff20db src/crc32.c
  }
 diff -r 352a05ff20db src/dialog_test.c
 --- a/src/dialog_test.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/dialog_test.c	Sat Mar 27 12:37:22 2021 +0100
-@@ -12,18 +12,16 @@
++++ b/src/dialog_test.c	Sat Mar 27 12:44:29 2021 +0100
+@@ -12,58 +12,55 @@
  #include "gui.h"
  #include "lens.h"
  
@@ -170,10 +170,77 @@ diff -r 352a05ff20db src/dialog_test.c
 +    return value;
  }
  
- static void print_dialog_handler_stack()
+-static void print_dialog_handler_stack()
+-{
++static void print_dialog_handler_stack() {
+     int x = 50;
+     int y = 50;
+     struct gui_task * current = gui_task_list.current;
+-    while (current)
+-    {
++    while (current) {
+         struct dialog * dialog = current->priv;
+         bmp_printf(FONT_MED, x, y, "%8x", dialog->handler);
+         y += font_med.height;
+-        if (y > 450) break;
+-        current = current->next;
++        if (y <= 450) {
++		    current = current->next;
++		}
+     }
+ }
+ 
+-void canon_gui_disable_front_buffer()
+-{
+-#ifndef CONFIG_5DC
+-BMP_LOCK(
+-    if (WINSYS_BMP_DIRTY_BIT_NEG == 0)
+-    {
+-        WINSYS_BMP_DIRTY_BIT_NEG = 1;
+-    }
+-)
+-#endif
++void canon_gui_disable_front_buffer() {
++	#ifndef CONFIG_5DC
++		BMP_LOCK(
++			if (WINSYS_BMP_DIRTY_BIT_NEG == 0) {
++				WINSYS_BMP_DIRTY_BIT_NEG = 1;
++			}
++		);
++	#endif
+ }
+ 
+-void canon_gui_enable_front_buffer(int also_redraw)
+-{
+-#ifndef CONFIG_5DC
+-BMP_LOCK(
+-    if (WINSYS_BMP_DIRTY_BIT_NEG)
+-    {
+-        WINSYS_BMP_DIRTY_BIT_NEG = 0;
+-        if (also_redraw) redraw();
+-    }
+-)
+-#endif
++void canon_gui_enable_front_buffer(int also_redraw) {
++	#ifndef CONFIG_5DC
++		BMP_LOCK(
++			if (WINSYS_BMP_DIRTY_BIT_NEG) {
++				WINSYS_BMP_DIRTY_BIT_NEG = 0;
++				if (also_redraw) {
++					redraw();
++				}
++			}
++		);
++	#endif
+ }
+ 
+-int canon_gui_front_buffer_disabled() { return WINSYS_BMP_DIRTY_BIT_NEG; }
++int canon_gui_front_buffer_disabled() { 
++	return WINSYS_BMP_DIRTY_BIT_NEG; 
++}
 diff -r 352a05ff20db src/fps-engio.c
 --- a/src/fps-engio.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/fps-engio.c	Sat Mar 27 12:37:22 2021 +0100
++++ b/src/fps-engio.c	Sat Mar 27 12:44:29 2021 +0100
 @@ -297,7 +297,7 @@
      #define FPS_TIMER_B_MIN (ZOOM ? 1490 : MV720 ? 873 : raw_lv_is_enabled() ? 1500 : 1580)
  #endif
@@ -185,7 +252,7 @@ diff -r 352a05ff20db src/fps-engio.c
  static uint16_t sensor_timing_table_patched[175*2];
 diff -r 352a05ff20db src/imath.c
 --- a/src/imath.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/imath.c	Sat Mar 27 12:37:22 2021 +0100
++++ b/src/imath.c	Sat Mar 27 12:44:29 2021 +0100
 @@ -3,36 +3,39 @@
  #include "dryos.h"
  #include "math.h"
@@ -243,7 +310,7 @@ diff -r 352a05ff20db src/imath.c
  }
 diff -r 352a05ff20db src/module.h
 --- a/src/module.h	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/module.h	Sat Mar 27 12:37:22 2021 +0100
++++ b/src/module.h	Sat Mar 27 12:44:29 2021 +0100
 @@ -169,8 +169,7 @@
  
  
@@ -300,7 +367,7 @@ diff -r 352a05ff20db src/module.h
  #endif
 diff -r 352a05ff20db src/util.c
 --- a/src/util.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/util.c	Sat Mar 27 12:37:22 2021 +0100
++++ b/src/util.c	Sat Mar 27 12:44:29 2021 +0100
 @@ -1,19 +1,15 @@
 -
 -
@@ -357,7 +424,7 @@ diff -r 352a05ff20db src/util.c
  }
 diff -r 352a05ff20db src/vsync-lite.c
 --- a/src/vsync-lite.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/vsync-lite.c	Sat Mar 27 12:37:22 2021 +0100
++++ b/src/vsync-lite.c	Sat Mar 27 12:44:29 2021 +0100
 @@ -7,25 +7,22 @@
  
  static struct msg_queue * vsync_msg_queue = 0;
@@ -394,7 +461,7 @@ diff -r 352a05ff20db src/vsync-lite.c
  
 diff -r 352a05ff20db src/zebra.c
 --- a/src/zebra.c	Wed Mar 24 17:35:08 2021 +0000
-+++ b/src/zebra.c	Sat Mar 27 12:37:22 2021 +0100
++++ b/src/zebra.c	Sat Mar 27 12:44:29 2021 +0100
 @@ -3363,21 +3363,23 @@
  
      // select buffer where MZ should be written (camera-specific, guesswork)
